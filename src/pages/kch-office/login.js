@@ -71,12 +71,12 @@ export default function Login(props) {
 						<Image src={Logo} fill className=' py-2 px-2 ' quality={100} priority={true} alt="Logo-KCH" />
 					</div>
 
-					<div className="mt-24 pt-4 xl:mt-28 ml-7 xl:ml-12 font-bold text-3xl xl:text-5xl text-white">
+					<div className="mt-24 pt-2 xl:mt-28 2xl:mt-32 ml-7 xl:ml-12 font-bold text-3xl xl:text-5xl text-white">
 						Welcome Back!
 					</div>
 
 					<div className="relative h-full flex place-content-end">
-						<div className="absolute w-full xl:w-11/12  flex place-content-end">
+						<div className="absolute w-full xl:w-11/12 xl:pl-14 2xl:pl-0  flex place-content-end">
 							<Image src={Cartoon} 
 									className="object-cover"
 									quality={100} 
