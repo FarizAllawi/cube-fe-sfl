@@ -61,7 +61,7 @@ export default function Login(props) {
 				<title>KCH OFFICE - LOGIN</title>
 			</Head>
             <div className="w-screen h-screen max-h-screen overflow-hidden  flex flex-col xl:flex-row ">
-                <div className={`h-full xl:w-1/2 xl:h-full 2xl:pl-10 pb-20 ${size.width > 1280 && 'rounded-login'} bg-gradient-login`}>
+                <div className="h-full xl:w-1/2 xl:h-full 2xl:pl-10 pb-20 xl:rounded-login bg-gradient-login">
 					
 					<div className="absolute top-10 left-0 w-28 h-12 px-2 py-2 xl:w-36 xl:h-14 flex place-content-center items-center rounded-r-2xl bg-white">
 						<Image src={Logo} fill className=' py-2 px-2 ' quality={100} priority={true} alt="Logo-KCH" />
