@@ -9,7 +9,7 @@ module.exports = {
   theme: {
     screens: {
       ...defaultTheme.screens,
-      "2xl": "1536px"
+      '2xl': "1512px"
     },
     supports: {},
     colors: colors,
