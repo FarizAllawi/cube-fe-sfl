@@ -7,8 +7,8 @@ import Image from 'next/image'
 // import useUser from 'pages/api/user'
 import useForm from 'helpers/useForm'
 
-import Input from 'components/FWA/Forms/Input'
-import Button from 'components/FWA/Button'
+import Input from 'components/kch-office/Forms/Input'
+import Button from 'components/kch-office/Button'
 
 import Logo from '../../../public/images/pictures/kch-office/logo-kalbe.png'
 import Cartoon from '../../../public/images/pictures/kch-office/cartoon.png'
