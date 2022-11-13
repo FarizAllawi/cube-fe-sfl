@@ -7,8 +7,8 @@ import Image from 'next/image'
 // import useUser from 'pages/api/user'
 import useForm from 'helpers/useForm'
 
-import Input from 'components/FWA/Forms/Input'
-import Button from 'components/FWA/Button'
+import Input from 'components/kch-office/Forms/Input'
+import Button from 'components/kch-office/Button'
 
 import Logo from '../../../public/images/pictures/kch-office/logo-kalbe.png'
 import Cartoon from '../../../public/images/pictures/kch-office/cartoon.png'
@@ -65,18 +65,18 @@ export default function Login(props) {
 				<title>KCH OFFICE - LOGIN</title>
 			</Head>
             <div className="w-screen h-screen max-h-screen overflow-hidden  flex flex-col xl:flex-row ">
-                <div className="h-full xl:w-1/2 xl:h-full 2xl:pl-10 pb-20 xl:rounded-login bg-gradient-login">
+                <div className={`h-full xl:w-1/2 xl:h-full 2xl:pl-10 pb-20 ${ size.width > 1280 && 'rounded-login' } bg-gradient-login`}>
 					
 					<div className="absolute top-10 left-0 w-28 h-12 px-2 py-2 xl:w-36 xl:h-14 flex place-content-center items-center rounded-r-2xl bg-white">
 						<Image src={Logo} fill className=' py-2 px-2 ' quality={100} priority={true} alt="Logo-KCH" />
 					</div>
 
-					<div className="mt-24 pt-2.5 xl:mt-36 ml-7 xl:ml-12 font-bold text-3xl xl:text-5xl text-white">
+					<div className="mt-24 pt-2 xl:mt-28 2xl:mt-32 ml-7 xl:ml-12 font-bold text-3xl xl:text-5xl text-white">
 						Welcome Back!
 					</div>
 
-					<div className="xl:mt-4 2xl:mt-0 relative h-full flex place-content-end">
-						<div className="absolute w-full xl:w-11/12  flex place-content-end">
+					<div className="relative h-full flex place-content-end">
+						<div className="absolute w-full xl:w-11/12 xl:pl-14 2xl:pl-0  flex place-content-end">
 							<Image src={Cartoon} 
 									className="object-cover"
 									quality={100} 
