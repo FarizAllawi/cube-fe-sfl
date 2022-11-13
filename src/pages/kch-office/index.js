@@ -8,12 +8,13 @@ import useOffice from 'pages/api/kch-office/office'
 import useDesk from 'pages/api/kch-office/desk'
 
 import useForm from 'helpers/useForm'
+import formatDate from 'helpers/formatDate'
 
 import Select from 'components/kch-office/Forms/Select'
+import Button from 'components/kch-office/Button'
 import Navbar from 'components/kch-office/Navbar'
 import BoxDeskSection from 'components/kch-office/DeskSection'
 import CardBookedList from 'components/kch-office/CardBooked'
-import formatDate from 'helpers/formatDate'
 
 export default function HomePage(props) {
     
@@ -26,6 +27,11 @@ export default function HomePage(props) {
     const [deskSection, setDeskSection] = useState([])
     const [selectedOffice, setSelectedOffice] = useState({})
     const [fetchStatus , setFetchStatus] = useState(false)
+    const [toggle, setToggle] = useState('desk')
+    const [size, setWindowSize] = useState({
+        width: undefined,
+		height: undefined,
+	})
 
     const [state, setState, newState] = useForm({
         office: '',
@@ -111,29 +117,48 @@ export default function HomePage(props) {
             getDeskSection()
             setFetchStatus(true)
         }
-    }, [state.office, fetchStatus, selectedOffice])
+
+         // Handler to call on window resize
+		const handleResize = () => {
+			// Set window width/height to state
+			setWindowSize({
+				width: window.innerWidth,
+				height: window.innerHeight,
+			})
+		}
+
+        window.addEventListener("resize", handleResize)
+        handleResize()
+
+        return () => {
+            window.removeEventListener("resize", handleResize)
+        }
+
+    }, [toggle, state.office, fetchStatus, selectedOffice])
+
+    console.log(size)
 
     return (
         <>
             <Head>
                 <title>KCH OFFICE</title>
             </Head>
-            <div className="w-screen h-screen max-h-screen flex flex-col">
+            <div className="w-screen h-screen max-h-screen flex flex-col select-none">
                 <Navbar />
-                <div className="w-full flex lg:flex-row lg:px-12 pt-2 lg:pt-24 2xl:pt-20">
-                    <div className="w-1/2 flex lg:flex-row">
-                        <div className="lg:text-4xl 2xl:text-5xl 2xl:mt-1 py-5 2xl:py-10 font-bold">
+                <div className="w-full flex flex-col xl:flex-row px-6 lg:px-12 mt-2 pt-20 pb-4 2xl:pt-20">
+                    <div className="w-full xl:w-1/2 flex lg:flex-row">
+                        <div className="text-xl sm:text-3xl md:text-4xl 2xl:text-5xl md:my-4 2xl:mt-4 pt-4 pb-3 2xl:pb-8 font-bold">
                             <div className='text-green-500'>CHOOSE</div>
                             <div className='text-green-700'>BOOK</div>
                             <div className='text-green-900'>ENJOY YOUR DESK</div>
                         </div>
                     </div>
-                    <div className="w-1/2 h-44 2xl:h-48 2xl:mt-4 px-4 py-4 flex flex-col bg-green-900 rounded-3xl">
+                    <div className="w-full xl:w-1/2 h-48 xl:h-44 2xl:h-48 lg:mt-4 2xl:mt-4 px-4 py-4 flex flex-col bg-green-900 rounded-3xl">
                         <div className="w-full flex flex-row place-content-center items-center">
-                            <div className="w-1/2 flex z-30">
-                                <div className="w-3/4 flex">
+                            <div className="w-3/4 sm:w-1/2 flex z-10">
+                                <div className="w-4/4 xl:w-3/4 flex">
                                     <Select name="officeId"
-                                            className="bg-white text-green-900"
+                                            className="py-1 xl:py-1 text-sm bg-white text-green-900"
                                             placeholder="Select Office"
                                             value={state.office.split('=')[1]}
                                             onClick={changeOffice}>
@@ -147,9 +172,9 @@ export default function HomePage(props) {
                                     </Select>
                                 </div>
                             </div>
-                            <div className="w-1/2 text-right">
+                            <div className="w-1/4 sm:w-1/2 text-right">
                                 <Link href="/kch-office/history">
-                                    <div className="cursor-pointer text-sm underline underline-offset-2 text-white font-medium">Booking history</div>
+                                    <div className="cursor-pointer text-xs sm:text-sm underline underline-offset-2 text-white font-medium">Booking history</div>
                                 </Link>
                             </div>
                         </div>
@@ -162,62 +187,93 @@ export default function HomePage(props) {
                     </div>
                 </div>
 
-                <div className="w-full h-full lg:flex flex-row lg:px-12 pb-10 2xl:pb-2">
-                    <div className="w-full flex flex-col">
-                        <div className="w-3/12 mb-6 z-40">
-                            <Select name="dateSelected"
-                                    placeholder="Select Date"
-                                    value={state.dateSelected}
-                                    onClick={changeDate}>
+                <div className="w-full h-full flex flex-col lg:my-0 md:my-4 xl:flex-row px-6 lg:px-12 pb-6 2xl:pb-0">
+                    <div className="w-full xl:w-7/12 flex flex-col">
+                        <div className="w-full mt-2 mb-4 md:mb-10 lg:mb-6 xl:mb-6 xl:-mt-4 sm:mt-2 z-40 flex flex-row">
+                            <div className="w-5/12 sm:w-1/3 xl:w-1/4">
+                                <Select name="dateSelected"
+                                        placeholder="Select Date"
+                                        value={state.dateSelected}
+                                        onClick={changeDate}>
 
-                                <option value={GetSelectOptionDate('monday')} >
-                                    <div className="w-full flex flex-col hover:text-white">
-                                        <div className='w-full text-opacity-100 font-semibold' style={{ fontSize: "11px"}}>Monday {currentDate.getDay() === 1 ? '- Today' : currentDate.getDay() > 1 ? '- Next Week' : ''}</div>
-                                        <div className='w-full'>{formatDate(GetSelectOptionDate('monday'))}</div>
-                                    </div>
-                                </option>
-                                <option value={GetSelectOptionDate('tuesday')} >
-                                    <div className="w-full flex flex-col hover:text-white">
-                                        <div className='w-full text-opacity-100 font-semibold' style={{ fontSize: "11px"}}>Tuesday {currentDate.getDay() === 2 ? '- Today' : (currentDate.getDay() + 1) === 2  ?  '- Tomorrow' : currentDate.getDay() > 2 ? '- Next Week' :  ''}</div>
-                                        <div className='w-full'>{formatDate(GetSelectOptionDate('tuesday'))}</div>
-                                    </div>
-                                </option>
-                                <option value={GetSelectOptionDate('wednesday')} >
-                                    <div className="w-full flex flex-col hover:text-white">
-                                        <div className='w-full text-opacity-100 font-semibold' style={{ fontSize: "11px"}}>Wednesday {currentDate.getDay() === 3 ? '- Today' : (currentDate.getDay() + 1) === 3 ?  '- Tomorrow' : currentDate.getDay() > 3 ? '- Next Week' :  ''}</div>
-                                        <div className='w-full'>{formatDate(GetSelectOptionDate('wednesday'))}</div>
-                                    </div>
-                                </option>
-                                <option value={GetSelectOptionDate('thursday')} >
-                                    <div className="w-full flex flex-col hover:text-white">
-                                        <div className='w-full text-opacity-100 font-semibold' style={{ fontSize: "11px"}}>Thursday {currentDate.getDay() === 4 ? '- Today' : (currentDate.getDay() + 1) === 4 ?  '- Tomorrow' : currentDate.getDay() > 4 ? '- Next Week' :  ''}</div>
-                                        <div className='w-full'>{formatDate(GetSelectOptionDate('thursday'))}</div>
-                                    </div>
-                                </option>
-                                <option value={GetSelectOptionDate('friday')} >
-                                    <div className="w-full flex flex-col hover:text-white">
-                                        <div className='w-full text-opacity-100 font-semibold' style={{ fontSize: "11px"}}>Friday {currentDate.getDay() === 5 ? '- Today' : (currentDate.getDay() + 1) === 5 ?  '- Tomorrow' : currentDate.getDay() > 5 ? '- Next Week' :  ''}</div>
-                                        <div className='w-full'>{formatDate(GetSelectOptionDate('friday'))}</div>
-                                    </div>
-                                </option>
-                            </Select>
-                        </div>
-                        <div className="w-7/12 grid lg:grid-cols-5 auto-rows-max gap-3 2xl:gap-4">
+                                    <option value={GetSelectOptionDate('monday')} >
+                                        <div className="w-full flex flex-col hover:text-white">
+                                            <div className='w-full text-opacity-100 font-semibold' style={{ fontSize: "11px"}}>Monday {currentDate.getDay() === 1 ? '- Today' : currentDate.getDay() > 1 ? '- Next Week' : ''}</div>
+                                            <div className='w-full'>{formatDate(GetSelectOptionDate('monday'))}</div>
+                                        </div>
+                                    </option>
+                                    <option value={GetSelectOptionDate('tuesday')} >
+                                        <div className="w-full flex flex-col hover:text-white">
+                                            <div className='w-full text-opacity-100 font-semibold' style={{ fontSize: "11px"}}>Tuesday {currentDate.getDay() === 2 ? '- Today' : (currentDate.getDay() + 1) === 2  ?  '- Tomorrow' : currentDate.getDay() > 2 ? '- Next Week' :  ''}</div>
+                                            <div className='w-full'>{formatDate(GetSelectOptionDate('tuesday'))}</div>
+                                        </div>
+                                    </option>
+                                    <option value={GetSelectOptionDate('wednesday')} >
+                                        <div className="w-full flex flex-col hover:text-white">
+                                            <div className='w-full text-opacity-100 font-semibold' style={{ fontSize: "11px"}}>Wednesday {currentDate.getDay() === 3 ? '- Today' : (currentDate.getDay() + 1) === 3 ?  '- Tomorrow' : currentDate.getDay() > 3 ? '- Next Week' :  ''}</div>
+                                            <div className='w-full'>{formatDate(GetSelectOptionDate('wednesday'))}</div>
+                                        </div>
+                                    </option>
+                                    <option value={GetSelectOptionDate('thursday')} >
+                                        <div className="w-full flex flex-col hover:text-white">
+                                            <div className='w-full text-opacity-100 font-semibold' style={{ fontSize: "11px"}}>Thursday {currentDate.getDay() === 4 ? '- Today' : (currentDate.getDay() + 1) === 4 ?  '- Tomorrow' : currentDate.getDay() > 4 ? '- Next Week' :  ''}</div>
+                                            <div className='w-full'>{formatDate(GetSelectOptionDate('thursday'))}</div>
+                                        </div>
+                                    </option>
+                                    <option value={GetSelectOptionDate('friday')} >
+                                        <div className="w-full flex flex-col hover:text-white">
+                                            <div className='w-full text-opacity-100 font-semibold' style={{ fontSize: "11px"}}>Friday {currentDate.getDay() === 5 ? '- Today' : (currentDate.getDay() + 1) === 5 ?  '- Tomorrow' : currentDate.getDay() > 5 ? '- Next Week' :  ''}</div>
+                                            <div className='w-full'>{formatDate(GetSelectOptionDate('friday'))}</div>
+                                        </div>
+                                    </option>
+                                </Select>
+                            </div>
+
                             {
-                                deskSection?.map((item, index) => {
-                                    return (
-                                        <BoxDeskSection key={index} data={item} />
-                                    )
-                                })
+                                size.width < 1280 && (
+                                    <div className="w-2/3 flex flex-row place-content-end items-center gap-1">
+                                        <Button type={toggle === 'desk' ? 'primary' : 'secondary'} size='small' onClick={() => setToggle('desk')}>Desk Section</Button>
+                                        <Button type={toggle === 'maps' ? 'primary' : 'secondary'} size='small' onClick={() => setToggle('maps')}>Show Maps</Button>
+                                    </div>
+                                )
                             }
+                            
                         </div>
+                        {
+                            (size.width > 1280 || toggle === 'desk') && (
+                                <div className="w-full flex place-content-center xl:place-content-start items-center">
+                                    <div className="w-full sm:w-3/4 md:w-9/12 xl:w-6/12 2xl:w-7/12 grid grid-cols-4 xl:grid-cols-5 auto-rows-max gap-3 sm:gap-3 md:gap-6 xl:gap-4">
+                                        {
+                                            deskSection?.map((item, index) => {
+                                                return (
+                                                    <BoxDeskSection key={index} data={item} />
+                                                )
+                                            })
+                                        }
+                                    </div>
+                                </div>
+                            )
+                        }
                     </div>
-                    <div className="relative w-1/2 mt-4">
-                        <Image loader={imageLoader} fill  src={`${ process.env.NEXT_PUBLIC_API_STORAGE}files/get?filePath=${selectedOffice.office_sketch}`} alt="Office Sketch" />
-                    </div>
+                    {
+                        (size.width > 1280 || toggle === 'maps') && (
+                            <div className="relative w-full h-80 sm:h-96 xl:h-full xl:w-5/12 xl:mt-0 2xl:-mt-3">
+                                <Image  loader={imageLoader} 
+                                        src={`${ process.env.NEXT_PUBLIC_API_STORAGE}files/get?filePath=${selectedOffice.office_sketch}`} 
+                                        className="object-fit sm:object-contain xl:object-fill  w-full h-full"
+                                        priority={true}
+                                        quality={100}
+                                        fill
+                                        sizes=" (max-width: 1280px) 100vw,
+                                                (max-width: 1200px) 50vw,
+                                                33vw"
+                                        alt="Office Sketch" />
+                            </div>
+                        )
+                    }
                 </div>
                 
-                <div className="w-full px-12 py-4 text-sm font-medium text-black text-opacity-50 bottom-0 bg-white">
+                <div className="w-full px-12 py-2 text-xs text-center xl:text-left xl:text-sm font-medium text-black text-opacity-50 bottom-0 bg-white">
                     Created With ❤️ Made By Kampus Merdeka Batch 3
                 </div>
 

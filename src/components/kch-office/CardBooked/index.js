@@ -7,10 +7,10 @@ export default function CardBookedList(props) {
     return (
         <div className="relative w-48 h-full p-2 flex flex-row bg-green-500 rounded-2xl 2xl:rounded-3xl">
             <div className="w-11 p-1 h-full flex flex-col place-content-center items-center bg-green-900 rounded-full">
-                <div className="w-full -mt-1 2xl:-mt-2 2xl:mb-2 flex place-content-center">
+                <div className="w-full h-2/12 -mt-2 2xl:-mt-2 2xl:mb-2 flex place-content-center">
                     <DeskIcon className=''/>
                 </div>
-                <div className="w-full h-9/12 text-white flex place-content-center text-base font-semibold">
+                <div className="w-full h-10/12 mt-2 xl:mt-0 text-white flex place-content-center text-base font-semibold">
                     A1
                 </div>
             </div>
