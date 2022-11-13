@@ -39,6 +39,6 @@ export default function ProfileInitial(props) {
 
 ProfileInitial.propTypes = {
     name: propTypes.string,
-    width: propTypes.number,
-    height: propTypes.number
+    width: propTypes.oneOfType['string', 'number'],
+    height: propTypes.oneOfType['string', 'number'],
 }
