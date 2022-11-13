@@ -7,13 +7,17 @@ const path = require('path')
 
 const nextConfig = {
   reactStrictMode: false,
-  async rewrites() {
-    return [
-      {
-        source: `/api`,
-        destination: `${process.env.NEXT_PUBLIC_API_STORAGE}/files/upload`,
-      },
-    ]
+  // async rewrites() {
+  //   return [
+  //     {
+  //       source: `/api`,
+  //       destination: `${process.env.NEXT_PUBLIC_API_STORAGE}/files/upload`,
+  //     },
+  //   ]
+  // },
+  images: {
+    dangerouslyAllowSVG: true,
+    // contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
   
   swcMinify: true,

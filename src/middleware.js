@@ -34,8 +34,8 @@ export const middleware = async (req) => {
     if (user?.isLogin === true || user?.isLogin !== undefined) {
          // user logged in and url path login then redirect to homepage
          if (user?.isLogin === true && user?.isLogin !== undefined) {
-             if (pathname === '/login') {
-                 return NextResponse.redirect(new URL('/', req.url)) // redirect to /unauthorized page
+             if (pathname === '/kch-office/login') {
+                 return NextResponse.redirect(new URL('/kch-office', req.url)) // redirect to /unauthorized page
              }
          }
     }
@@ -44,8 +44,8 @@ export const middleware = async (req) => {
         await session.destroy()
 
         // unauthorized to see pages use application
-        if (pathname !== '/login') {
-            return NextResponse.redirect(new URL('/login', req.url)) // redirect to /unauthorized page
+        if (pathname !== '/kch-office/login') {
+            return NextResponse.redirect(new URL('/kch-office/login', req.url)) // redirect to /unauthorized page
         }
         
     }
@@ -54,13 +54,13 @@ export const middleware = async (req) => {
   
 export const config = {
     matcher: [
-        '/',
-        '/login', 
-        '/profile',
-        '/rating',
-        '/notification',
-        '/claims/:path*',
-        '/btb/:path*',
-        '/approval/:path*',
+        '/kch-office',
+        '/kch-office/login', 
+        // '/profile',
+        // '/rating',
+        // '/notification',
+        // '/claims/:path*',
+        // '/btb/:path*',
+        // '/approval/:path*',
     ],
 };
