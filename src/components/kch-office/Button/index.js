@@ -19,9 +19,10 @@ export default function Button(props) {
 
     const className = [props.className]
 
-    if (type === 'secondary') className.push('bg-transparent border-2 border-gray-500')
+    if (type === 'primary') className.push('bg-green-900 border-2 border-green-900 hover:border-opacity-90 hover:bg-opacity-90 text-white')
+    if (type === 'secondary') className.push('bg-transparent text-green-900 border-2 border-green-900')
 
-    if (size === 'small') className.push(` text-sm inline-block py-2 ${isLoading || appendIcon ? 'px-4' : 'px-8'}`)
+    if (size === 'small') className.push(` text-xs sm:text-sm inline-block py-1.5 ${isLoading || appendIcon ? 'px-1.5' : 'px-3'}`)
     if (size === 'medium') className.push(`inline-block py-2.5 ${isLoading || appendIcon ? 'px-4' : 'px-8'}`)
 
 
@@ -56,7 +57,7 @@ Button.defaultProps = {
     type: 'primary',
     size: 'small',
     isDisabled: false,
-    className: 'bg-gray-400 hover:bg-gray-300'
+    // className: 'bg-gray-400 hover:bg-gray-300'
 
 }
 

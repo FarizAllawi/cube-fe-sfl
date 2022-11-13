@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import Head from 'next/head'
 import Image from 'next/image'
 
-// import useUser from 'pages/api/user'
+import useUser from 'pages/api/kch-office/user'
 import useForm from 'helpers/useForm'
 
 import Input from 'components/kch-office/Forms/Input'
@@ -16,10 +16,7 @@ import Cartoon from '../../../public/images/pictures/kch-office/cartoon.png'
 export default function Login(props) {
 	const router = useRouter()
 
-	// const {login, isLoading} = useUser()
-
-
-	const [isLoading, setIsLoading] = useState(false)
+	const {login, isLoading} = useUser()
 
 	const [size, setWindowSize] = useState({
         width: undefined,
@@ -32,11 +29,10 @@ export default function Login(props) {
 	})
 
 	const submitLoginForm = async () => {
-		// await login({
-		// 	email: state.email,
-		// 	password: state.password
-		// })
-		setIsLoading(true)
+		await login({
+			email: state.email,
+			password: state.password
+		})
 	}
 
 	useEffect(() => {
@@ -65,7 +61,7 @@ export default function Login(props) {
 				<title>KCH OFFICE - LOGIN</title>
 			</Head>
             <div className="w-screen h-screen max-h-screen overflow-hidden  flex flex-col xl:flex-row ">
-                <div className={`h-full xl:w-1/2 xl:h-full 2xl:pl-10 pb-20 ${ size.width > 1280 && 'rounded-login' } bg-gradient-login`}>
+                <div className="h-full xl:w-1/2 xl:h-full 2xl:pl-10 pb-20 xl:rounded-login bg-gradient-login">
 					
 					<div className="absolute top-10 left-0 w-28 h-12 px-2 py-2 xl:w-36 xl:h-14 flex place-content-center items-center rounded-r-2xl bg-white">
 						<Image src={Logo} fill className=' py-2 px-2 ' quality={100} priority={true} alt="Logo-KCH" />
