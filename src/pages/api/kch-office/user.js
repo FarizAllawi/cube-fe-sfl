@@ -35,18 +35,19 @@ export default function useUser() {
     const login = async ({setErrors, ...props}) => {
         let user = {}
         setIsLoading(true)
+        setErrors([])
 
 		// Request login and get user credential
 		const response = await axios.post(`api/auth/login`, props)
                                     .then(res => {
                                         console.log(res)
                                         user = {
-                                            id: res.data.user.id,
                                             nik: res.data.user.nik,
                                             name: res.data.user.name,
                                             email: res.data.user.email,
                                             photo: res.data.user.photo_profile,
                                             token: res.data.token,
+                                            uid_user: res.data.user.uid_user,
                                         }
                                         setIsLoading(false)
                                         return {
@@ -54,7 +55,10 @@ export default function useUser() {
                                         }
                                     })
                                     .catch(err => {
+                                        console.log(err)
                                         setIsLoading(false)
+                                        if (err.response.status >= 400 && err.response.data.errors === undefined) errorHandler(err.response.data.message)
+                                        setErrors(err.response.data.errors)
                                     })
                                     
         if (response?.status === 200) {
@@ -73,6 +77,7 @@ export default function useUser() {
     const loginTesting = async ({setErrors, ...props}) => {
         let user = {}
         setIsLoading(true)
+        setErrors([])
 
 		// Request login and get user credential
 		const response = await axios.get(`api/User/get/byEmail?getEmail=${props.email}`)

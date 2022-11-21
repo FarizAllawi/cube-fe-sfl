@@ -1,6 +1,6 @@
 import {useState} from 'react'
 
-export default (initialValues) => {
+export default function useForm(initialValues){
     const [state, setState] = useState(initialValues)
     
     return [

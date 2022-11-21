@@ -15,21 +15,27 @@ export default function NavbarMobile(props) {
 
     const { user } = useUser()
 
+    const imageLoader = ({src}) => {
+        return src
+    }
+
     useEffect(() => {
     }, [])
 
 
     return (
         <>
-            <div className="w-auto flex flex-col py-2 place-content-center items-center">
-                <div className="text-xl text-green-900 font-extrabold ">CHStar</div>
-                <div className="text-sm tracking-wide text-green-500 font-semibold">KCH OFFICE</div>
-            </div>
+            <Link href="/kch-office">
+                <div className="w-auto flex flex-col py-2 place-content-center items-center">
+                    <div className="text-xl text-green-900 font-extrabold ">CHStar</div>
+                    <div className="text-sm tracking-wide text-green-500 font-semibold">KCH OFFICE</div>
+                </div>
+            </Link>
             <div className="w-full flex flex-row gap-4 xl:gap-4 place-content-end items-center">
                 
-                <Link href="/kch-office/notification">
+                {/* <Link href="/kch-office/notification">
                     <NotificationIcon className='px-0.5' />
-                </Link>
+                </Link> */}
 
                 <Link href="/kch-office/profile">
                     <div className="relative flex w-12 h-12  xl:w-10 xl:h-10 p-0.5 place-content-center items-center border-2 border-green-900 rounded-full">

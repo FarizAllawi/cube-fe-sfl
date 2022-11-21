@@ -1,45 +1,75 @@
 import axios from 'configs/axios'
+import useSWR from 'swr'
+import { format } from 'date-fns'
 import { useRouter } from 'next/router'
 import { useState , useEffect } from 'react'
 import errorHandler from 'configs/errorHandler'
 
 import useUser from './user'
 
-export default function useDesk() {
+export default function useBooking() {
     const router = useRouter()
     const [isLoading, setIsLoading] = useState(false)
-    const [deskSection, setDeskSection] = useState([])
-
+    const [selectedDeskSection, setSelectedDeskSection] = useState({})
+    const [selectedDate, setSelectedDate] = useState(new Date())
+    const [desk, setDesk] = useState({})
     const { user, getUser } = useUser()
 
-    const getDeskSectionByOffice = async (uid_office) => {
-        let deskSection = []
-        let userSession = user.token === undefined ? await getUser() : user
-        setIsLoading(true)
+    
+    // const { getDesk , error } = useSWR([`/api/booking/desk-section/${selectedDeskSection.uid_ds}${selectedDate !== '' ? '?date='+format(selectedDate, 'yyyy-MM-dd') : ''}`, user.token] , 
+        
+    //     selectedDeskSection.uid_ds !== undefined ? (
+    //         async (url, token) => {
+    //             await axios.get(url, {
+    //                 headers: {
+    //                     'Authorization': `Bearer ${token}`
+    //                 }
+    //             }).then(res => {
+    //                 setDesk(getDataRow(2, res.data))
+    //             })
+    //             // return response
+    //         }
+    //     ) : null,
 
-		const response = await axios.get(`/api/desk-section/office/${uid_office}`, {
+    //     { revalidateOnFocus: false, refreshWhenHidden: false, refreshWhenOffline: false, refreshInterval: 0 }
+    // )
+
+    
+
+    const getDeskSectionById = async (uid_ds, date = null) => {
+        let userSession = user.token === undefined ? await getUser() : user
+
+        setIsLoading(true)
+        const response = await axios.get(`/api/desk-section/${uid_ds}${date !== null && date !== undefined ? '?date='+date : ''}`, {
             headers: {
                 'Authorization': `Bearer ${userSession.token}`
             }
         })
         .then(res => {
-            deskSection = res.data
             setIsLoading(false)
+            return res.data
         })
         .catch(err => {
             setIsLoading(false)
         })
 
-        return deskSection
+        return response
     }
+
 
     useEffect(() => {
 
         // if (user?.isLogin === undefined) getUser()
 
-    }, [router, user])
+    }, [desk, selectedDeskSection, setSelectedDeskSection, selectedDate])
 
     return {
-        isLoading, getDeskSectionByOffice
+        isLoading, 
+        desk,
+        getDeskSectionById,
+        selectedDeskSection,
+        selectedDate,
+        setSelectedDeskSection,
+        setSelectedDate
     }
 }
