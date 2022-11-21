@@ -645,7 +645,7 @@ export default function DeskSection(props) {
                             bookedList.length > 0 ? (
                                 <div className="w-full flex flex-col gap-4 pb-10">
                                     <div className="w-full text-base xl:text-lg text-green-900">Your Booked List</div>
-                                    <div className="scroll-display-none w-full h-full overflow-scroll rounded-b-3xl">
+                                    <div className="scroll-display-none w-full h-96 overflow-scroll rounded-b-3xl">
                                         <div className="w-full flex flex-col gap-4 overfolow-y-scroll snap-y">
                                         {
                                             bookedList.map((item, index) => {

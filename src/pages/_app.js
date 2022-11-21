@@ -56,7 +56,7 @@ function Loading() {
 				#nprogress .bar {
 					background: ${color};
 					position: fixed;
-					z-index: 1031;
+					z-index: 10000;
 					top: 0;
 					left: 0;
 					width: 100%;
@@ -77,7 +77,7 @@ function Loading() {
 				#nprogress .spinner {
 					display: "block";
 					position: fixed;
-					z-index: 1031;
+					z-index: 10000;
 					top: 15px;
 					right: 15px;
 				}

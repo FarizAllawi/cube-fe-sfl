@@ -13,14 +13,17 @@ import Logo from '../../../../../public/images/pictures/kch-office/logo-kalbe.pn
 
 export default function NavbarDesktop(props) {
 
-    const { user } = useUser()
+    const { user, logout } = useUser()
+
+    const [toggle, setToggle] = useState(false)
 
     const imageLoader = ({src}) => {
         return src
     }
 
     useEffect(() => {
-    }, [])
+
+    }, [user])
 
 
     return (
@@ -42,27 +45,41 @@ export default function NavbarDesktop(props) {
                     <NotificationIcon className='px-0.5' />
                 </Link> */}
 
-                <Link href="/kch-office/profile">
-                    <div className="flex flex-row gap-1 px-1.5 py-1.5 place-content-end items-center bg-green-900 cursor-pointer  drop-shadow-md hover:drop-shadow-sm rounded-full ">
+                {/* <Link href="/kch-office/profile">
+                </Link> */}
+                <div className="relative flex flex-row gap-1 px-1.5 py-1.5 place-content-end items-center bg-green-900 cursor-pointer  drop-shadow-md hover:drop-shadow-sm rounded-full "
+                    onClick={() => setToggle(!toggle)}>
                         <div className="flex p-2">
                             <p className="text-gray-500 text-white text-sm font-medium">{capitalizeEachWord(user?.name)}</p>
                         </div>
                         <div className="relative flex w-10 h-10 p-0.5 place-content-center items-center border-2 border-white rounded-full">
                         {
-                            user.photo === null || user.photo === undefined ? (
+                            user?.photo_profile === null || user?.photo_profile === undefined ? (
                                 <ProfileInitial name={user?.name} width="full" height="full"/>
                             ) : (
                                 <Image  fill
                                         loader={imageLoader}
-                                        src={`${process.env.NEXT_PUBLIC_API_STORAGE}files/get?filePath=${user.photo}`} 
+                                        src={`${process.env.NEXT_PUBLIC_API_STORAGE}files/get?filePath=${user.photo_profile}`} 
                                         className="object-contain rounded-full" 
                                         alt="profile-image"/>
                             )
 
                         }
                         </div>
-                    </div>
-                </Link>
+
+                        {
+                            toggle && (
+                                <div className="fixed flex flex-col drop-shadow-md mt-48 shadow-md rounded-xl">
+                                    <div className="text-right text-sm text-green-900 font-medium p-4 bg-white hover:bg-opacity-95 rounded-t-xl" onClick={() => logout()}>Log Out</div>
+                                    <Link href="/kch-office/profile">
+                                        <div className="text-right text-sm text-green-900 font-medium p-4 bg-white hover:bg-opacity-95 rounded-b-xl">Profile Setting</div>
+                                    </Link>
+                                </div>
+                            )
+                        }
+                </div>
+
+
 
             </div>
             

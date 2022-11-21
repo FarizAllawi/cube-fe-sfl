@@ -20,6 +20,7 @@ export default withIronSessionApiRoute(
       email: req.body.email,
       token: req.body.token,
       uid_user: req.body.uid_user,
+      photo_profile: req.body.photo_profile,
       isLogin: true,
       expire: getDate,
     };
