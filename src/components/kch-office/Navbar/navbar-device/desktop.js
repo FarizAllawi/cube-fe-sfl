@@ -15,6 +15,10 @@ export default function NavbarDesktop(props) {
 
     const { user } = useUser()
 
+    const imageLoader = ({src}) => {
+        return src
+    }
+
     useEffect(() => {
     }, [])
 
@@ -22,9 +26,11 @@ export default function NavbarDesktop(props) {
     return (
         <>
             <div className="relative w-1/3 flex flex-col py-1 gap-1 place-content-start items-center">
-                <div className="absolute -left-2 w-28 h-12 xl:w-36 xl:h-14 flex place-content-center items-center rounded-r-2xl">
-                    <Image src={Logo} fill className=' py-2 px-2 ' quality={100} priority={true} alt="Logo-KCH" />
-                </div>
+               <Link href='/kch-office'>
+                    <div className="absolute -left-2 w-28 h-12 xl:w-36 xl:h-14 flex place-content-center items-center rounded-r-2xl">
+                        <Image src={Logo} fill className=' py-2 px-2 ' quality={100} priority={true} alt="Logo-KCH" />
+                    </div>
+               </Link>
             </div>
             <div className="w-1/3 flex flex-col py-2 place-content-center items-center">
                 <div className="text-2xl text-green-900 font-extrabold ">CHStar</div>
@@ -32,9 +38,9 @@ export default function NavbarDesktop(props) {
             </div>
             <div className="w-1/3 flex flex-row gap-4 place-content-end items-center">
                 
-                <Link href="/kch-office/notification">
+                {/* <Link href="/kch-office/notification">
                     <NotificationIcon className='px-0.5' />
-                </Link>
+                </Link> */}
 
                 <Link href="/kch-office/profile">
                     <div className="flex flex-row gap-1 px-1.5 py-1.5 place-content-end items-center bg-green-900 cursor-pointer  drop-shadow-md hover:drop-shadow-sm rounded-full ">

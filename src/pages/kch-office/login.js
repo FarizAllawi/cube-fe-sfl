@@ -16,7 +16,8 @@ import Cartoon from '../../../public/images/pictures/kch-office/cartoon.png'
 export default function Login(props) {
 	const router = useRouter()
 
-	const {login, isLoading} = useUser()
+	const {login ,isLoading} = useUser()
+	const [errors, setErrors] = useState({})
 
 	const [size, setWindowSize] = useState({
         width: undefined,
@@ -31,7 +32,8 @@ export default function Login(props) {
 	const submitLoginForm = async () => {
 		await login({
 			email: state.email,
-			password: state.password
+			password: state.password,
+			setErrors
 		})
 	}
 
@@ -100,15 +102,19 @@ export default function Login(props) {
 									name='email'
 									value={state.email}
 									onChange={setState}
+									errorResponse={!errors?.email ? 'Please match the requested field' : errors?.email[0]}
+									errorStatus={errors?.email ? true : false}
 									placeholder='Email' />
 
 							<Input  type='password'
 									name='password'
 									value={state.password}
 									onChange={setState}
+									errorResponse={!errors?.password ? 'Please match the requested field' : errors?.password[0]}
+									errorStatus={errors?.password ? true : false}
 									placeholder='Password' />
 
-							<Button className='mt-2 w-1/2 bg-green-500 hover:bg-opacity-80 text-white' isLoading={isLoading} onClick={() => submitLoginForm()}>Log In</Button>
+							<Button type="primary" className='mt-2 w-1/2 bg-green-500 border-2 border-green-500 hover:bg-opacity-80 hover:border-opacity-80 text-white' isLoading={isLoading} onClick={() => submitLoginForm()}>Log In</Button>
 
 						</div>
 					</div>
