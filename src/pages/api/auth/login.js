@@ -15,13 +15,14 @@ export default withIronSessionApiRoute(
     let getDate = new Date().addDate(1);
     
     req.session.user = {
-        id: req.body.id,
-        nik: req.body.nik,
-        name: req.body.name,
-        email: req.body.email,
-        token: req.body.token,
-        expire: getDate,
-        isLogin: true,
+      nik: req.body.nik,
+      name: req.body.name,
+      email: req.body.email,
+      token: req.body.token,
+      uid_user: req.body.uid_user,
+      photo_profile: req.body.photo_profile,
+      isLogin: true,
+      expire: getDate,
     };
     await req.session.save();
     res.send({ ok: true });

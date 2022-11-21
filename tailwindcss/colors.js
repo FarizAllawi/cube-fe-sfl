@@ -3,7 +3,11 @@ module.exports = {
     current: 'currentColor',
     'black': '#121417',
     'white': '#ffffff',
-    
+
+    'red' : {
+        500 : '#BF3838'
+    },
+
     'gray' : {
         100: '#f3f4f6',
         200: '#e5e7eb',
@@ -14,7 +18,7 @@ module.exports = {
     'green': {
         900: '#0F7143',
         700: '#638B2C',
-        500: "#87C141",
+        500: "#8BBF38",
     },
 
     'amber': {

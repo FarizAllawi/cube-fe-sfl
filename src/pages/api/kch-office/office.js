@@ -33,6 +33,26 @@ export default function useOffice() {
         return office
     }
 
+    const getOfficeById = async (uid_office) => {
+        let userSession = user.token === undefined ? await getUser() : user
+
+        setIsLoading(true)
+        const response = await axios.get(`/api/office/${uid_office}`, {
+            headers: {
+                'Authorization': `Bearer ${userSession.token}`
+            }
+        })
+        .then(res => {
+            setIsLoading(false)
+            return res.data
+        })
+        .catch(err => {
+            setIsLoading(false)
+        })
+
+        return response
+    }
+
     useEffect(() => {
 
         // if (user?.isLogin === undefined) getUser()
@@ -40,6 +60,6 @@ export default function useOffice() {
     }, [router, user])
 
     return {
-        isLoading, getAllOffice
+        isLoading, getAllOffice, getOfficeById
     }
 }

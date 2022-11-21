@@ -54,7 +54,7 @@ export const middleware = async (req) => {
   
 export const config = {
     matcher: [
-        '/kch-office',
+        '/kch-office/:page*',
         '/kch-office/login', 
         // '/profile',
         // '/rating',

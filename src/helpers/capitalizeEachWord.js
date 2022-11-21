@@ -1,4 +1,4 @@
-export default string => {
+export default function capitalizeEachWord(string) {
     //split the above string into an array of strings 
     //whenever a blank space is encountered
 

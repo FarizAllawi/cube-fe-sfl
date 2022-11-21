@@ -1,3 +1,4 @@
+import useSWR from 'swr'
 import axios from 'configs/axios'
 import { useRouter } from 'next/router'
 import { useState , useEffect } from 'react'
@@ -8,45 +9,63 @@ export default function useUser() {
     const [isLoading, setIsLoading] = useState(false)
     const [user, setUser] = useState({})
 
+    const { updateUserSession } = useSWR( 
+        user?.isLogin !== undefined ? 
+            '/api/auth/user'
+        : null,
+
+        async (url) => {
+            let user = await fetch(url).then(res => {return res.json()})
+            setUser(user.data)
+        },
+
+        { revalidateOnFocus: false, refreshWhenHidden: false, refreshWhenOffline: false, refreshInterval: 1000 }
+    )
+
     const getUser = async () => {
         let user = await fetch('/api/auth/user').then(res => {return res.json()})
         setUser(user.data)
         return user.data
     }
     
-    const getDetailUser = async (id) => {
-        let user = {}
+    const getDetailUser = async (email) => {email
         let userSession = await getUser()
 
         setIsLoading(true)
         // await axios.post(`api/User/login?getEmail=${userSession.email}&getPassword=${userSession.password}`)
-        await axios.get(`api/User/get/byEmail?getEmail=${userSession.email}`)
-                    .then(res => {
-                        user = res.data[0]
-                        setIsLoading(false)
-                    })
-                    .catch(err => {
-                        console.log(err)
-                        setIsLoading(false)
-                    })
-        return user
+        const response = await axios.get(`api/user?email=${userSession.email}`, {
+            headers: {
+                'Authorization': `Bearer ${userSession.token}`
+            }
+        })
+        .then(res => {
+            setIsLoading(false)
+            setUser(res.data)
+            return res.data
+        })
+        .catch(err => {
+            console.log(err)
+            setIsLoading(false)
+        })
+        return response
     }
 
     const login = async ({setErrors, ...props}) => {
         let user = {}
         setIsLoading(true)
+        setErrors([])
 
 		// Request login and get user credential
 		const response = await axios.post(`api/auth/login`, props)
                                     .then(res => {
                                         console.log(res)
                                         user = {
-                                            id: res.data.user.id,
                                             nik: res.data.user.nik,
                                             name: res.data.user.name,
                                             email: res.data.user.email,
-                                            photo: res.data.user.photo_profile,
+                                            photo_profile: res.data.user.photo_profile,
                                             token: res.data.token,
+                                            uid_user: res.data.user.uid_user,
                                         }
                                         setIsLoading(false)
                                         return {
@@ -54,7 +73,10 @@ export default function useUser() {
                                         }
                                     })
                                     .catch(err => {
+                                        console.log(err)
                                         setIsLoading(false)
+                                        if (err.response.status >= 400 && err.response.data.errors === undefined) errorHandler(err.response.data.message)
+                                        setErrors(err.response.data.errors)
                                     })
                                     
         if (response?.status === 200) {
@@ -73,6 +95,7 @@ export default function useUser() {
     const loginTesting = async ({setErrors, ...props}) => {
         let user = {}
         setIsLoading(true)
+        setErrors([])
 
 		// Request login and get user credential
 		const response = await axios.get(`api/User/get/byEmail?getEmail=${props.email}`)
@@ -117,7 +140,28 @@ export default function useUser() {
 
     const logout = async () => {
         await fetch('/api/auth/logout')
-        router.push('/')
+        router.push('/kch-office/login')
+    }
+
+    const updateUser = async ({...props}) => {
+        let userSession = await getUser()
+        setIsLoading(true)
+        const response = await axios.put('/api/user', props, {
+            headers: {
+                'Authorization': `Bearer ${userSession.token}`
+            }
+        })
+        .then(res => {
+            setIsLoading(false)
+            return res.status
+        })
+        .catch(err => {
+            setIsLoading(false)
+            errorHandler("Failed to update user")
+            return err.response.status
+        })
+
+        return response
     }
 
 
@@ -125,9 +169,9 @@ export default function useUser() {
 
         if (user?.isLogin === undefined) getUser()
 
-    }, [router, user])
+    }, [router, user, setUser])
 
     return {
-        isLoading, user, loginTesting, getUser,  getDetailUser, logout, login
+        isLoading, user, setUser, loginTesting, getUser,  getDetailUser, logout, login, updateUser
     }
 }
