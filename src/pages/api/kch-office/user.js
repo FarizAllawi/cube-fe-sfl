@@ -1,4 +1,5 @@
 import useSWR from 'swr'
+import CryptoJS from 'crypto-js'
 import axios from 'configs/axios'
 import { useRouter } from 'next/router'
 import { useState , useEffect } from 'react'
@@ -19,7 +20,7 @@ export default function useUser() {
             setUser(user.data)
         },
 
-        { revalidateOnFocus: false, refreshWhenHidden: false, refreshWhenOffline: false, refreshInterval: 1000 }
+        { revalidateOnFocus: false, refreshWhenHidden: false, refreshWhenOffline: false, refreshInterval: 60000 }
     )
 
     const getUser = async () => {
@@ -55,6 +56,11 @@ export default function useUser() {
         setIsLoading(true)
         setErrors([])
 
+        let key = CryptoJS.enc.Utf8.parse(process.env.NEXT_PUBLIC_AES_HASH_KEY)
+        let iv = CryptoJS.enc.Utf8.parse(process.env.NEXT_PUBLIC_AES_IV_KEY)
+
+        let encryptedPassword = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(props.password), key, {iv:iv, mode:CryptoJS.mode.CBC, padding: CryptoJS.pad.Pkcs7})
+        props['password'] = encryptedPassword.ciphertext.toString(CryptoJS.enc.Base64)
 		// Request login and get user credential
 		const response = await axios.post(`api/auth/login`, props)
                                     .then(res => {

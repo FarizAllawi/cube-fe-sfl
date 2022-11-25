@@ -16,6 +16,8 @@ import Button from 'components/kch-office/Button'
 import BoxDeskSection from 'components/kch-office/DeskSection'
 import CardBookedList from 'components/kch-office/CardBooked'
 
+import NotFoundData from '../../../public/images/svg/kch-office/not-found-data.svg'
+
 export default function HomePage(props) {
     
     const weekDay = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
@@ -263,22 +265,31 @@ export default function HomePage(props) {
                         {
                             (size.width >= 1280 || toggle === 'desk') && (
                                 <div className="w-full flex place-content-center xl:place-content-start items-center">
-                                    <div className="w-full sm:w-3/4 md:w-9/12 xl:w-8/12 2xl:w-7/12 grid grid-cols-4 xl:grid-cols-5 auto-rows-max gap-4 md:gap-6 xl:gap-4">
-                                        {
-                                            deskSection?.map((item, index) => {
-                                                return (
-                                                    <BoxDeskSection key={index} data={item} selectedDate={selectedDate} />
-                                                )
-                                            })
-                                        }
-                                    </div>
+                                    {
+                                        deskSection?.length > 0 ? (
+                                            <div className="w-full sm:w-3/4 md:w-9/12 xl:w-8/12 2xl:w-7/12 grid grid-cols-4 xl:grid-cols-5 auto-rows-max gap-4 md:gap-6 xl:gap-4">
+                                            {
+                                                deskSection?.map((item, index) => {
+                                                    return (
+                                                        <BoxDeskSection key={index} data={item} selectedDate={selectedDate} />
+                                                    )
+                                                })
+                                            }
+                                            </div>
+                                        ) : (
+                                            <div className="w-full flex flex-col place-content-center items-center xl:items-start gap-2">
+                                                <NotFoundData className='w-96 h-72 mx-20 mt-6' />
+                                                <div className="mx-40 w-56 text-center text-green-900 font-medium">oops, looks like we can't find what you want</div>
+                                            </div>
+                                        )
+                                    }  
                                 </div>
                             )
                         }
                     </div>
                     {
                         (size.width >= 1280 || toggle === 'maps') && selectedOffice.office_sketch !== undefined && (
-                            <div className="relative w-full h-80 sm:h-96 xl:h-full xl:w-5/12 xl:mt-0 2xl:mt-2">
+                            <div className="relative w-full h-80 sm:h-96 xl:h-full xl:w-5/12 xl:mt-4 2xl:mt-2">
                                 <Image  loader={imageLoader} 
                                         src={`${ process.env.NEXT_PUBLIC_API_STORAGE}files/get?filePath=${selectedOffice.office_sketch}`} 
                                         className="object-fit sm:object-contain xl:object-fill w-full h-full"
@@ -292,7 +303,7 @@ export default function HomePage(props) {
                 </div>
                 
                 <div className="w-full py-2 text-xs text-center xl:text-left xl:text-sm font-medium text-black text-opacity-50 bottom-0 bg-white">
-                    Created With ❤️ Made By Kampus Merdeka Batch 3
+                    Created With ❤️ Made By Talent Kampus Merdeka Batch 3
                 </div>
         </Layout>
     )

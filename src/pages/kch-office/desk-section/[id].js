@@ -51,7 +51,6 @@ function getDataRow(row, data) {
     }
 }
 
-
 export async function getServerSideProps(context) {
     const {id} = context.query
     const {date} = context.query
@@ -137,7 +136,7 @@ export default function DeskSection(props) {
             return response
         },
 
-        { revalidateOnFocus: false, refreshWhenHidden: false, refreshWhenOffline: false, refreshInterval: 1000 }
+        { revalidateOnFocus: false, refreshWhenHidden: false, refreshWhenOffline: false, refreshInterval: 7000 }
     )
 
     const { getBookedDeskSection } = useSWR( 
@@ -151,7 +150,7 @@ export default function DeskSection(props) {
             return response
         },
 
-        { revalidateOnFocus: true ,refreshWhenHidden: false, refreshWhenOffline: false, refreshInterval: 1000 }
+        { revalidateOnFocus: true ,refreshWhenHidden: false, refreshWhenOffline: false, refreshInterval: 10000 }
     )
 
     const [size, setWindowSize] = useState({
@@ -228,15 +227,17 @@ export default function DeskSection(props) {
                         }
                     }
                 }
-
-                setTimeout(() => {
-                    toast.update(id, { 
-                        render: message, 
-                        type: type, 
-                        isLoading: false,
-                    });
-                }, timer)
-                timer += 1000
+                
+                if (message !== "") {
+                    setTimeout(() => {
+                        toast.update(id, { 
+                            render: message, 
+                            type: type, 
+                            isLoading: false,
+                        });
+                    }, timer)
+                    timer += 1000
+                }
                 startDate = addDays(startDate, 1)
             }
 
@@ -388,6 +389,7 @@ export default function DeskSection(props) {
         }
     }, [getBookedList, getDeskSectionById, getOfficeById, props, selectedDate, setSelectedDeskSection])
 
+    console.log(desk)
 
     useEffect(() => {
         
@@ -522,12 +524,12 @@ export default function DeskSection(props) {
                                             <div className={`
                                                     relative w-14 h-14  xl:w-24 xl:h-24 flex place-content-center items-center 
                                                     text-xl xl:text-4xl font-semibold text-green-900 cursor-pointer
-                                                    ${(item.uid_user === null || item.uid_user === '') ? 'border-4 border-green-500 border-opacity-40 bg-white bg-opacity-60 hover:bg-green-500' : 'border-4 border-green-500 bg-green-500'} 
-                                                    ${selectedDesk.uid_dk === undefined && item.desk_status === 0 && 'border-4 border-opacity-0 bg-white bg-opacity-20'}
-                                                    ${selectedDesk.uid_dk !== undefined && selectedDesk.uid_dk === item.uid_dk && 'border-4 border-green-500 bg-green-500 bg-opacity-100'} 
+                                                    ${item.desk_status !== 2 && (item.uid_user === null || item.uid_user === '') && 'border-4 border-green-500 border-opacity-40 bg-white bg-opacity-60 hover:bg-green-500'} 
+                                                    ${item.desk_status !== 2 && selectedDesk.uid_dk !== undefined && selectedDesk.uid_dk === item.uid_dk && 'border-4 border-green-500 bg-green-500 bg-opacity-100'} 
+                                                    ${item.desk_status === 2 && 'border-4 border-white border-opacity-5 bg-white bg-opacity-20'}
                                                     rounded-full`
                                                 }
-                                                onClick={() => selectDesk(item)}>
+                                                onClick={() => item.desk_status !== 2 ?selectDesk(item) : ''}>
                                                     {
                                                         item.desk_status !== 0 && item.uid_user !== null && item.uid_user !== '' ? (
                                                             <>
@@ -573,12 +575,12 @@ export default function DeskSection(props) {
                                             <div className={`
                                                     relative w-14 h-14  xl:w-24 xl:h-24 flex place-content-center items-center 
                                                     text-xl xl:text-4xl font-semibold text-green-900 cursor-pointer
-                                                    ${(item.uid_user === null || item.uid_user === '') ? 'border-4 border-green-500 border-opacity-40 bg-white bg-opacity-60 hover:bg-green-500' : 'border-4 border-green-500 bg-green-500'} 
-                                                    ${selectedDesk.uid_dk === undefined && item.desk_status === 0 && 'border-4 border-opacity-0 bg-white bg-opacity-20'}
-                                                    ${selectedDesk.uid_dk !== undefined && selectedDesk.uid_dk === item.uid_dk && 'border-4 border-green-500 bg-green-500 bg-opacity-100'} 
+                                                    ${item.desk_status !== 2 && (item.uid_user === null || item.uid_user === '') && 'border-4 border-green-500 border-opacity-40 bg-white bg-opacity-60 hover:bg-green-500'} 
+                                                    ${item.desk_status !== 2 && selectedDesk.uid_dk !== undefined && selectedDesk.uid_dk === item.uid_dk && 'border-4 border-green-500 bg-green-500 bg-opacity-100'} 
+                                                    ${item.desk_status === 2 && 'border-4 border-white border-opacity-5 bg-white bg-opacity-20'}
                                                     rounded-full`
                                                 }
-                                                onClick={() => selectDesk(item)}>
+                                                onClick={() => item.desk_status !== 2 ? selectDesk(item) : ''}>
                                                     {
                                                         item.desk_status !== 0 && item.uid_user !== null && item.uid_user !== '' ? (
                                                             <>
@@ -613,7 +615,8 @@ export default function DeskSection(props) {
                                 <div className="text-sm xl:text-base text-black font-medium">Available</div>
                             </div>
                             <div className="w-auto flex flex-row gap-2 mx-2 xl:mx-4">
-                                <div className="w-4 h-4 xl:w-6 xl:h-6 border-2 border-green-900 border-opacity-0 bg-green-900 bg-opacity-60 rounded-full"></div>
+                                <div className="w-4 h-4 xl:w-6 xl:h-6 border-2 border-green-900 bg-green-900 rounded-full"></div>
+                                <div className="absolute w-4 h-4 xl:w-6 xl:h-6 border-2 border-white border-opacity-10 bg-white bg-opacity-30 rounded-full"></div>
                                 <div className="text-sm xl:text-base text-black font-medium">Unavailable</div>
                             </div>
                             <div className="w-auto flex flex-row gap-2 mx-2 xl:mx-4">
