@@ -147,7 +147,7 @@ export default function Mileage(props) {
         } else router.push('/404')
 
 
-    }, [getClaimMileage, getClaimOtherMedia, getDetailUser, newState, chid, cmid, status])
+    }, [getClaimMileage, cmid, getClaimOtherMedia, getDetailUser, router, newState, chid, status])
 
     const deleteDocument = async (document) => {
         let indexCoMedia = null;

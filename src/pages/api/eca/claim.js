@@ -3,7 +3,7 @@ import {useRouter} from 'next/router'
 import { useState , useEffect} from 'react'
 import queryString from 'query-string'
 
-import useUser from 'pages/api/user'
+import useUser from 'pages/api/eca/user'
 
 export default function useClaim({middleware} = {}) {
     const router = useRouter()

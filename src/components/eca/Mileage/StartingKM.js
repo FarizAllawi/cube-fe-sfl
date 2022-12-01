@@ -220,16 +220,7 @@ export default function StartingKM(props) {
         }
 
         setIsSubmitForm(false)
-    },[
-        cmid,
-        insertClaimOtherMedia,
-        isSubmitForm,
-        mileageStatus,
-        props,
-        startKM.startingKM,
-        state,
-        updateClaimMileage
-    ])
+    },[chid, cmid, insertClaimOtherMedia, isSubmitForm, mileageStatus, props, router, startKM.startingKM, state, updateClaimMileage])
 
     const getLocation = useCallback( () => {
         navigator.geolocation.getCurrentPosition((position) => {

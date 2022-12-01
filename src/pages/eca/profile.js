@@ -87,7 +87,7 @@ export default function Profile(props) {
         }
 
         
-    }, [user, fetchStatus, newState, getDetailUser])
+    }, [user, fetchStatus, newState, getDetailUser, sessionUser.id])
     
     return (
         <LayoutDetail title="Profile" 

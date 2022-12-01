@@ -58,7 +58,7 @@ export default function GridColumn(props) {
         return () => {
             window.removeEventListener("resize", handleResize)
         }
-    }, [children])
+    }, [children, mounted])
 
     if (!mounted) return null
 

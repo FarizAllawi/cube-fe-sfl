@@ -4,30 +4,30 @@ import { useRouter } from 'next/router'
 import Image from 'next/image'
 import Link from 'next/link'
 
-import useClaim from 'pages/api/claim'
-import useUser from 'pages/api/user'
-import useApproval from 'pages/api/approval'
+import useClaim from 'pages/api/eca/claim'
+import useUser from 'pages/api/eca/user'
+import useApproval from 'pages/api/eca/approval'
 
 import useForm from 'helpers/useForm'
 import slugify from 'helpers/slugify'
 import formatDate from 'helpers/formatDate'
 import capitalizeEachWord from 'helpers/capitalizeEachWord'
 
-import Dropdown from 'components/Dropdown'
-import LayoutList from 'components/Layout/List'
-import Filter from 'components/Filter'
-import ShowDocument from 'components/Document/Show'
-import Modals from 'components/Modals'
-import Textarea from 'components/Forms/Textarea'
-import Button from 'components/Button'
-import GridColumn from 'components/Grid/Column'
-import BadgeStatus from 'components/Badge'
+import Dropdown from 'components/eca/Dropdown'
+import LayoutList from 'components/eca/Layout/List'
+import Filter from 'components/eca/Filter'
+import ShowDocument from 'components/eca/Document/Show'
+import Modals from 'components/eca/Modals'
+import Textarea from 'components/eca/Forms/Textarea'
+import Button from 'components/eca/Button'
+import GridColumn from 'components/eca/Grid/Column'
+import BadgeStatus from 'components/eca/Badge'
 
-import CloseDark from '/public/images/svg/close-dark.svg'
-import PendingDark from '/public/images/svg/pending-dark.svg'
-import SearchDark from '/public/images/svg/search-dark.svg'
-import BTBDark from '/public/images/svg/btb-dark.svg'
-import BTBLight from '/public/images/svg/btb-light.svg'
+import CloseDark from '/public/images/svg/eca/close-dark.svg'
+import PendingDark from '/public/images/svg/eca/pending-dark.svg'
+import SearchDark from '/public/images/svg/eca/search-dark.svg'
+import BTBDark from '/public/images/svg/eca/btb-dark.svg'
+import BTBLight from '/public/images/svg/eca/btb-light.svg'
 import errorHandler from 'configs/errorHandler'
 import { toast } from 'react-toastify'
 
@@ -68,7 +68,7 @@ function CardClaims(props) {
 
         if (typeClaim === '') getTypeClaim()
 
-    }, [typeClaim])
+    }, [data, getClaimOtherMedia, typeClaim])
 
     return (
        
@@ -449,7 +449,7 @@ export default function Payment(props) {
             getApprovalData()
         }
 
-    },[user, getPaymentApproval, state.fetchStatus, state.paymenApprovalData])
+    },[user, getPaymentApproval, state.fetchStatus, state.paymenApprovalData, fetchStatus, newState])
     
 
     return (

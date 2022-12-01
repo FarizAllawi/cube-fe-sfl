@@ -22,7 +22,7 @@ export default function Notification(props) {
             setFetchStatus(true)
         }
         
-    },[fetchStatus])
+    },[fetchStatus, notifications])
 
     return (
         <div className="py-3 px-3.5 rounded-full bg-white dark:bg-gray-700 drop-shadow-md hover:drop-shadow-sm  cursor-pointer">

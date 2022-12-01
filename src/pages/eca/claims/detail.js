@@ -38,13 +38,13 @@ function CardClaims(props) {
         return src
     }
 
-    const getClaimMedia = async (id) => {
+    const getClaimMedia = useCallback(async (id) => {
         setClaimMedia(await getClaimOtherMedia(id))
-    }
+    },[getClaimOtherMedia])
 
     useEffect(() => {
         if (claimMedia?.length === 0) getClaimMedia(data.hasOwnProperty('coid') ? data.coid : data.cmid)
-    },[claimMedia])
+    },[claimMedia, data, getClaimMedia])
 
     return (
         <div className="w-full py-4 px-3 flex flex-col gap-2 items-start bg-white dark:bg-gray-700 drop-shadow-md hover:drop-shadow-sm rounded-3xl cursor-pointer">

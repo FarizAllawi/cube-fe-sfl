@@ -160,7 +160,7 @@ export default function Claims(props) {
     useEffect(() => {
         if (state.claimsDataTemp.length === 0 && !state.fetchStatus)  getClaim()
 
-    },[user, isLoading, state.claimsDataTemp, state.claimHeaderData, getClaim])
+    },[user, isLoading, state.claimsDataTemp, state.claimHeaderData, getClaim, state.fetchStatus])
 
 
     return (

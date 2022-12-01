@@ -132,7 +132,7 @@ export default function EndingKM(props) {
         }     
         // newState({ submitStatus: false })
         // router.push('/claims')
-    }, [chid, cmid, endTripClaimMileage, getDetailUser, insertClaimOtherMedia, mileageStatus, newState, router, startKM, state, user.id])
+    }, [chid, cmid, endTripClaimMileage, getDetailUser, insertClaimOtherMedia, isSubmitForm, mileageStatus, newState, router, startKM.endingKMDocumentsProve, startKM.startingKM, startKM.startingKMDocumentsProve, state.claimMileageStatusApproval, state.distance, state.endingKM, state.endingKMDocuments, user.id])
 
     const haversine = (start, end) => {
         const toRad = (x) => {

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef, useCallback } from "react"
 import { useTheme } from "next-themes"
 import { toast } from 'react-toastify'
 import { useRouter } from 'next/router'
@@ -60,11 +60,11 @@ function CardRating(props) {
         return total
     }
 
-    const getDataClaim = async () => {
+    const getDataClaim = useCallback( async () => {
         let dataClaim = await getCHBundle(data?.chid)
         setDataClaim(dataClaim)
         setFetchStatus(true)
-    }
+    },[data?.chid, getCHBundle])
 
     const imageLoader = ({src}) => {
         return src
@@ -87,7 +87,7 @@ function CardRating(props) {
         return () => {
             window.removeEventListener("mouseover", hoverStar)
         }
-    }, [fetchStatus, dataClaim])
+    }, [fetchStatus, dataClaim, getDataClaim, data.rating, data?.chid, rating])
 
     return (
         <div className="w-full p-4 flex flex-row gap-1 border-2 border-slate-200 dark:border-gray-700  bg-zinc-50 dark:bg-gray-700 drop-shadow-sm rounded-3xl" >
@@ -273,7 +273,7 @@ export default function Rating(props) {
         ratingClicked: ''
     })
 
-    const getRating = async () => {
+    const getRating = useCallback(async () => {
         let data = await getClaimHeader(user.id)
         let temp = [] 
 
@@ -288,7 +288,7 @@ export default function Rating(props) {
             dataRating: temp
         })
 
-    }
+    }, [getClaimHeader, newState, user.id])
 
     const updateClaimRating = async() => {
         let splitRatingClick = state.ratingClicked.split('-')
@@ -333,7 +333,7 @@ export default function Rating(props) {
     useEffect(() => {
         if (!fetchStatus && user.nik !== undefined && state.dataRating.length === 0) getRating()
         
-    },[user, fetchStatus, state.dataRating, state.ratingClicked])
+    },[user, fetchStatus, state.dataRating, state.ratingClicked, getRating])
     
     return (
         <Layout title="Rating" defaultBackPage="/eca" refresh={true}>

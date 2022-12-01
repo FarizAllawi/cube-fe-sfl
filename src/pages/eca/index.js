@@ -1,4 +1,4 @@
-import { useState , useEffect } from 'react'
+import { useState , useEffect, useCallback } from 'react'
 import { useTheme  } from 'next-themes'
 import Head from 'next/head'
 import Link from 'next/link'
@@ -88,7 +88,7 @@ export default function Home(props) {
 	const { login } = useUserEca()
 	const { getHomeNotification } = useNotification() 
 
-	const fetchData = async () => {
+	const fetchData = useCallback( async () => {
 		let syncUser = await login({ email: user.email, password: user.password})
 		let homeNotif = await getHomeNotification(user.nik)
 
@@ -98,7 +98,7 @@ export default function Home(props) {
 		})
 
 		setHomeNotificationTemp(temp)
-	}
+	}, [getHomeNotification, login, user.email, user.nik, user.password])
 
     useEffect(() => {
 		if (user?.nik !== undefined && homeNotification.length == 0 && !fetchStatus) fetchData()
@@ -119,7 +119,7 @@ export default function Home(props) {
             window.removeEventListener("resize", handleResize)
         }
 
-    }, [fetchStatus, homeNotification, user])
+    }, [fetchData, fetchStatus, homeNotification, user])
 	// if (!mounted) return null
 
 	return (

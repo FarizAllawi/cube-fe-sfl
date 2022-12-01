@@ -134,7 +134,7 @@ export default function useUser() {
 
         if (user?.isLogin === undefined) getUser()
 
-    }, [router])
+    }, [router, user?.isLogin])
 
     return {
         isLoading, user, loginTesting,getUserByNik, getDetailUser, logout, login, updateUser

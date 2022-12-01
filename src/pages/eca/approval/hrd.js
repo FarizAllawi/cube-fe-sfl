@@ -63,13 +63,13 @@ function CardClaims(props) {
         return src
     }
 
-    const getClaimMedia = async (id) => {
+    const getClaimMedia =  useCallback(async (id) => {
         setClaimMedia(await getClaimOtherMedia(id))
-    }
+    },[getClaimOtherMedia])
 
     useEffect(() => {
         if (claimMedia?.length === 0) getClaimMedia(data.hasOwnProperty('coid') ? data.coid : data.cmid)
-    },[claimMedia])
+    },[claimMedia, data, getClaimMedia])
 
     return (
         <div className="w-full h-full p-4 flex flex-row items-center  gap-1 bg-zinc-50 dark:bg-gray-900 drop-shadow-md rounded-3xl" >

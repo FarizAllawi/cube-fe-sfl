@@ -1,4 +1,4 @@
-export default async function (req, res) {
+export default async function sendEmail (req, res) {
     let nodemailer = require('nodemailer')
     const transporter = nodemailer.createTransport({
       host: `${process.env.NEXT_PUBLIC_SMTP_URL}`,
