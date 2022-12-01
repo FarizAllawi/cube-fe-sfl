@@ -4,7 +4,7 @@ import Image from 'next/image'
 
 import ProfileInitial from 'components/kch-office/ProfileInitial'
 
-import useUser from 'pages/api/kch-office/user'
+import useUser from 'pages/api/user'
 
 import capitalizeEachWord from 'helpers/capitalizeEachWord'
 

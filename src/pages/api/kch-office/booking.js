@@ -1,10 +1,10 @@
 import { useState , useEffect } from 'react'
-import axios from 'configs/axios'
+import axios from 'configs/kch-office/axios'
 import useSWR from 'swr'
 import { useRouter } from 'next/router'
 import errorHandler from 'configs/errorHandler'
 
-import useUser from './user'
+import useUser from '../user'
 
 export default function useBooking() {
     const router = useRouter()
@@ -18,7 +18,7 @@ export default function useBooking() {
 
         let response = await axios.get(url, {
             headers: {
-                'Authorization': `Bearer ${userSession.token}`
+                'Authorization': `Bearer ${userSession?.token}`
             }
         }).then(res => {
             return res.data
@@ -33,7 +33,7 @@ export default function useBooking() {
         setIsLoading(true)
         const response = await axios.get(`/api/booking/office/${uid_office}${date !== null && date !== '' ? '?date='+date : ''}`, {
             headers: {
-                'Authorization': `Bearer ${userSession.token}`
+                'Authorization': `Bearer ${userSession?.token}`
             }
         })
         .then(res => {
@@ -53,7 +53,7 @@ export default function useBooking() {
         setIsLoading(true)
         const response = await axios.get(`/api/booking/desk/${uid_desk}${date !== null && date !== '' ? '?date='+date : ''}`, {
             headers: {
-                'Authorization': `Bearer ${userSession.token}`
+                'Authorization': `Bearer ${userSession?.token}`
             }
         })
         .then(res => {
@@ -72,9 +72,9 @@ export default function useBooking() {
         let userSession = user.uid_user === undefined ? await getUser() : user
 
         setIsLoading(true)
-        const response = await axios.get(`/api/booking/booked-list/${userSession.uid_user}`, {
+        const response = await axios.get(`/api/booking/booked-list/${userSession?.uid_user}`, {
             headers: {
-                'Authorization': `Bearer ${userSession.token}`
+                'Authorization': `Bearer ${userSession?.token}`
             }
         })
         .then(res => {
@@ -95,7 +95,7 @@ export default function useBooking() {
         props['uid_user'] = userSession.uid_user
         const response = await axios.post(`/api/booking`, props, {
             headers: {
-                'Authorization': `Bearer ${userSession.token}`
+                'Authorization': `Bearer ${userSession?.token}`
             }
         })
         .then(res => {
@@ -125,7 +125,7 @@ export default function useBooking() {
         setIsLoading(true)
         const response = await axios.delete(`/api/booking/cancel/${uid_booking}`, {
             headers: {
-                'Authorization': `Bearer ${userSession.token}`
+                'Authorization': `Bearer ${userSession?.token}`
             }
         })
         .then(res => {

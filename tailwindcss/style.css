@@ -33,12 +33,12 @@ body::-webkit-scrollbar {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  @apply bg-gray-400 rounded-r-3xl;
+  /* @apply bg-gray-400 rounded-r-3xl; */
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-gray-400;
+  /* @apply bg-gray-400; */
 
 }
 
@@ -80,7 +80,7 @@ input:-webkit-autofill:active{
 }
 
 .text-logo-stroke-mobile {
-  -webkit-text-stroke-width: 0.5px;
+  -webkit-text-stroke-width: 0.25px;
   -webkit-text-stroke-color: #E5FFC3;
 }
 
@@ -133,7 +133,7 @@ input:-webkit-autofill:active{
   .flip-to-square div {
     -webkit-animation: flip-to-square 1.5s calc(var(--delay) * 1s) infinite backwards;
             animation: flip-to-square 1.5s calc(var(--delay) * 1s) infinite backwards;
-    background-color: #fff; }
+    background-color: #7dd3fc; }
     .flip-to-square div:nth-child(1) {
       --delay: 0.1; }
     .flip-to-square div:nth-child(2) {
@@ -153,3 +153,22 @@ input:-webkit-autofill:active{
     .flip-to-square div:nth-child(9) {
       --delay: 0.9; }
 
+.bg-gradient-shine {
+  background: radial-gradient(ellipse at center, #fffbeb 5%, #ffff 15%, #ffff 100%);
+}
+
+/* WAVE EFFECT */
+::selection{background-color: salmon; color: white;}
+.parallax > use{
+  animation: move-forever 7s  linear infinite;
+  &:nth-child(1){
+    animation-delay:-2s;
+  }
+  &:nth-child(2){animation-delay:-2s; animation-duration:5s}
+  &:nth-child(3){animation-delay:-4s; animation-duration:3s}
+}
+
+@keyframes move-forever{
+  0%{transform: translate(-90px , 0%)}
+  100%{transform: translate(85px , 0%)} 
+}

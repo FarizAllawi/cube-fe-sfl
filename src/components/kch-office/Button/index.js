@@ -19,7 +19,7 @@ export default function Button(props) {
 
     const className = [props.className]
 
-    if (type === 'primary') className.push('bg-green-900 border-2 border-opacity-0 hover:bg-opacity-90 text-white')
+    if (type === 'primary') className.push('border-2 border-opacity-0 hover:bg-opacity-90 text-white')
     if (type === 'secondary') className.push('bg-transparent text-green-900 border-2 border-green-900')
 
     if (size === 'small') className.push(` text-xs sm:text-sm inline-block py-1.5 ${isLoading || appendIcon ? 'px-1.5' : 'px-3'}`)
@@ -32,7 +32,7 @@ export default function Button(props) {
     }
 
     return (
-        <div className={`select-none rounded-full font-semibold cursor-pointer ${className.join(" ")}`} disabled={isDisabled} onClick={onClick}>
+        <div className={`select-none rounded-full font-semibold cursor-pointer ${ className !== undefined ? className.join(" ") : 'bg-green-900'}`} disabled={isDisabled} onClick={onClick}>
             <div className='flex flex-row place-content-center items-center gap-2 '>
                 <div>{props.children}</div>
                 { 

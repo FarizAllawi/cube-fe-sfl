@@ -1,9 +1,9 @@
-import axios from 'configs/axios'
+import axios from 'configs/kch-office/axios'
 import { useRouter } from 'next/router'
 import { useState , useEffect } from 'react'
 import errorHandler from 'configs/errorHandler'
 
-import useUser from './user'
+import useUser from '../user'
 
 export default function useOffice() {
     const router = useRouter()
@@ -19,7 +19,7 @@ export default function useOffice() {
 
 		const response = await axios.get(`api/office`, {
             headers: {
-                'Authorization': `Bearer ${userSession.token}`
+                'Authorization': `Bearer ${userSession?.token}`
             }
         })
         .then(res => {
@@ -39,7 +39,7 @@ export default function useOffice() {
         setIsLoading(true)
         const response = await axios.get(`/api/office/${uid_office}`, {
             headers: {
-                'Authorization': `Bearer ${userSession.token}`
+                'Authorization': `Bearer ${userSession?.token}`
             }
         })
         .then(res => {

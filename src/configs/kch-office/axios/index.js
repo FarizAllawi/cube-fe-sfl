@@ -1,13 +1,13 @@
 import axios from 'axios'
-import errorHandler from '../errorHandler'
+import errorHandler from '../../errorHandler'
 
 const instance = axios.create({
-    baseURL: `${process.env.NEXT_PUBLIC_API_HOST}`,
+    baseURL: `${process.env.NEXT_PUBLIC_KCH_OFFICE_SERVICE}`,
     headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
         'X-Requested-With' : 'XMLHttpRequest',
-        'ApiKey' : `${process.env.NEXT_PUBLIC_API_KEY}`,
+        'ApiKey' : `${process.env.NEXT_PUBLIC_KCH_OFFICE_API_KEY}`,
     },
     // withCredentials: true
 })

@@ -17,6 +17,7 @@ import BoxDeskSection from 'components/kch-office/DeskSection'
 import CardBookedList from 'components/kch-office/CardBooked'
 
 import NotFoundData from '../../../public/images/svg/kch-office/not-found-data.svg'
+import BookingNotFound from '../../../public/images/svg/kch-office/booking-not-found.svg'
 
 export default function HomePage(props) {
     
@@ -197,17 +198,32 @@ export default function HomePage(props) {
                             </div>
                         </div>
 
-                        <div className="static scroll-display-none w-full h-full mt-4 flex flex-row gap-4 overflow-x-scroll snap-x">
-                            {
-                                bookedList.map((item, index) => {
-                                    return (
-                                        <div key={index} className='snap-start'>
-                                            <CardBookedList data={item} />
+                        {
+                            bookedList.length > 0 ? (
+                                <div className="static scroll-display-none w-full h-full mt-4 flex flex-row gap-4 overflow-x-scroll snap-x">
+                                {
+                                    bookedList.map((item, index) => {
+                                        return (
+                                            <div key={index} className='snap-start'>
+                                                <CardBookedList data={item} />
+                                            </div>
+                                        )
+                                    })
+                                }
+                                </div>
+                            ) : (
+                                <div className="w-full h-full flex flex-row place-content-center">
+                                    <div className="w-1/3 flex place-content-end">
+                                        <BookingNotFound className='w-36 h-36'/>
+                                    </div>
+                                    <div className="w-1/2 ml-4 h-full flex flex-col place-content-center">
+                                        <div className="text-sm sm:text-base text-white font-medium">
+                                            You seem not booked a desk yet
                                         </div>
-                                    )
-                                })
-                            }
-                        </div>
+                                    </div>      
+                                </div>
+                            )
+                        }
                     </div>
                 </div>
                 <div className="w-full h-full flex flex-col lg:my-0 xl:flex-row">
@@ -255,7 +271,7 @@ export default function HomePage(props) {
                             {
                                 size.width < 1280 && (
                                     <div className="w-2/3 flex flex-row place-content-end items-center gap-1">
-                                        <Button type={toggle === 'desk' ? 'primary' : 'secondary'} size='small' className='border-2 border-green-900' onClick={() => setToggle('desk')}>Desk Section</Button>
+                                        <Button type={toggle === 'desk' ? 'primary' : 'secondary'} size='small' className='border-2 bg-green-900 border-green-900' onClick={() => setToggle('desk')}>Desk Section</Button>
                                         <Button type={toggle === 'maps' ? 'primary' : 'secondary'} size='small' onClick={() => setToggle('maps')}>Show Maps</Button>
                                     </div>
                                 )

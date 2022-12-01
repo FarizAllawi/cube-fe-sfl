@@ -1,0 +1,139 @@
+.bodyContainer{
+    box-sizing: border-box;
+    position: relative;
+}
+
+.wrapper{
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    /* align-items: center; */
+    position: relative;
+    width: 100%;
+    /* background: lightpink; */
+}
+
+.box{
+    /* align-items: center; */
+    display: flex;
+    /* justify-content: center; */
+    width: 100%;
+}
+
+.content{
+    height: 320px;
+    perspective: 960px;
+    width: 320px;
+}
+
+.singleboxes{
+    height: 100%;
+    position: relative;
+    transform: translateZ(-160px);
+    transform-style: preserve-3d;
+    width: 100%;
+    animation: animate 20s linear infinite forwards;
+
+}
+
+.singlebox{
+    align-items: center;
+    /* background-color: lightblue; */
+    background: white;
+    /* background: linear-gradient(90deg, rgba(17,9,152,1) 0%, rgba(70,70,208,1) 35%, rgba(0,212,255,1) 100%); */
+    display: flex;
+    height: 320px;
+    width: 320px;
+    justify-content: center;
+    overflow: hidden;
+    position: absolute;
+
+    border: 0.1em solid #fff;
+    padding: 0.1em;
+    animation: pulsate 1s infinite alternate;
+    box-shadow: 0 0 .2rem #fff,
+                0 0 .2rem #fff,
+                0 0 1rem #00d4ff,
+                0 0 0.5rem #00d4ff,
+                0 0 1.2rem #00d4ff,
+                inset 0 0 1.2rem #00d4ff;
+}
+
+.front{
+    transform: rotateY(0) translateZ(160px);
+}
+
+.back{
+    transform: rotateY(180deg) translateZ(160px);
+}
+
+.left{
+    transform: rotateY(-90deg) translateZ(160px);
+}
+
+.right{
+    transform: rotateY(90deg) translateZ(160px);
+}
+
+.top{
+    transform: rotateX(90deg) translateZ(0px) translateY(-156px);
+}
+
+.bottom{
+    transform: rotateX(90deg) translateZ(-320px) translateY(-160px);
+}
+
+@keyframes animate{
+    0% {
+        transform: rotate3d(0,0,0,0);
+    }
+
+    25% {
+        transform: rotate3d(0,1,1,90deg);
+    }
+
+    50% {
+        transform: rotate3d(1,0,1,180deg);
+    }
+
+    75% {
+        transform: rotate3d(1,1,0,240deg);
+    }
+
+    100% {
+        transform: rotate3d(1,1,1,360deg);
+    }
+
+}
+
+@keyframes pulsate {
+    
+    100% {
+  
+        text-shadow:
+        0 0 4px #fff,
+        0 0 11px #fff,
+        0 0 19px #fff,
+        0 0 40px #00d4ff,
+        0 0 80px #00d4ff,
+        0 0 90px #00d4ff,
+        0 0 100px #00d4ff,
+        0 0 150px #00d4ff;
+    
+    }
+    
+    0% {
+  
+      text-shadow:
+      0 0 2px #fff,
+      0 0 4px #fff,
+      0 0 6px #fff,
+      0 0 10px #00d4ff,
+      0 0 45px #00d4ff,
+      0 0 55px #00d4ff,
+      0 0 70px #00d4ff,
+      0 0 80px #00d4ff;
+  
+  }
+
+}

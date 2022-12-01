@@ -5,7 +5,7 @@ import useSWR from 'swr'
 import Image from 'next/image'
 import { addDays, subDays , format, set, sub } from 'date-fns'
 
-import useUser from 'pages/api/kch-office/user'
+import useUser from 'pages/api/user'
 import useDesk from 'pages/api/kch-office/desk'
 import useBooking from 'pages/api/kch-office/booking'
 import useOffice from 'pages/api/kch-office/office'
@@ -389,8 +389,6 @@ export default function DeskSection(props) {
         }
     }, [getBookedList, getDeskSectionById, getOfficeById, props, selectedDate, setSelectedDeskSection])
 
-    console.log(desk)
-
     useEffect(() => {
         
         // Handler to call on window resize
@@ -444,7 +442,7 @@ export default function DeskSection(props) {
                                             minDate={addDays(new Date(), 0)}
                                             maxDate={addDays(new Date(), 7)}
                                             />
-                                <Button className="border-2 border-green-900" 
+                                <Button className="border-2 bg-green-900 border-green-900" 
                                         isLoading={isLoading} 
                                         onClick={() => {
                                             setIsLoading(true)
@@ -479,7 +477,7 @@ export default function DeskSection(props) {
                             size="medium">
                             <div className="w-full h-full flex flex-row place-content-center items-center mt-2">
                                 <div className="w-1/2 flex place-content-center items-center gap-2">
-                                    <Button type='primary' className="border border-green-900" size='medium' onClick={() => cancelBooking(deleteBooking)}>YES</Button>
+                                    <Button type='primary' className="border bg-green-900 border-green-900" size='medium' onClick={() => cancelBooking(deleteBooking)}>YES</Button>
                                     <Button type='primary' className="border bg-green-500 border-green-500" size='medium' onClick={() => setDeleteBooking('') }>NO</Button>
                                 </div>
                             </div>

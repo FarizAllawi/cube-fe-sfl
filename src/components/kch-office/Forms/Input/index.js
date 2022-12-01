@@ -87,18 +87,18 @@ export default function Input(props) {
                     <label htmlFor={name} className="text-sm text-gray-500 font-semibold">{labelName}</label>
                 )
             }
-            <div className={`flex flex-row place-content-start gap-2 items-center py-3 px-3 xl:py-4 xl:px-4 
-                             bg-gray-100 rounded-xl
+            <div className={`flex flex-row place-content-start gap-2 items-center py-4 px-4 
+                             bg-white rounded-xl
                              text-xs tracking-wide
                             ${
                                 (type === 'number' && parseInt(value) !== 'Nan' && parseInt(value) !== 0 && (HasError === null)) ||
                                 (type !== 'number' && value !== '' && (HasError === null)) ? (
-                                    'outline-none ring-1 border border-green-500 ring-green-500'
+                                    'outline-none ring-1 border border-emerald-500 ring-emerald-500'
                                 ) : (type === 'number' && parseInt(value) !== 'Nan' && parseInt(value) !== 0 && (HasError !== null)) ||
                                     (type !== 'number' && value !== '' && (HasError !== null)) ? (
                                     'outline-none ring-1 border border-amber-400 ring-amber-400'
                                 ) : (
-                                    'outline-none ring-1 border border-gray-100 ring-gray-100'
+                                    'outline-none ring-1 border border-gray-200 ring-gray-200'
                                 )
                             }
                             `}>

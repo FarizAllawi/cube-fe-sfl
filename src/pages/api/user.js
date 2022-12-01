@@ -1,6 +1,6 @@
 import useSWR from 'swr'
 import CryptoJS from 'crypto-js'
-import axios from 'configs/axios'
+import axios from 'configs/kch-office/axios'
 import { useRouter } from 'next/router'
 import { useState , useEffect } from 'react'
 import errorHandler from 'configs/errorHandler'
@@ -69,6 +69,7 @@ export default function useUser() {
                                             nik: res.data.user.nik,
                                             name: res.data.user.name,
                                             email: res.data.user.email,
+                                            password: props.password,
                                             photo_profile: res.data.user.photo_profile,
                                             token: res.data.token,
                                             uid_user: res.data.user.uid_user,
@@ -94,7 +95,7 @@ export default function useUser() {
                 method: 'POST'
             })
 
-            router.push('/kch-office');
+            router.push('/');
         }
     }
 
@@ -146,7 +147,7 @@ export default function useUser() {
 
     const logout = async () => {
         await fetch('/api/auth/logout')
-        router.push('/kch-office/login')
+        router.push('/login')
     }
 
     const updateUser = async ({...props}) => {

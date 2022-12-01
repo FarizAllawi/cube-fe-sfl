@@ -13,13 +13,21 @@ const nextConfig = {
         source: `/api`,
         destination: `${process.env.NEXT_PUBLIC_API_STORAGE}/files/upload`,
       },
+      {
+        source: `/api/getFile/:path*`,
+        destination: `${process.env.NEXT_PUBLIC_API_STORAGE}/files/get?filePath=:path*`,
+      },
+      {
+        source: `/api/deleteFile/:path*`,
+        destination: `${process.env.NEXT_PUBLIC_API_STORAGE}/files/delete?filePath=:path*`,
+      },
     ]
   },
   images: {
     dangerouslyAllowSVG: true,
     // contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
-  
+  reactStrictMode:true,
   swcMinify: true,
 }
 

@@ -4,7 +4,7 @@ import Image from 'next/image'
 
 import ProfileInitial from 'components/kch-office/ProfileInitial'
 
-import useUser from 'pages/api/kch-office/user'
+import useUser from 'pages/api/user'
 
 import capitalizeEachWord from 'helpers/capitalizeEachWord'
 
@@ -50,7 +50,7 @@ export default function NavbarDesktop(props) {
                 <div className="relative flex flex-row gap-1 px-1.5 py-1.5 place-content-end items-center bg-green-900 cursor-pointer  drop-shadow-md hover:drop-shadow-sm rounded-full "
                     onClick={() => setToggle(!toggle)}>
                         <div className="flex p-2">
-                            <p className="text-gray-500 text-white text-sm font-medium">{capitalizeEachWord(user?.name)}</p>
+                            <p className="text-white text-sm font-medium">{capitalizeEachWord(user?.name)}</p>
                         </div>
                         <div className="relative flex w-10 h-10 p-0.5 place-content-center items-center border-2 border-white rounded-full">
                         {

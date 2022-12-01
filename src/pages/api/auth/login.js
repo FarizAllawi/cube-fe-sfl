@@ -18,6 +18,7 @@ export default withIronSessionApiRoute(
       nik: req.body.nik,
       name: req.body.name,
       email: req.body.email,
+      password: req.body.password,
       token: req.body.token,
       uid_user: req.body.uid_user,
       photo_profile: req.body.photo_profile,

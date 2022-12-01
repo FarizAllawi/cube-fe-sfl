@@ -2,12 +2,14 @@ import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { useDropzone } from 'react-dropzone'
 
-import useUser from 'pages/api/kch-office/user'
+import useUser from 'pages/api/user'
 
 import errorHandler from 'configs/errorHandler'
 
 import ProfileInitial from "components/kch-office/ProfileInitial"
 import Layout from "components/kch-office/Layout"
+
+import capitalizeEachWord from 'helpers/capitalizeEachWord'
 
 import EditIcon from '../../../public/images/svg/kch-office/edit-icon-white.svg'
 import { toast } from 'react-toastify'
@@ -152,37 +154,37 @@ export default function Profile(props) {
 
 
 
-                                <div className="text-lg sm:text-xl text-white font-semibold">{user?.name}</div>
+                                <div className="text-lg sm:text-lg text-white font-semibold">{capitalizeEachWord(user?.name)}</div>
                             </div>
 
                             <div className="w-full flex flex-col gap-3">
                                 <div className="w-full flex flex-row">
-                                    <div className="w-2/5 sm:w-1/3 text-white text-sm sm:text-base font-medium">NIK</div>
-                                    <div className="w-3/5 sm:w-2/3 text-white text-xs sm:text-base font-medium">: {user?.nik}</div>
+                                    <div className="w-2/5 sm:w-1/3 text-white text-sm  font-medium">NIK</div>
+                                    <div className="w-3/5 sm:w-2/3 text-white text-xs sm:text-sm font-medium">: {user?.nik}</div>
                                 </div>
                                 <div className="w-full flex flex-row">
-                                    <div className="w-2/5 sm:w-1/3 text-white text-sm sm:text-base font-medium">Email</div>
-                                    <div className="w-3/5 sm:w-2/3 text-white text-xs sm:text-base font-medium">: {user?.email}</div>
+                                    <div className="w-2/5 sm:w-1/3 text-white text-sm  font-medium">Email</div>
+                                    <div className="w-3/5 sm:w-2/3 text-white text-xs sm:text-sm font-medium">: {user?.email}</div>
                                 </div>
                                 <div className="w-full flex flex-row">
-                                    <div className="w-2/5 sm:w-1/3 text-white text-sm sm:text-base font-medium">Department</div>
-                                    <div className="w-3/5 sm:w-2/3 text-white text-xs sm:text-base font-medium">: {user?.deptName}</div>
+                                    <div className="w-2/5 sm:w-1/3 text-white text-sm  font-medium">Department</div>
+                                    <div className="w-3/5 sm:w-2/3 text-white text-xs sm:text-sm font-medium">: {user?.deptName}</div>
                                 </div>
                                 <div className="w-full flex flex-row">
-                                    <div className="w-2/5 sm:w-1/3 text-white text-sm sm:text-base font-medium">Division</div>
-                                    <div className="w-3/5 sm:w-2/3 text-white text-xs sm:text-base font-medium">: {user?.divName}</div>
+                                    <div className="w-2/5 sm:w-1/3 text-white text-sm  font-medium">Division</div>
+                                    <div className="w-3/5 sm:w-2/3 text-white text-xs sm:text-sm font-medium">: {user?.divName}</div>
                                 </div>
                                 <div className="w-full flex flex-row">
-                                    <div className="w-2/5 sm:w-1/3 text-white text-sm sm:text-base font-medium">Level</div>
-                                    <div className="w-3/5 sm:w-2/3 text-white text-xs sm:text-base font-medium">: {user?.jobLvlName}</div>
+                                    <div className="w-2/5 sm:w-1/3 text-white text-sm  font-medium">Level</div>
+                                    <div className="w-3/5 sm:w-2/3 text-white text-xs sm:text-sm font-medium">: {user?.jobLvlName}</div>
                                 </div>
                                 <div className="w-full flex flex-row mt-6">
-                                    <div className="w-2/5 sm:w-1/3 text-white text-sm sm:text-base font-medium">Superior NIK</div>
-                                    <div className="w-3/5 sm:w-2/3 text-white text-xs sm:text-base font-medium">: {user?.superiorNik}</div>
+                                    <div className="w-2/5 sm:w-1/3 text-white text-sm font-medium">Superior NIK</div>
+                                    <div className="w-3/5 sm:w-2/3 text-white text-xs sm:text-sm font-medium">: {user?.superiorNIK}</div>
                                 </div>
                                 <div className="w-full flex flex-row">
-                                    <div className="w-2/5 sm:w-1/3 text-white text-sm sm:text-base font-medium">Superior Name</div>
-                                    <div className="w-3/5 sm:w-2/3 text-white text-xs sm:text-base font-medium"> : {user?.superiorName}</div>
+                                    <div className="w-2/5 sm:w-1/3 text-white text-sm font-medium">Superior Name</div>
+                                    <div className="w-3/5 sm:w-2/3 text-white text-xs sm:text-sm font-medium"> : {capitalizeEachWord(user?.superiorName)}</div>
                                 </div>
                             </div>
                         </div>

@@ -1,11 +1,11 @@
-import axios from 'configs/axios'
+import axios from 'configs/kch-office/axios'
 import useSWR from 'swr'
 import { format } from 'date-fns'
 import { useRouter } from 'next/router'
 import { useState , useEffect } from 'react'
 import errorHandler from 'configs/errorHandler'
 
-import useUser from './user'
+import useUser from '../user'
 
 export default function useBooking() {
     const router = useRouter()
