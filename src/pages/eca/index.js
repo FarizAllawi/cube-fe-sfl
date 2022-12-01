@@ -79,18 +79,20 @@ export default function Home(props) {
 
 	const [ homeNotification , setHomeNotification ] = useState([])
 	const [ homeNotificationTemp, setHomeNotificationTemp] = useState({})
+	const [ user, setUser] = useState(false)
 
 	const [fetchStatus, setFetchStatus] = useState(false)
 	const [mounted, setMounted] = useState(false)
 
 	const {theme, setTheme} = useTheme()
-	const { user } = useUserCube()
+	const { getDetailUser } = useUserCube()
 	const { login } = useUserEca()
 	const { getHomeNotification } = useNotification() 
 
 	const fetchData = useCallback( async () => {
-		let syncUser = await login({ email: user.email, password: user.password})
-		let homeNotif = await getHomeNotification(user.nik)
+		let userData = await getDetailUser()
+		let syncUser = await login({ email: userData.email, password: userData.password})
+		let homeNotif = await getHomeNotification(userData.nik)
 
 		let temp = {}
 		homeNotif.map(item => {
@@ -98,10 +100,11 @@ export default function Home(props) {
 		})
 
 		setHomeNotificationTemp(temp)
-	}, [getHomeNotification, login, user.email, user.nik, user.password])
+		setFetchStatus(true)
+	}, [getDetailUser, getHomeNotification, login])
 
     useEffect(() => {
-		if (user?.nik !== undefined && homeNotification.length == 0 && !fetchStatus) fetchData()
+		if (homeNotification.length == 0 && !fetchStatus) fetchData()
 
         // Handler to call on window resize
 		const handleResize = () => {
@@ -113,13 +116,12 @@ export default function Home(props) {
 		}
 
         window.addEventListener("resize", handleResize)
-        handleResize()
 
         return () => {
             window.removeEventListener("resize", handleResize)
         }
 
-    }, [fetchData, fetchStatus, homeNotification, user])
+    }, [fetchData, fetchStatus, homeNotification])
 	// if (!mounted) return null
 
 	return (
