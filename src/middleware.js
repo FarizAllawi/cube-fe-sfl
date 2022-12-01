@@ -13,54 +13,43 @@ export const middleware = async (req) => {
           secure: process.env.NEXT_PUBLIC_IRON_SESSION_PASSWORD === "production",
         },
     });
-  
-    // do anything with session here:
     const { user } = session;
-  
-    // like mutate user:
-    // user.something = someOtherThing;
-    // or:
-    // session.user = someoneElse;
-  
-    // uncomment next line to commit changes:
-    // await session.save();
-    // or maybe you want to destroy session:
-    // await session.destroy();
-  
-    // console.log("from middleware", { user });
 
     const { pathname } = req.nextUrl
 
-    if (user?.isLogin === true || user?.isLogin !== undefined) {
-         // user logged in and url path login then redirect to homepage
-         if (user?.isLogin === true && user?.isLogin !== undefined) {
+    console.log(user)
+
+    if (user?.isLogin === true && user?.isLogin !== undefined) {
+        
+        if (user.defaultPassword === true && pathname !== '/change-password') {
+            return NextResponse.redirect(new URL('/change-password', req.url)) 
+        }
+        else {
+            // user logged in and url path login then redirect to homepage
              if (pathname === '/login') {
-                 return NextResponse.redirect(new URL('/', req.url)) // redirect to /unauthorized page
+                 return NextResponse.redirect(new URL('/', req.url)) 
              }
-         }
-    }
+        }
+        
+         
+     }
     else {
         //Logout user
-        await session.destroy()
+        session.destroy()
 
         // unauthorized to see pages use application
         if (pathname !== '/login') {
-            return NextResponse.redirect(new URL('/login', req.url)) // redirect to /unauthorized page
-        }
-        
-    }
+            return NextResponse.redirect(new URL('/login', req.url)) 
+        }    }
     return res;
   };
   
 export const config = {
     matcher: [
-        // '/:page*',
+        '/',
+        '/eca/:page*',
+        '/kch-office/:page*',
+        '/change-password',
         '/login',
-        // '/profile',
-        // '/rating',
-        // '/notification',
-        // '/claims/:path*',
-        // '/btb/:path*',
-        // '/approval/:path*',
     ],
 };

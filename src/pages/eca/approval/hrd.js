@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react'
+import { format } from 'date-fns'
+import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/router'
 import { toast } from 'react-toastify'
-import axios from 'configs/kch-office/axios'
+import axios from 'configs/eca/axios'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -80,7 +81,7 @@ function CardClaims(props) {
                                 {/* <PDFIcon className="w-full h-full p-3"/> */}
                             </div>
                         ) : (
-                            <Image loader={imageLoader} src={`${ process.env.NEXT_PUBLIC_API_STORAGE}/files/get?filePath=${props.type === 'other' ? data.upload_prove : data.upload_start}`} layout="fill" className="object-cover rounded-full" alt={props.title}/>
+                            <Image loader={imageLoader} src={`/api/getFile/${props.type === 'other' ? data.upload_prove : data.upload_start}`} fill unoptimized className="object-cover rounded-full" alt="User Documents"/>
                         )
                     }
                     
@@ -108,33 +109,16 @@ function CardClaims(props) {
     )
 }
 
-export const getServerSideProps = async (context) => {
-
-    const { referer } = context.req.headers 
-
-    let pathReferer = ''
-    if (referer !== undefined) {
-        let url = new URL(referer)
-        pathReferer = url.pathname
-    }
-
-    return { 
-        props: { 
-            pathReferer: pathReferer
-        } 
-    }
-}
-
-
 export default function Hrd(props) {
     const router = useRouter()
     const [filter, setFilter] = useState(false)
 
-    const { user } = useUser()
-    const { updateClaimMileage } = useClaim()
+    const { getDetailUser , getUserByNik } = useUser()
+    // const { updateClaimMileage } = useClaim()
     const {getHRDApproval, approveMileageHRD, rejectMileageHRD} = useApproval()
-    const { insertNotification } = useNotification()
+    const { insertNotification, sendEmail } = useNotification()
 
+    const [user, setUser] = useState({})
     const [isLoading, setIsLoading] = useState(false)
     
     const [state, setState, newState] = useForm({
@@ -201,25 +185,35 @@ export default function Hrd(props) {
         })
     }
 
-    const getClaimsApproval = async () => {
-        newState({ 
-            claimsApprovalData: [{},{},{},{}],
-            fetchStatus: false
-        })
-        setIsLoading(true)
-        
-        setTimeout(async () => {
-            const data = await getHRDApproval(user.nik)
-            newState({ 
-                claimsApprovalData: data,
-                claimRequestorData: {},
-                fetchStatus: true
-            })
-            setIsLoading(false)
-        }, 1000);
+    const fetchData = useCallback( async () => {
+        let userData = await getDetailUser()
 
-        // newState({ claimsDataTemp: claimsData })
-    }
+        if (userData.id !== undefined) {
+            setUser(userData)
+            newState({ 
+                rejectMileage: '',
+                rejectAllMileage: '',
+                approveMileage: '',
+                claimsApprovalData: [{},{},{},{}],
+                fetchStatus: false
+            })
+            setIsLoading(true)
+            
+            setTimeout(async () => {
+                const data = await getHRDApproval(userData.nik)
+                newState({ 
+                    rejectMileage: '',
+                    rejectAllMileage: '',
+                    approveMileage: '',
+                    claimsApprovalData: data,
+                    claimRequestorData: {},
+                    fetchStatus: true
+                })
+                setIsLoading(false)
+            }, 1000);
+        }
+        else errorHandler("There is an error when retrieving user data")
+    }, [getDetailUser, getHRDApproval, newState])
 
     const getClaimRequestorData = async (chid) => {
         setTimeout(async () => {
@@ -247,54 +241,93 @@ export default function Hrd(props) {
 
     const approveMileage = async () => {
 
+        let approve = false
         let dataRequestor = state.claimsApprovalData[0]
         let statusClaim = state.claimRequestorData[state.approveMileage].item2[0].hrd_approval
 
         if (dataRequestor.nik !== undefined && statusClaim !== undefined) {
             
+            let detailUser = await getUserByNik(dataRequestor.nik)
+
             // HRD Supervisor Approval
             if (statusClaim === 3) {
-                await approveMileageHRD({
+                approve =await approveMileageHRD({
                     chid: state.approveMileage,
                     status_approval:2,
                     hrd_approval: 2,
                     reject_desc:''
                     // superior_dt: convertDateTime(currentDate)
                 })
+
+                if (approve) {
+                    insertNotification({
+                        nik: dataRequestor.nik,
+                        header: `claims-Claim Approved-${dataRequestor.chid}`,
+                        description: `Claim ${dataRequestor.chid} approved by HRD Supervisor ${capitalizeEachWord(user.name)}`
+                    })
     
-                insertNotification({
-                    nik: dataRequestor.nik,
-                    header: `claims-Claim Approved-${dataRequestor.chid}`,
-                    description: `Claim ${dataRequestor.chid} approved by HRD Supervisor ${capitalizeEachWord(user.name)}`
-                })
+                    if (detailUser.email !== undefined) {
+                        await sendEmail({
+                            email: detailUser.email,
+                            header: `Claim Approved`,
+                            description: `Your Claim ${requestor.chid} approved by HRD Supervisor ${capitalizeEachWord(user.name)}`
+                        })
+                    }
+                }
+                else {
+                    errorHandler("There is an error when approve claim mileage")
+                    newState({
+                        approveMileage: '',
+                        reason: ''
+                    })
+                }
             }
             
 
             // HRD Dept Head Approval
             if (statusClaim === 2) {
-                await approveMileageHRD({
+                approve = await approveMileageHRD({
                     chid: state.approveMileage,
                     status_approval:1,
                     hrd_approval: 1,
                     reject_desc:''
                     // superior_dt: convertDateTime(currentDate)
                 })
+
+                if (approve) {
+
+                    insertNotification({
+                        nik: dataRequestor.nik,
+                        header: `claims-Claim Approved-${dataRequestor.chid}`,
+                        description: `Claim ${dataRequestor.chid} approved by HRD Dept Head ${capitalizeEachWord(user.name)}`
+                    })
     
-                insertNotification({
-                    nik: dataRequestor.nik,
-                    header: `claims-Claim Approved-${dataRequestor.chid}`,
-                    description: `Claim ${dataRequestor.chid} approved by HRD Dept Head ${capitalizeEachWord(user.name)}`
-                })
+                    if (detailUser.email  !== undefined) {
+                        await sendEmail({
+                            email: detailUser.email,
+                            header: `Claim Approved`,
+                            description: `Your Claim ${requestor.chid} approved by HRD Dept Head ${capitalizeEachWord(user.name)}`
+                        })
+                    }
+                }
+                else {
+                    errorHandler("There is an error when approve claim mileage")
+                    newState({
+                        approveMileage: '',
+                        reason: ''
+                    })
+                }
+    
             }
 
-            toast.success("Approve mileage successsfully")
+            if (approve) {
+                toast.success("Approve mileage successsfully")
+                setTimeout(() => {
+                    fetchData()
+                }, 350)
+            }
         }
         else errorHandler("An error when approve claim")
-
-        newState({approveMileage: ''})
-        setTimeout(() => {
-            router.reload()
-        }, 350)
     }
 
     const rejectParticularMileage = async() => {
@@ -303,7 +336,7 @@ export default function Hrd(props) {
         let claimId = state.rejectMileage.split('-')[1]
         let statusClaim = 0
         let requestor = {}
-
+        
         state.claimRequestorData[claimHead]?.item2.map( async (item) => {
             if (item.cmid === claimId) {
                 statusClaim = item.hrd_approval
@@ -314,27 +347,47 @@ export default function Hrd(props) {
             if (item.chid === claimHead) requestor = item
         })
 
+        let detailUser = await getUserByNik(requestor.nik)
+
         if (state.reason !== "") {
-            await rejectMileageHRD({
+            let reject = await rejectMileageHRD({
                 cmid: claimId,
                 chid: claimHead,
                 status_approval:5,
                 hrd_approval:5,
                 reject_desc: state.reason,
-                // hrd_dt: convertDateTime(currentDate)
+                hrd_dt: format(currentDate, 'yyyy-MM-dd HH:mm:ss')
             })
-        
-            await insertNotification({
-                nik: requestor.nik,
-                header: `claims-Claim Rejected-${claimHead}`,
-                description: `Claim Mileage ${item.cmid} rejected by HRD ${statusClaim === 3 ? 'Supervisor' : statusClaim === 2 && "Dept Head"} ${capitalizeEachWord(user.name)}`
-            })
+            
+            if (reject) {
 
-            newState({rejectMileage: ''})
-            toast.success("Reject Claim Succesfuly ")
-            setTimeout(() => {
-                router.reload()
-            }, 350)
+                await insertNotification({
+                    nik: requestor.nik,
+                    header: `claims-Claim Rejected-${claimHead}`,
+                    description: `Claim Mileage ${claimHead} rejected by HRD ${statusClaim === 3 ? 'Supervisor' : statusClaim === 2 && "Dept Head"} ${capitalizeEachWord(user.name)}`
+                })
+    
+                if (detailUser.email !== undefined) {
+                    await sendEmail({
+                        email: detailUser.email,
+                        header: `Claim Rejected`,
+                        description: `Claim Mileage ${claimId} rejected by HRD ${statusClaim === 3 ? 'Supervisor' : statusClaim === 2 && "Dept Head"} ${capitalizeEachWord(user.name)}`
+                    })
+                }
+    
+                toast.success("Reject Claim Succesfuly ")
+                setTimeout(() => {
+                    fetchData()
+                }, 350)
+            }
+            else {
+                errorHandler("There is an error when reject claim mileage")
+                newState({
+                    rejectMileage: '',
+                    reason: ''
+                })
+            }
+            
         }
         else {
             errorHandler("Please insert your reason...")
@@ -350,37 +403,48 @@ export default function Hrd(props) {
             if (item.chid === claimHead) requestor = item
         })
 
+        let detailUser = await getUserByNik(requestor.nik)
+
         if (state.reason !== "") {
 
-            await approveMileageHRD({
+            let reject = await approveMileageHRD({
                 chid: claimHead,
                 status_approval:5,
                 hrd_approval:5,
                 reject_desc: state.reason,
-                // hrd_dt: convertDateTime(currentDate)
+                hrd_dt: format(currentDate, 'yyyy-MM-dd HH:mm:ss')
             })
 
-            // state.claimRequestorData[claimHead]?.item2.map( async (item) => {
-            //     if (item.cmid === claimId) {
-    
-            //     }
-            // })
             
-            
-            await insertNotification({
-                nik: requestor.nik,
-                header: `claims-Claim Rejected-${item.claimHead}`,
-                description: `Claims ${item.claimHead} rejected by HRD ${capitalizeEachWord(user.name)}`
-            })
+            if (reject) {
 
-            // state.claimRequestorData[claimHead]?.item2.map( async (item) => {
-            // })
+                await insertNotification({
+                    nik: requestor.nik,
+                    header: `claims-Claim Rejected-${item.claimHead}`,
+                    description: `Claims ${claimHead} rejected by HRD ${capitalizeEachWord(user.name)}`
+                })
 
-            newState({rejectMileage: ''})
-            toast.success("Reject Claim Succesfuly ")
-            setTimeout(() => {
-                router.reload()
-            }, 350)
+
+                if (detailUser.email !== undefined) {
+                    await sendEmail({
+                        email: detailUser.email,
+                        header: `Claim Rejected`,
+                        description: `Claim Mileage ${claimHead}} rejected by HRD ${statusClaim === 3 ? 'Supervisor' : statusClaim === 2 && "Dept Head"} ${capitalizeEachWord(user.name)}`
+                    })
+                }
+
+                toast.success("Reject Claim Succesfuly ")
+                setTimeout(() => {
+                    fetchData()
+                }, 350)
+            }
+            else {
+                errorHandler("There is an error when reject claim mileage")
+                newState({
+                    rejectAllMileage: '',
+                    reason: ''
+                })
+            }
         }
         else {
             errorHandler("Please insert your reason...")
@@ -389,14 +453,14 @@ export default function Hrd(props) {
 
 
     useEffect(() => {
-        if (user.id !== undefined && state.claimsApprovalData.length === 0 && !state.fetchStatus) getClaimsApproval()
+        if (state.claimsApprovalData.length === 0 && !state.fetchStatu) fetchData()
 
-    },[state.approveMileage, state.claimsApprovalData, state.claimRequestorData, user, isLoading])
+    },[fetchData, state.claimsApprovalData, state.fetchStatu])
 
     return (
         <LayoutList title="List of HRD Approval" 
-                    refresh={true} onRefresh={() => getClaimsApproval(user.nik)} 
-                    goBackPage={props.pathReferer !== '' ? props.pathReferer !== '/eca/approval/hrd' && props.pathReferer !== '/eca/claims/detail' ? props.pathReferer :'/eca/approval' : '/eca'}>
+                    refresh={true} onRefresh={() => fetchData()} 
+                    defaultBackPage='/eca/approval'>
 
             <div className="w-full px-4 mt-20 select-none flex flex-row place-content-center items-center">
                 <p className="w-full font-semibold text-lg">Claim Mileage Transactions Need Your Approval</p>
@@ -443,7 +507,8 @@ export default function Hrd(props) {
                         state.claimsApprovalData?.map((item, index) => {
                             return (
                                 <Dropdown key={index} 
-                                        title={`${item.chid}-${item.name?.length > 10 ? capitalizeEachWord(item.name).substring(0,10) : ''}...`} 
+                                        title={`${item.chid}`} 
+                                        caption={`${item.name?.length > 10 ? capitalizeEachWord(item.name).substring(0,10) : ''}...`}
                                         name={`Claim-${item.title}`}
                                         isLoading={isLoading}
                                         onClick={clicked => {
@@ -498,11 +563,9 @@ export default function Hrd(props) {
                                                                 }
                                                             </div>
                                                             <div className="w-full flex flex-row place-content-center gap-2 p-4">
-                                                                <Link href={`/claims/detail?chid=${slugify(item.chid)}`}>
-                                                                    <div className="cursor-pointer w-1/3 flex place-content-center items-center">
-                                                                        <div className="w-full flex place-content-center py-2 bg-blue-400 rounded-full text-white text-xs font-semibold">
-                                                                            SEE DETAIL
-                                                                        </div>
+                                                                <Link href={`/eca/claims/detail?chid=${slugify(item.chid)}`} className="cursor-pointer w-1/3 flex place-content-center items-center">
+                                                                    <div className="w-full flex place-content-center py-2 bg-blue-400 rounded-full text-white text-xs font-semibold">
+                                                                        SEE DETAIL
                                                                     </div>
                                                                 </Link>
                                                                 <div className="cursor-pointer w-1/3 flex place-content-center items-center">

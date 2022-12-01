@@ -19,15 +19,15 @@ export default function Home(props) {
                 </div>
 
                 <div className="absolute w-full h-full flex flex-col place-content-center items-center z-20">
-                    <div className="w-full sm:w-1/2 p-6 flex flex-row place-content-center items-center gap-4">
+                    <div className="w-full sm:w-1/2 p-6 sm:p-2 flex flex-row place-content-center items-center gap-4">
 
-                        <Link href="/eca" className='cursor-pointer w-1/2 sm:w-1/3 flex place-content-center items-center h-48 sm:h-56 p-4 bg-white bg-opacity-40 backdrop-blur-md border-2 border-gray-200 rounded-xl'>
+                        <Link href="/eca" className='cursor-pointer w-1/2 flex place-content-center items-center h-48 sm:h-56 p-4 bg-white bg-opacity-40 backdrop-blur-md border-2 border-gray-200 rounded-xl'>
                             <div className="w-40 text-center">
                                 <div className="mt-4 text-3xl xl:text-5xl text-blue-300 text-logo-stroke-mobile xl:text-logo-stroke-desktop font-extrabold ">ECA</div>
                                 <div className="mb-4 text-xs tracking-normal text-blue-300 font-light">EMPLOYEE CLAIM APP</div>
                             </div>
                         </Link>
-                        <Link href="/kch-office" className='cursor-pointer w-1/2 sm:w-1/3 flex place-content-center items-center h-48 sm:h-56 p-4 bg-white bg-opacity-40 backdrop-blur-md border-2 border-gray-200 rounded-xl'>
+                        <Link href="/kch-office" className='cursor-pointer w-1/2 flex place-content-center items-center h-48 sm:h-56 p-4 bg-white bg-opacity-40 backdrop-blur-md border-2 border-gray-200 rounded-xl'>
                             <div className="w-40 text-center">
                                 <div className="mt-4 text-3xl xl:text-4xl text-green-900 text-logo-stroke-mobile xl:text-logo-stroke-desktop font-extrabold ">CHStar</div>
                                 <div className="mb-4 text-base xl:text-xl tracking-wider text-green-500 text-logo-stroke-mobile font-extrabold">KCH OFFICE</div>

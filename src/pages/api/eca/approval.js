@@ -12,7 +12,6 @@ export default function useApproval() {
             const response = res.data
             paymentApproval = response
         }).catch(err => {
-            console.log(err)
         })
         return paymentApproval
     }
@@ -24,7 +23,6 @@ export default function useApproval() {
             const response = res.data
             hrdApproval = response
         }).catch(err => {
-            console.log(err)
         })
         return hrdApproval
     }
@@ -36,7 +34,6 @@ export default function useApproval() {
             const response = res.data
             claimApproval = response
         }).catch(err => {
-            console.log(err)
         })
         return claimApproval
     }
@@ -48,7 +45,6 @@ export default function useApproval() {
             const response = res.data
             btbApproval = response
         }).catch(err => {
-            console.log(err)
         })
         return btbApproval
     }
@@ -58,7 +54,7 @@ export default function useApproval() {
         let status = false
         await axios.put(`api/ClaimMil/approval/superior`, props)
                    .then( res => { status = true })
-                   .catch()
+                   .catch ( err => {})
         return status
     }
 
@@ -67,7 +63,7 @@ export default function useApproval() {
         let status = false
         await axios.put(`api/ClaimMil/approval/superior/all`, props)
                    .then( res => { status = true })
-                   .catch()
+                   .catch ( err => {})
         return status
     }
 
@@ -76,7 +72,7 @@ export default function useApproval() {
         let status = false
         await axios.put(`api/ClaimOthers/approval/superior`, props)
                    .then( res => { status = true })
-                   .catch()
+                   .catch ( err => {})
         return status
     }
 
@@ -85,7 +81,7 @@ export default function useApproval() {
         let status = false
         await axios.put(`api/ClaimOthers/approval/superior/all`, props)
                    .then( res => { status = true })
-                   .catch()
+                   .catch ( err => {})
         return status
     }
 
@@ -94,7 +90,7 @@ export default function useApproval() {
         let status = false
         await axios.put(`/api/BTBChild/approval/superior/all`, props)
                    .then( res => { status = true })
-                   .catch()
+                   .catch ( err => {})
         return status
     }
 
@@ -103,7 +99,7 @@ export default function useApproval() {
         let status = false
         await axios.put(`api/ClaimMil/approval/hrd/all`, props)
                    .then( res => { status = true })
-                   .catch()
+                   .catch( err => {})
         return status
     }
 
@@ -112,7 +108,7 @@ export default function useApproval() {
         let status = false
         await axios.put(`api/ClaimMil/approval/hrd`, props)
                    .then( res => { status = true })
-                   .catch()
+                   .catch(err => {})
         return status
     }
 
@@ -121,7 +117,7 @@ export default function useApproval() {
         let status = false
         await axios.put(`api/PaymentApproval/updatepauser?pdid=${pdid}`)
                    .then( res => { status = true })
-                   .catch()
+                   .catch ( err => {})
         return status
     }
 

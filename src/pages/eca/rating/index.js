@@ -2,31 +2,23 @@ import { useState, useEffect, useRef } from "react"
 import { useTheme } from "next-themes"
 import { toast } from 'react-toastify'
 import { useRouter } from 'next/router'
-import Image from 'next/image'
 import Link from 'next/link'
 
-import GridColumn from "components/Grid/Column"
-import ShowDocument from "components/Document/Show"
-import Layout from "components/Layout/List"
-import Modals from 'components/Modals'
-import Button from "components/Button"
-import Textarea from "components/Forms/Textarea"
+import GridColumn from "components/eca/Grid/Column"
+import ShowDocument from "components/eca/Document/Show"
+import Layout from "components/eca/Layout/List"
+import Modals from 'components/eca/Modals'
+import Button from "components/eca/Button"
 
-import errorHandler from "configs/errorHandler"
-
-import useClaim from 'pages/api/claim'
-import useRating from 'pages/api/rating'
-import useUser from 'pages/api/user'
+import useClaim from 'pages/api/eca/claim'
+import useRating from 'pages/api/eca/rating'
+import useUser from 'pages/api/eca/user'
 
 import useForm from "helpers/useForm"
-
-import ClaimDark from '/public/images/svg/claim-dark.svg'
-import ClaimLight from '/public/images/svg/claim-light.svg'
-import BTBDark from '/public/images/svg/btb-dark.svg'
-import BTBLight from '/public/images/svg/btb-light.svg'
-import StarLight from '/public/images/svg/star-light.svg'
-import StarDark from '/public/images/svg/star-dark.svg'
 import formatDate from "helpers/formatDate"
+
+import StarLight from '/public/images/svg/eca/star-light.svg'
+import StarDark from '/public/images/svg/eca/star-dark.svg'
 
 function CardRating(props) {
     
@@ -344,7 +336,7 @@ export default function Rating(props) {
     },[user, fetchStatus, state.dataRating, state.ratingClicked])
     
     return (
-        <Layout title="Rating" goBackPage="/" refresh={true}>
+        <Layout title="Rating" defaultBackPage="/eca" refresh={true}>
 
             <div className="w-full mt-20">
                 {

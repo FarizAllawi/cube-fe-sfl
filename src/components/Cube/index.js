@@ -11,37 +11,37 @@ export default function Cube() {
 
                 <div className={styles.front}>
                     <div className={styles.singlebox}>
-                        <Image src={CubeLogo} width={150} height={150} />
+                        <Image src={CubeLogo} width={150} height={150} alt="cube-logo" />
                     </div>
                 </div>
 
                 <div className={styles.back}>
                     <div className={styles.singlebox}>
-                        <Image src={CubeLogo} width={150} height={150}></Image>
+                        <Image src={CubeLogo} width={150} height={150} alt="cube-logo" />
                     </div>
                 </div>
 
                 <div className={styles.left}>
                     <div className={styles.singlebox}>
-                        <Image src={CubeLogo} width={150} height={150}></Image>
+                        <Image src={CubeLogo} width={150} height={150} alt="cube-logo" />
                     </div>
                 </div>
 
                 <div className={styles.right}>
                     <div className={styles.singlebox}>
-                        <Image src={CubeLogo} width={150} height={150}></Image>
+                        <Image src={CubeLogo} width={150} height={150} alt="cube-logo" />
                     </div>
                 </div>
 
                 <div className={styles.top}>
                     <div className={styles.singlebox}>
-                        <Image src={CubeLogo} width={150} height={150}></Image>
+                        <Image src={CubeLogo} width={150} height={150} alt="cube-logo" />
                     </div>
                 </div>
 
                 <div className={styles.bottom}>
                     <div className={styles.singlebox}>
-                        <Image src={CubeLogo} width={150} height={150}></Image>
+                        <Image src={CubeLogo} width={150} height={150} alt="cube-logo" />
                     </div>
                 </div>
 

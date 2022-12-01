@@ -173,8 +173,6 @@ export default function StartingKM(props) {
 
         let startingKMState = state 
 
-        console.log("TRUE HEREE")
-
         // Update Claim Mileage for update File
         if (cmid !== undefined && !isSubmitForm && mileageStatus === 'view'){
             let firstFile = state.startingKMDocuments[0]
@@ -215,7 +213,7 @@ export default function StartingKM(props) {
                     startingKMState['startingKMDocumentsProve'] = item?.storagePath
                     props.onChange(startingKMState)
                     toast.success("Start Trip Updated Sucessfully")
-                    return props.nextStep()
+                    return router.push(`/eca/claims/detail?chid=${chid}`)
                 }
             }
 

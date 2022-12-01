@@ -164,7 +164,7 @@ export default function Claims(props) {
 
 
     return (
-        <LayoutList title="List of Claims" goBackPage='/eca' refresh={true} onRefresh={getClaim}>
+        <LayoutList title="List of Claims" defaultBackPage='/eca' refresh={true} onRefresh={getClaim}>
 
             <div className="w-full px-4 mt-20 select-none flex flex-row place-content-center items-center">
                 <p className="w-1/2 font-semibold text-xl">Your Claims</p>

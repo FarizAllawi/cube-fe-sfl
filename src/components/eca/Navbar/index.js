@@ -10,6 +10,15 @@ export default function Navbar(props) {
 		height: undefined,
 	})
 
+    const [updateLocalStorage, setUpdateLocalStorage] = useState(false)
+
+    const initLocalStorage = () => {
+        localStorage.setItem('current-page', '/eca') // Hompage route path
+        localStorage.setItem('navigation-page', JSON.stringify([]))  //set empty navigation page
+        setUpdateLocalStorage(true)
+    }
+    
+
     useEffect(() => {
         setMounted(true)
         // Handler to call on window resize
@@ -21,6 +30,8 @@ export default function Navbar(props) {
 			})
 		}
 
+        if (!updateLocalStorage) initLocalStorage()
+
         window.addEventListener("resize", handleResize)
         handleResize()
 
@@ -28,7 +39,7 @@ export default function Navbar(props) {
             window.removeEventListener("resize", handleResize)
         }
 
-    }, [])
+    }, [updateLocalStorage])
     if (!mounted) return null
 
     return ( 

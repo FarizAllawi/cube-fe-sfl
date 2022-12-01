@@ -190,7 +190,7 @@ export async function getServerSideProps(context) {
 export default function Claims(props) {
 
     const router = useRouter()
-    const { insertNotification } = useNotification()
+    const { insertNotification, sendEmail } = useNotification()
     const { 
         getCHBundle,
         getClaimOtherMedia,
@@ -203,7 +203,7 @@ export default function Claims(props) {
         updateClaimMileage,
         isLoading
     } = useClaim()
-    const { getDetailUser, getUserByNik, sendEmail } = useUser()
+    const { getDetailUser, getUserByNik } = useUser()
 
     // console.log(props.data.item1)
 
@@ -284,7 +284,7 @@ export default function Claims(props) {
             sendEmail({
                 email: detailSuperior.email,
                 heaer: 'Claim Need Approval',
-                description: `BTB ${bhid} from ${capitalizeEachWord(detailUser.name)} needs your approval`
+                description: `Claim ${chid} from ${capitalizeEachWord(detailUser.name)} needs your approval`
             })
 
             
@@ -335,7 +335,7 @@ export default function Claims(props) {
         let claim = await getCHBundle(chid)
         let userData = await getDetailUser()
         
-        if (claim.item2.length > 0 || claim.item3.length > 0) {
+        if (claim?.item2?.length > 0 || claim?.item3?.length > 0) {
             setDataClaim(claim)
             setClaimHead(claim.item1)
             if (userData.id !== undefined) setUser(userData)
@@ -357,7 +357,7 @@ export default function Claims(props) {
                       detailId={router.query.id} 
                       status={claimHead[0]?.status !== undefined  && claimHead[0]?.status === 3 ? 'draft' : 'view'}
                     //   status={claimHead[0].status}
-                      goBackPage={ props.pathReferer !== '' && (props.pathReferer !== '/eca/claims/action/other' || props.pathReferer !== '/eca/claims/action/mileage') ? props.pathReferer : '/eca/claims' }
+                      defaultBackPage='/eca/claims' 
                       isSubmitLoading={isLoading}
                       onSubmitClick={() => user.id !== undefined ? submitClaimHeader(claimHead[0].chid) : false}>
 

@@ -1,20 +1,36 @@
 import propTypes from 'prop-types'
+import CryptoJS from 'crypto-js'
 import {useEffect, useState} from 'react'
 import { useTheme } from 'next-themes'
 
 import ArrowRightDark from '/public/images/svg/eca/arrow-right-dark.svg'
 import ArrowRightLight from '/public/images/svg/eca/arrow-right-light.svg'
 
+function HashString(string) {
+    return CryptoJS.AES.encrypt(string, process.env.NEXT_PUBLIC_AES_HASH_KEY).toString();
+}
+
 export default function Dropdown(props) {
 
     const {
         title, name, append, className, children, isLoading, caption
     } = props
+    
 
     const { theme } = useTheme()
-    const [clicked, setClicked] = useState('')
+    const [clicked, setClicked] = useState(false)
+    const [isHashStatus , setHashStatus] = useState(false)
 
-    useEffect(() => {}, [isLoading])
+    const [hashName, setHashName] = useState('')
+    const [hashTitle, setHashTitle] = useState('')
+
+    useEffect(() => {
+        if (!isHashStatus && (name !== '' || name !== undefined) && (title !== '' || title !== undefined )) {
+            setHashName(HashString(name))
+            setHashTitle(HashString(title))
+            setHashStatus(true)
+        }
+    }, [clicked, hashName, hashTitle, isHashStatus, isLoading, name, title])
 
     return (
         <div className={`relative select-none w-full flex place-content-center items-center `}>
@@ -32,13 +48,8 @@ export default function Dropdown(props) {
                     !isLoading && (
                         <div className="cursor-pointer w-full p-4 flex flex-row place-content-start items-center h-full" 
                             onClick={() => {
-                                        if (clicked !== `${name}-${title}`){
-                                            setClicked(`${name}-${title}`)
-                                            props.onClick(`${name}-${title}`) 
-                                        }else{
-                                            setClicked('')
-                                            props.onClick(``) 
-                                        }
+                                        setClicked(!clicked)
+                                        props.onClick()
                                     }}>
                             <div className={`w-8/12 flex flex-row font-semibold text-sm`}>
                                 <div className="w-1/2">
@@ -53,11 +64,10 @@ export default function Dropdown(props) {
                                     {
                                         append
                                     }
-                                    
                                 </div>
                                 <div className="flex place-content-end ml-2">
                                 {
-                                    clicked !== `${name}-${title}` ? (
+                                    !clicked ? (
                                         <>
                                         {
                                             theme === 'dark' ? <ArrowRightDark className="w-8/12 transition-transform rounded-full" /> : <ArrowRightLight className="w-8/12 transition-transform rounded-full" />
@@ -76,9 +86,7 @@ export default function Dropdown(props) {
                         </div>
                     )
                 }
-                {
-                        clicked === `${name}-${title}` && children
-                }
+                <div className={!clicked ? 'hidden' : 'visible'}>{children}</div>
             </div>
         </div>
     )    
@@ -88,7 +96,6 @@ Dropdown.propTypes = {
     title: propTypes.string,
     caption: propTypes.string,
     name: propTypes.string.isRequired,
-    clicked: propTypes.string,
     className: propTypes.string,
     append: propTypes.object,
     isLoading: propTypes.bool,

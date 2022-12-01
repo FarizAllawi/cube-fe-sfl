@@ -322,9 +322,9 @@ export default function Other(props) {
         <LayoutDetail title="Action Other Claim" 
                       detailFeature='claim'
                       detailFeatureFormButton={''} 
-                      goBackPage={props.pathReferer !== '' ? props.pathReferer !== '/eca/claims/action' ? props.pathReferer : undefined : '/eca/claims'}
                       status={otherStatus}
                       isSubmitLoading={isSubmitForm}
+                      defaultBackPage='/eca/claims'
                       onSubmitClick={() => {
                         console.log(state)
 

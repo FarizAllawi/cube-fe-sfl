@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 708.29 464.55">
+    <defs>
+        <style>
+            .class-1{fill:#edf7ff;}
+            .class-2{opacity:0.15;}
+            .class-10,.class-2{isolation:isolate;}
+            .class-3{fill:#867fad;}
+            .class-4{fill:url(#linear-gradient);}
+            .class-5{fill:url(#linear-gradient-2);}
+            .class-6{fill:url(#linear-gradient-3);}
+            .class-7{fill:url(#linear-gradient-4);}
+            .class-8{fill:#908abd;}
+            .class-9{fill:#c9e2f4;}
+            .class-10{fill:#fff;opacity:0.2;}
+            .class-11{fill:#53516d;}
+            .class-12{fill:#d1eff2;}
+        </style>
+        <linearGradient id="linear-gradient" x1="338.01" y1="456.84" x2="338.01" y2="256.38" gradientUnits="userSpaceOnUse">
+        <stop offset="0" stop-color="#7db6d3"/>
+        <stop offset="1" stop-color="#8f8dbf"/>
+        </linearGradient>
+        <linearGradient id="linear-gradient-2" x1="-1129.72" y1="198.46" x2="-1129.72" y2="200.3" gradientTransform="translate(228101.01 -10287.16) scale(201.61 52.56)" xlink:href="#linear-gradient"/>
+        <linearGradient id="linear-gradient-3" x1="-1128.48" y1="198.97" x2="-1128.48" y2="197.27" gradientTransform="translate(186491.88 -14806.03) scale(164.96 75.6)" xlink:href="#linear-gradient"/>
+        <linearGradient id="linear-gradient-4" x1="491.16" y1="495.55" x2="518.92" y2="495.55" gradientTransform="matrix(1, 0, 0, -1, -305.87, 712.51)" xlink:href="#linear-gradient"/>
+    </defs>
+    <title>404 Error</title>
+    <g id="Layer_2" data-name="Layer 2">
+        <g id="Illustration">
+            <path id="Background" class="class-1" d="M646.44,456.84H126.5s-141.11-34.31-125.26-149c26.41-79.4,63.61-51.42,139.82-118.39,50.63-47.62-8-146.57,30.71-176.17,71.08-49.62,208.8,54.45,228.33,73.26,15.31,14.75,31.41,23,51.74,18,74.82-18.4,118.83-33.77,158-1,45.8,38.3-54.81,129.78-10.9,173.65s94.83-8.8,108.46,47.37C716.93,379.48,646.44,371.07,646.44,456.84Z"/>
+            <polygon class="class-2" points="232.75 261.58 443.2 261.58 443.2 94.5 438.65 81.45 305.11 24.13 232.75 24.13 232.75 261.58"/>
+                <rect id="Rectangle_1" data-name="Rectangle 1" class="class-3" x="185.32" y="384.99" width="305.3" height="64.15"/>
+                <path id="Path_4-2" data-name="Path 4-2" class="class-4" d="M588.62,279.51v154.2a23.2,23.2,0,0,1-23.14,23.13H490.67v-56a15.8,15.8,0,0,0-15.8-15.8H201.13a15.81,15.81,0,0,0-15.8,15.8v56h-74.8a23.2,23.2,0,0,1-23.14-23.13V279.51a23.2,23.2,0,0,1,23.14-23.13h455A23.21,23.21,0,0,1,588.62,279.51Z"/>
+                <path id="Rectangle_6" data-name="Rectangle 6" class="class-5" d="M199,177.17H477a13.65,13.65,0,0,1,13.65,13.65h0v65.94H185.32V190.82A13.65,13.65,0,0,1,199,177.17Z"/>
+                <path id="Path_9" data-name="Path 9" class="class-6" d="M462.87,152.87V256.8H213.06V152.87a10.58,10.58,0,0,1,10.56-10.56h228.7A10.56,10.56,0,0,1,462.87,152.87Z"/>
+            <rect id="Rectangle_7" data-name="Rectangle 7" class="class-2" x="229.97" y="142.32" width="7.3" height="114.49"/>
+            <rect id="Rectangle_8" data-name="Rectangle 8" class="class-2" x="438.68" y="142.32" width="7.3" height="114.49"/>
+            <path id="Path_10" data-name="Path 10" class="class-7" d="M185.29,256.76s19.28.43,19.28-23.85-5.44-55.74,8.48-55.74v79.59Z"/>
+            <path id="Path_11" data-name="Path 11" class="class-2" d="M490.66,256.76s-19.28.43-19.28-23.85,5.44-55.74-8.48-55.74v79.59Z"/>
+            <path id="Path_12" data-name="Path 12" class="class-1" d="M438.65,81.45V257.07H237.29v-229H385.65A10.73,10.73,0,0,0,396.37,38.8a9.82,9.82,0,0,0,1.21-.07,10.63,10.63,0,0,0,8-5.15,38.26,38.26,0,0,0,24.83,26,12.5,12.5,0,0,0,8.27,21.87Z"/>
+                <g id="Group_6" data-name="Group 6">
+                    <g id="Group_2" data-name="Group 2">
+                        <path id="Path_13" data-name="Path 13" class="class-8" d="M314.73,180.47H307.8v8.94H294.93v-8.94H270.25v-8.6l20.94-29.14h13.68l-19,27.27h9.47v-7.93h12.47V170h6.94Z"/>
+                        <path id="Path_14" data-name="Path 14" class="class-8" d="M317.4,166.07c0-15.41,8.67-24.28,20.61-24.28s20.54,8.87,20.54,24.28-8.67,24.27-20.54,24.27S317.4,181.47,317.4,166.07Zm27.88,0c0-9.81-3.07-13.48-7.27-13.48s-7.34,3.67-7.34,13.48,3.07,13.48,7.34,13.48S345.28,175.87,345.28,166.07Z"/>
+                        <path id="Path_15" data-name="Path 15" class="class-8" d="M407.13,180.47h-7v8.94H387.29v-8.94H362.61v-8.6l21-29.14h13.67l-19,27.27h9.47v-7.93h12.43V170h7Z"/>
+                    </g>
+                    <g id="Group_5" data-name="Group 5"><g id="Group_3" data-name="Group 3"><ellipse id="Ellipse_1" data-name="Ellipse 1" class="class-8" cx="323.79" cy="99" rx="2.84" ry="4.49"/>
+                        <ellipse id="Ellipse_2" data-name="Ellipse 2" class="class-8" cx="352.16" cy="99" rx="2.84" ry="4.49"/>
+                    </g>
+                    <g id="Group_4" data-name="Group 4">
+                        <path id="Path_16" data-name="Path 16" class="class-8" d="M317.37,124.86a1.42,1.42,0,0,1-.86-2.55,36.47,36.47,0,0,1,42.92,0,1.42,1.42,0,0,1-1.52,2.4l-.15-.11h0a33.62,33.62,0,0,0-39.5,0A1.37,1.37,0,0,1,317.37,124.86Z"/>
+                    </g>
+                </g>
+            </g>
+                <path id="Path_17" data-name="Path 17" class="class-9" d="M438.65,256.82V132.4c0,35.94-20.62,31.21-19.67,56.5s-4.73,28.62-34.12,22.94-17,36.89-39.58,28.38-26.56-33.15-59.67-14.15-48.32-36.71-48.32-36.71v67.5Z"/>
+                <path id="Path_22" data-name="Path 22" class="class-10" d="M565.48,256.38s-14.08,93.61-109.6,56-127-14-134.93,22-56.15,35-113.86,0-49.34,86.39-119.74,86.39v12.94a23.19,23.19,0,0,0,23.13,23.13h54a81.44,81.44,0,0,0,4-12.31c3.23-13.3,9-22.89,16.82-29.59V400.79A15.81,15.81,0,0,1,201.12,385H381.86c-.87-3.54-3.24-6.48-5-9.69-4.54-8.48-5.7-25.46,3.77-31.21,13.66-8.29,35.86,4.07,49.65,7.68,30.43,8,62.65,16.7,94.39,13.3,34.32-3.67,56.18-26.12,61.93-59.9a152.1,152.1,0,0,0,2-25.66A23.2,23.2,0,0,0,565.48,256.38Z"/>
+                <path id="Path_23" data-name="Path 23" class="class-10" d="M525,361.47c-34.61-36.6-72.83-12.4-125.51,12.6-24.15,11.5-46.52-13.52-60.63-29.81-9.59-11.07-18-23.08-26.84-34.76-6.84-9-16.67-26.91-28.87-28.27-14.46-1.61-16,17.25-19.51,26.82-14.68,40-78.31,19.17-103.66,3.72a124,124,0,0,1-47.19-52.38,5.61,5.61,0,0,0-2-2.65,2.8,2.8,0,0,1-.48-.37,23.2,23.2,0,0,0-23,23.12v28a16.42,16.42,0,0,0,1.16,4.08c1.63,3.74,4.81,6.55,7.94,9.16,20.31,16.89,43.35,30.79,68.49,38.91,30.72,9.91,76.63,15.26,102.13-9.39,7.35-7.12,9.48-18.87,18.16-24.94,15-10.51,29.89,30.44,34.76,39.15,3.74,6.71,7.73,15.9,14.15,20.56h113l9.1-5.23c41-23.33,68.12,9.46,83.43,37.17,9,16.29,14.34,31.74,21.31,39.91h4.53a23.2,23.2,0,0,0,23.14-23.13v-13C560.83,448.55,559.57,398.07,525,361.47Z"/>
+            <g id="Group_10" data-name="Group 10">
+                <rect id="Rectangle_9" data-name="Rectangle 9" class="class-11" x="144.4" y="449.13" width="387.04" height="15.42" rx="4.99" ry="4.99"/>
+                <rect id="Rectangle_10" data-name="Rectangle 10" class="class-11" x="144.4" y="449.13" width="387.04" height="15.42" rx="4.99" ry="4.99"/>
+            </g>
+            <rect id="Rectangle_15" data-name="Rectangle 15" class="class-12" x="237.29" y="445.33" width="201.37" height="3.8"/>
+        </g>
+    </g>
+</svg>

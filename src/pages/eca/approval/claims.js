@@ -25,29 +25,12 @@ import GridColumn from 'components/eca/Grid/Column'
 
 import errorHandler from 'configs/errorHandler'
 
-export const getServerSideProps = async (context) => {
-
-    const { referer } = context.req.headers 
-
-    let pathReferer = ''
-    if (referer !== undefined) {
-        let url = new URL(referer)
-        pathReferer = url.pathname
-    }
-
-    return { 
-        props: { 
-            pathReferer: pathReferer
-        } 
-    }
-}
-
 export default function Claims(props) {
     const router = useRouter()
     const [filter, setFilter] = useState(false)
     const [user, setUser] = useState({})
 
-    const { getDetailUser } = useUser()
+    const { getDetailUser, getUserByNik } = useUser()
 
     const {updateClaimMileage, updateClaimOther} = useClaim()
     const {
@@ -57,7 +40,7 @@ export default function Claims(props) {
         approveMileageSuperior,
         approveOthersSuperior
     } = useApproval()
-    const { insertNotification } = useNotification()
+    const { insertNotification, sendEmail } = useNotification()
 
     const [isLoading, setIsLoading] = useState(false)
     
@@ -126,22 +109,30 @@ export default function Claims(props) {
         })
     }
 
-    const getClaimsApproval = useCallback( async () => {
+    const fetchData = useCallback( async () => {
         let userData = await getDetailUser()
+        newState({ 
+            rejectAll: '',
+            approveAll: '',
+            reason: '',
+            deleteParticularClaim: '',
+            claimsApprovalData: [{},{},{},{}],
+            claimRequestorData: {},
+            fetchStatus: true
+        })
+
+        setIsLoading(true)
 
         if (userData.id !== undefined) {
             setUser(userData)
-            newState({ 
-                approveAll: '',
-                reason: '',
-                claimsApprovalData: [{},{},{},{}],
-                fetchStatus: false
-            })
-            setIsLoading(true)
-            
+
             setTimeout(async () => {
                 const data = await getClaimApproval(userData.nik)
                 newState({ 
+                    rejectAll: '',
+                    approveAll: '',
+                    reason: '',
+                    deleteParticularClaim: '',
                     claimsApprovalData: data,
                     claimRequestorData: {},
                     fetchStatus: true
@@ -149,7 +140,22 @@ export default function Claims(props) {
                 setIsLoading(false)
             }, 1000);
         }
-        else errorHandler("There is an error when retrieving user data")
+        else { 
+            setTimeout(async () => {
+                newState({ 
+                    rejectAll: '',
+                    approveAll: '',
+                    reason: '',
+                    deleteParticularClaim: '',
+                    claimsApprovalData: [],
+                    claimRequestorData: {},
+                    fetchStatus: true
+                })
+                setIsLoading(false)
+            }, 1000);
+            errorHandler("There is an error when retrieving user data")
+        }
+
     }, [getClaimApproval, getDetailUser, newState])
 
     const getAmount = (mileage, others, type) => {
@@ -192,7 +198,7 @@ export default function Claims(props) {
             if (item.chid === state.approveAll) requestor = item
         })
 
-        // let detailUser = await getUserByNik(requestor.nik)
+        let detailUser = await getUserByNik(requestor.nik)
 
         if (state.claimRequestorData[state.approveAll]?.item2?.length !== 0) mileage = true
         if (state.claimRequestorData[state.approveAll]?.item3?.length !== 0) other = true
@@ -223,17 +229,15 @@ export default function Claims(props) {
             description: `Your Claim ${requestor.chid} approved by your superior ${capitalizeEachWord(user.name)}`
         })
 
-        // await sendEmail({
-        //     email: detailUser.email,
-        //     header: `Claim Approved`,
-        //     description: `Your Claim ${requestor.chid} approved by your superior ${capitalizeEachWord(user.name)}`
-        // })
+        await sendEmail({
+            email: detailUser.email,
+            header: `Claim Approved`,
+            description: `Your Claim ${requestor.chid} approved by your superior ${capitalizeEachWord(user.name)}`
+        })
         
         newState({aproveAll: ''})
+        fetchData()
         toast.success("Approve Claim Succesfuly ")
-        setTimeout(() => {
-            router.reload()
-        }, 350)
     }
 
     const rejectParticularClaim = async() => {
@@ -246,7 +250,7 @@ export default function Claims(props) {
             if (item.chid === claimHead) requestor = item
         })
 
-        // let detailUser = await getUserByNik(requestor.nik)
+        let detailUser = await getUserByNik(requestor.nik)
         
         if (state.reason !== "") {
 
@@ -267,19 +271,17 @@ export default function Claims(props) {
                         description: `Claim Mileage ${claimId} rejected by your superior ${capitalizeEachWord(user.name)}`
                     })
 
-                    // await sendEmail({
-                    //     email: detailUser.email,
-                    //     header: `Claim Rejected`,
-                    //     description: `Claim Mileage ${claimId} rejected by your superior ${capitalizeEachWord(user.name)}`
-                    // })
+                    await sendEmail({
+                        email: detailUser.email,
+                        header: `Claim Rejected`,
+                        description: `Claim Mileage ${claimId} rejected by your superior ${capitalizeEachWord(user.name)}`
+                    })
                     
 
+                    
                     newState({deleteParticularClaim: ''})
-
                     toast.success("Reject Claim Succesfuly ")
-                    setTimeout(() => {
-                        router.reload()
-                    }, 350)
+                    fetchData()
                 // }
                 // catch(err) {
                 //     errorHandler("An error occured while rejecting claim")
@@ -316,9 +318,7 @@ export default function Claims(props) {
                     newState({deleteParticularClaim: ''})
 
                     toast.success("Reject Claim Succesfuly ")
-                    setTimeout(() => {
-                        router.reload()
-                    }, 350)
+                    fetchData()
                 // }
                 // catch(err) {
                 //     errorHandler("An error occured while rejecting claim")
@@ -343,9 +343,12 @@ export default function Claims(props) {
         let mileage = false
         let other = false
 
+        
         state.claimsApprovalData.map(item => {
             if (item.chid === claimHead) requestor = item
         })
+
+        let detailUser = await getUserByNik(requestor.nik)
 
         if (state.claimRequestorData[claimHead]?.item2?.length !== 0) mileage = true
         if (state.claimRequestorData[claimHead]?.item3?.length !== 0) other = true
@@ -377,19 +380,17 @@ export default function Claims(props) {
                 description: `Claim ${claimHead} rejected by your superior ${capitalizeEachWord(user.name)}`
             })
 
-            // await sendEmail({
-            //     email: detailUser.email,
-            //     header: `Claim Rejected`,
-            //     description: `Claim Other ${claimId} rejected by your superior ${capitalizeEachWord(user.name)}`
-            // })
-
+            if (detailUser.email !== undefined) {
+                await sendEmail({
+                    email: detailUser.email,
+                    header: `Claim Rejected`,
+                    description: `Claim Header ${claimHead} rejected by your superior ${capitalizeEachWord(user.name)}`
+                })
+            }
             
             newState({rejectAll: ''})
             toast.success("Reject Claim Succesfuly ")
-            setTimeout(() => {
-                router.reload()
-            }, 350)
-            
+            fetchData()
         }
         else {
             errorHandler("Please insert your reason...")
@@ -397,16 +398,16 @@ export default function Claims(props) {
     }
 
     useEffect(() => {
-        if (state.claimsApprovalData.length === 0 && !state.fetchStatus) getClaimsApproval()
+        if (state.claimsApprovalData.length === 0 && !state.fetchStatus) fetchData()
 
-    },[getClaimsApproval, state.claimsApprovalData.length, state.fetchStatus])
+    },[fetchData, state.claimsApprovalData.length, state.fetchStatus])
     
     // console.log(state.claimRequestorData)
 
     return (
         <LayoutList title="List of Claim Approval" 
-                    refresh={true} onRefresh={getClaimsApproval} 
-                    goBackPage={props.pathReferer !== '' ? props.pathReferer !== '/eca/approval/claims' && props.pathReferer !== '/eca/claims/detail' ? props.pathReferer :'/eca/approval' : '/eca'}>
+                    refresh={true} onRefresh={fetchData} 
+                    defaultBackPage='/eca/approval'>
 
             <div className="w-full px-4 mt-20 select-none flex flex-row place-content-center items-center">
                  <p className="w-full font-semibold text-lg">Claim Transactions Need Your Approval</p>
@@ -458,10 +459,11 @@ export default function Claims(props) {
                                         caption={`${capitalizeEachWord(item.name)}`}
                                         isLoading={isLoading}
                                         onClick={clicked => {
-                                                if (!state.claimRequestorData.hasOwnProperty(item.chid)) {
-                                                    getClaimRequestorData(item.chid)
-                                                }
-                                                
+
+                                            if (!state.claimRequestorData.hasOwnProperty(item.chid)) {
+                                                getClaimRequestorData(item.chid)
+                                            }
+                                            
                                         }}>
                                     { 
                                         !isLoading && (

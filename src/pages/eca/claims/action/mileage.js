@@ -17,6 +17,14 @@ import errorHandler from 'configs/errorHandler'
 
 export async function getServerSideProps(context) {
 
+    const { referer } = context.req.headers 
+
+    let pathReferer = ''
+    if (referer !== undefined) {
+        let url = new URL(referer)
+        pathReferer = url.pathname
+    }
+
     const {cmid} = queryString.parseUrl(context.resolvedUrl).query
     const claimMileage = await axios.get(`api/ClaimMil/getByCMID?getCMID=${cmid}`)
     .then(res => {
@@ -47,7 +55,8 @@ export async function getServerSideProps(context) {
                 endingKM: claimMileage.data[0].end_km,
                 endingKMDocumentsProve: claimMileage.data[0].upload_end,
                 metadata: claimMileage.data[0].metadata,
-                claimMileageUploaded: claimMileageUploaded
+                claimMileageUploaded: claimMileageUploaded,
+                pathReferer: pathReferer
             }
          }
     }
@@ -231,7 +240,8 @@ export default function Mileage(props) {
     }
 
     useEffect(() => {
-        if (!fetchStatus && cmid !== undefined && chid !== undefined && (status === 'update' || status === 'view')) getDataClaim()
+        if (!fetchStatus && cmid !=
+             undefined && chid !== undefined && (status === 'update' || status === 'view')) getDataClaim()
         if (cmid === undefined && chid === undefined) setOtherStatus('create')
         else if (cmid !== undefined && status === 'view') setOtherStatus('view') 
 
@@ -239,7 +249,7 @@ export default function Mileage(props) {
     // if (!state.mounted) return null
     
     return (
-        <LayoutDetail title="Action Claim Mileage" status={''} goBackPage="/eca/claims">
+        <LayoutDetail title="Action Claim Mileage" status={''} defaultBackPage='/eca/claims'>
             <div className="z-20 w-full px-4 pt-20 pb-4 fixed select-none bg-neutral-50 dark:bg-gray-900 drop-shadow-md">
                 <p className="font-bold text-base md:text-lg text-center">{
                         otherStatus === 'create' ?  'Add New' : otherStatus === 'view' ? 'View' : 'Update'

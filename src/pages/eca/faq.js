@@ -63,7 +63,7 @@ export default function Faq(props) {
     }, [state.faq])
 
     return (
-        <Layout title="FAQ's" goBackPage="/eca">
+        <Layout title="FAQ's" defaultBackPage="/eca">
             <div className="w-full px-4 mt-20 select-none flex flex-col place-content-center items-center">
                 <p className="font-semibold text-center text-base md:text-xl">Top Questions</p>
                 <p className="font-light text-center text-sm text-blue-400">Frequents Question we Get</p>

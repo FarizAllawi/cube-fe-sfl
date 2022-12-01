@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import Image from 'next/image'
 
 import BadgeStatus from 'components/eca/Badge'
@@ -18,13 +18,13 @@ export default function CardClaims(props) {
         return src
     }
 
-    const getClaimMedia = async (id) => {
+    const getClaimMedia = useCallback( async (id) => {
         setClaimMedia(await getClaimOtherMedia(id))
-    }
+    }, [getClaimOtherMedia])
 
     useEffect(() => {
         if (claimMedia?.length === 0) getClaimMedia(data.hasOwnProperty('coid') ? data.coid : data.cmid)
-    },[claimMedia])
+    },[claimMedia, data, getClaimMedia])
 
 
     return (
@@ -39,7 +39,7 @@ export default function CardClaims(props) {
                                 <PDFIcon className="w-full h-full p-3"/>
                             </div>
                         ) : (
-                            <Image loader={imageLoader} fill src={`/api/getFile/${props.type === 'other' ? data.upload_prove : data.upload_start}`} layout="fill" className="object-cover rounded-full" alt={props.title}/>
+                            <Image loader={imageLoader} src={`/api/getFile/${props.type === 'other' ? data.upload_prove : data.upload_start}`} fill unoptimized className="object-cover rounded-full" alt="User Documents"/>
                         )
                     }
                     

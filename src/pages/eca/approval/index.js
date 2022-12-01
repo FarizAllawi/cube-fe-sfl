@@ -81,7 +81,7 @@ export default function Approve(props) {
 
     return (
         <LayoutList title="List of Approval"
-                    goBackPage='/eca'>
+                    defaultBackPage='/eca'>
             <div className="mt-20 select-none w-full h-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 auto-rows-max px-4 gap-2 pb-4 pt-4 overflow-y-scroll scroll-display-none">
                 {
                     role.length !== 0 && (

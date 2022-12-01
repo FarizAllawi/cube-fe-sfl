@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect, useRef} from 'react'
 import { useDropzone } from 'react-dropzone'
 import propTypes from 'prop-types'
-import Images from 'next/image'
+import Image from 'next/image'
 
 import UploadGray from '/public/images/svg/eca/upload-gray.svg'
 import TrashDark from '/public/images/svg/eca/trash-dark.svg'
@@ -60,7 +60,7 @@ function CardDocuments(props) {
         })
     }
 
-    const upload = async () => {
+    const upload = useCallback(async () => {
         let tempData = data
         const url = await uploadFiles(tempData, setProgress)
         if (!tempData.hasOwnProperty('storagePath')) { 
@@ -68,7 +68,7 @@ function CardDocuments(props) {
             tempData['storageFileName'] = url.fileName
         }
         props.onChange({target: {name: name, value: tempData}})
-    }
+    }, [data, name, props])
 
     useEffect(() => {
         const handleClickOutside = event => {
@@ -86,7 +86,7 @@ function CardDocuments(props) {
         return () => {
             document.removeEventListener("mouseover", handleClickOutside)
         }
-    }, [uploadStatus, progress, cardHover])
+    }, [uploadStatus, progress, cardHover, upload, props, data.name])
 
     return (
     <div ref={cardWrapper} className="relative w-10 h-12  bg-gray-300 rounded-lg">
@@ -104,7 +104,15 @@ function CardDocuments(props) {
                     <TextIcon className="w-10 h-10" />
                 </div>
             ) : (
-                <img src={data.url} width={10} height={12} className="w-full h-full object-cover rounded-lg" alt={data.name}  />
+                <Image  src={data.url}
+                        className="w-full h-full object-cover rounded-lg" 
+                        placeholder=''
+                        width={10} 
+                        height={12} 
+                        quality={100} 
+                        alt={data.name}  
+                        priority 
+                        unoptimized={true} />
             )
         
         }
@@ -195,7 +203,7 @@ export default function Upload(props) {
             }
         })
         
-    }, [dataUpload, uploadStatus])
+    }, [dataUpload, maxFiles, name, props, value])
 
     const deleteFile = (file) => {
         let tempData = value

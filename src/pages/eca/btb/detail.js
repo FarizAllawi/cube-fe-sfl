@@ -244,14 +244,14 @@ export default function BTB(props) {
 
 
         if (btbHead.length === 0 && !isFetch) getDataBTB()
-    }, [btbHead, dataBTB, getBTBChildByHeader, getBTBHeadDetail, isFetch, router.query])
+    }, [btbHead, dataBTB, getBTBChildByHeader, getBTBHeadDetail, getDetailUser, isFetch, router.query])
 
     return (
         <LayoutDetail title="Detail of BTB" 
                       detailId={router.query.id} 
                       status={btbHead[0]?.status !== undefined  && btbHead[0]?.status === 3 ? 'draft' : 'view'}
                       detailFeature="btb"
-                      goBackPage={ props.pathReferer !== '' ? props.pathReferer !== '/eca/btb'? props.pathReferer :'/eca/btb' : '/eca/btb' }
+                      defaultBackPage='/eca/btb'
                       isSubmitLoading={isLoading}
                       onSubmitClick={() => user.id !== undefined ? submitBTBHeader(bhid) : false}>
 

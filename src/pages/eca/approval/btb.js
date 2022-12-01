@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
 import {toast} from 'react-toastify'
 import {useRouter} from 'next/router'
@@ -35,23 +35,6 @@ const getAmount = (data, type) => {
     return total
 }
 
-export const getServerSideProps = async (context) => {
-
-    const { referer } = context.req.headers 
-
-    let pathReferer = ''
-    if (referer !== undefined) {
-        let url = new URL(referer)
-        pathReferer = url.pathname
-    }
-
-    return { 
-        props: { 
-            pathReferer: pathReferer
-        } 
-    }
-}
-
 export default function BTB(props) {
 
     const router  = useRouter()
@@ -73,10 +56,12 @@ export default function BTB(props) {
         fetchStatus: false,
     })
 
+
     const [filter, setFilter] = useState(false)
-    const { user, getUserByNik } = useUser()
+    const [user, setUser] = useState([])
     const {updateBTBChild} = useBTB()
     const {getBtbApproval, approveAllBtbSuperior} = useApproval()
+    const { getDetailUser, getUserByNik } = useUser()
     const {getBTBChildByHeader} = useBTB()
     const {insertNotification, sendEmail} = useNotification()
     const [isLoading, setIsLoading] = useState(false)
@@ -130,27 +115,55 @@ export default function BTB(props) {
         })
     }
 
-    const getBtbHeadApproval = async () => {
-        setIsLoading(true)
+    const getBtbHeadApproval = useCallback(async () => {
+
+        let userData = await getDetailUser()
         newState({ 
+            rejectAll: '',
             approveAll: '',
             reason: '',
+            rejectParticularBTB: '',
             btbApprovalData: [{},{},{},{}],
+            btbRequestorData: {},
             fetchStatus: false
         })
-        
-        setTimeout(async () => {
-            const data = await getBtbApproval(user.nik)
-            newState({ 
-                btbApprovalData: data,
-                btbRequestorData: {},
-                fetchStatus: true
-            })
-            setIsLoading(false)
-        }, 1000);
 
+        setIsLoading(true)
+
+        if (userData.id !== undefined) {
+            setUser(userData)
+
+            setTimeout(async () => {
+                const data = await getBtbApproval(userData.nik)
+                newState({ 
+                    rejectAll: '',
+                    approveAll: '',
+                    reason: '',
+                    rejectParticularBTB: '',
+                    btbApprovalData: data,
+                    btbRequestorData: {},
+                    fetchStatus: true
+                })
+                setIsLoading(false)
+            }, 1000);
+        }
+        else { 
+            setTimeout(async () => {
+                newState({ 
+                    rejectAll: '',
+                    rejectParticularBTB: '',
+                    approveAll: '',
+                    reason: '',
+                    btbApprovalData: [],
+                    btbRequestorData: {},
+                    fetchStatus: true
+                })
+                setIsLoading(false)
+            }, 1000);
+            errorHandler("There is an error when retrieving user data")
+        }
         // newState({ claimsDataTemp: claimsData })
-    }
+    }, [getBtbApproval, getDetailUser, newState])
 
     const getBtbRequestorData = async (bhid) => {
         setTimeout(async () => {
@@ -162,41 +175,47 @@ export default function BTB(props) {
 
     const approveAll = async () => {
         let requestor = {}
-
-
         state.btbApprovalData.map(item => {
             if (item.chid === state.approveAll) requestor = item
         })
 
-        // let detailUser = await getUserByNik(requestor.nik)
-        await Promise.all(
-            [
-                approveAllBtbSuperior({
-                    bhid: state.approveAll, 
-                    superior_approval:1,
-                    status_approval:1,
-                    reject_desc:''
-                    // superior_dt: convertDateTime(currentDate)
-                }),
-                insertNotification({
-                    nik: requestor.nik,
-                    header: `btb-BTB Approved-${state.approveAll}`,
-                    description: `BTB ${requestor.chid} approved by your superior ${capitalizeEachWord(user.name)}`
-                }),
-                // sendEmail({
-                //     email: detailUser.email,
-                //     heaer: 'BTB Approved',
-                //     description: `BTB ${requestor.chid} approved by your superior ${capitalizeEachWord(user.name)}`
-                // })
-            ]
-        )
-        
+        let detailUser = await getUserByNik(requestor.nik)
 
-        newState({approveAll: ''})
+        let approve = approveAllBtbSuperior({
+            bhid: state.approveAll, 
+            superior_approval:1,
+            status_approval:1,
+            reject_desc:''
+            // superior_dt: convertDateTime(currentDate)
+        })
+
+        if (approve) {
+
+            insertNotification({
+                nik: requestor.nik,
+                header: `btb-BTB Approved-${state.approveAll}`,
+                description: `BTB ${requestor.chid} approved by your superior ${capitalizeEachWord(user.name)}`
+            })
+            if (detailUser.email !== undefined) {
+                sendEmail({
+                    email: detailUser.email,
+                    heaer: 'BTB Approved',
+                    description: `BTB ${requestor.chid} approved by your superior ${capitalizeEachWord(user.name)}`
+                })
+            }
+    
             toast.success("Approve All BTB Success")
             setTimeout(() => {
-                router.reload()
+                getBtbHeadApproval
             }, 350)
+
+        }
+        else {
+            newState({
+                approveAll: ''
+            })
+            errorHandler("There is an error when approve BTB")
+        } 
     }
 
     const rejectParticularBTB = async () => {
@@ -209,11 +228,12 @@ export default function BTB(props) {
             if (item.bhid === btbHead) requestor = item
         })
 
-        // let detailUser = await getUserByNik(requestor.nik)
+        let detailUser = await getUserByNik(requestor.nik)
+
         if (state.reason !== "") {
             state.btbRequestorData[btbHead].map( async (item) => {
                 if (item.bcid === bcid) {
-                    await updateBTBChild({
+                    let reject = await updateBTBChild({
                         bhid: item.bhid,
                         bcid: item.bcid,
                         bc_type: item.bc_type,
@@ -234,30 +254,43 @@ export default function BTB(props) {
                         is_active: item.is_active,
                     })
 
-                    await insertNotification({
-                        nik: requestor.nik,
-                        header: `btb-BTB Rejected-${btbHead}`,
-                        description: `BTB ${item.bcid} rejected by your superior ${capitalizeEachWord(user.name)}`
-                    })
+                    if (reject) {
+                        await insertNotification({
+                            nik: requestor.nik,
+                            header: `btb-BTB Rejected-${btbHead}`,
+                            description: `BTB ${item.bcid} rejected by your superior ${capitalizeEachWord(user.name)}`
+                        })
+    
+                        if (detailUser.email !== undefined) {
+                            await sendEmail({
+                                email: detailUser.email,
+                                heaer: 'BTB Rejected',
+                                description: `BTB ${item.bcid} rejected by your superior ${capitalizeEachWord(user.name)}`
+                            })
+                        }
 
-                    // await sendEmail({
-                    //     email: detailUser.email,
-                    //     heaer: 'BTB Rejected',
-                    //     description: `BTB ${item.bcid} rejected by your superior ${capitalizeEachWord(user.name)}`
-                    // })
+                        toast.success("Reject BTB Succesfuly ")
+                        setTimeout(() => {
+                            getBtbHeadApproval()
+                        }, 350)
+                    }
+                    else {
+                        newState({
+                            rejectParticularBTB: '',
+                            reason: ''
+                        })
+                        errorHandler("There is an error when reject BTB")
+                    }
 
                 }
             })
-            newState({rejectParticularBTB: ''})
-            toast.success("Reject BTB Succesfuly ")
-            setTimeout(() => {
-                router.reload()
-            }, 350)
+            
         }
         else errorHandler("Please insert your reason...")
     }
 
     const rejectAllBTB = async () => {
+        let reject = false
         let currentDate = new Date()
         let btbHead = state.rejectAll
         let requestor = {}
@@ -266,10 +299,11 @@ export default function BTB(props) {
             if (item.bhid === btbHead) requestor = item
         })
 
-        // let detailUser = await getUserByNik(requestor.nik)
+        let detailUser = await getUserByNik(requestor.nik)
+
         if (state.reason !== "") {
-            state.btbRequestorData[btbHead].map( async (item) => {
-                await updateBTBChild({
+            state.btbRequestorData[btbHead].map( async (item, index) => {
+                reject = await updateBTBChild({
                     bhid: item.bhid,
                     bcid: item.bcid,
                     bc_type: item.bc_type,
@@ -289,40 +323,54 @@ export default function BTB(props) {
                     business_partner_type: item.business_partner_type,
                     is_active: item.is_active,
                 })
+
+                if (index === state.btbRequestorData[btbHead].length-1){
+                    if (reject) {
+                        await insertNotification({
+                            nik: requestor.nik,
+                            header: `btb-BTB Rejected-${btbHead}`,
+                            description: `BTB ${btbHead} rejected by your superior ${capitalizeEachWord(user.name)}`
+                        })
+        
+                        if (detailUser.email !== undefined) {
+                            await sendEmail({
+                                email: detailUser.email,
+                                heaer: 'BTB Rejected',
+                                description: `BTB Headear ${btbHead} rejected by your superior ${capitalizeEachWord(user.name)}`
+                            })
+                        }
+        
+                        toast.success("Reject BTB Succesfuly ")
+                        setTimeout(() => {
+                            router.reload()
+                        }, 500)
+                    }
+                    else {
+                        newState({
+                            rejectAll: '',
+                            reason: ''
+                        })
+                        errorHandler("There is an error when reject BTB")
+                    }
+                }
             })
 
-            await insertNotification({
-                nik: requestor.nik,
-                header: `btb-BTB Rejected-${btbHead}`,
-                description: `BTB ${btbHead} rejected by your superior ${capitalizeEachWord(user.name)}`
-            })
 
-            // await sendEmail({
-            //     email: detailUser.email,
-            //     heaer: 'BTB Rejected',
-            //     description: `BTB ${item.bcid} rejected by your superior ${capitalizeEachWord(user.name)}`
-            // })
-
-            newState({rejectAll: ''})
-            toast.success("Reject BTB Succesfuly ")
-            setTimeout(() => {
-                router.reload()
-            }, 350)
         }
         else errorHandler("Please insert your reason...")
     }
 
     useEffect(() => {
-        if (user.nik !== undefined && state.btbApprovalData.length === 0 && !state.fetchStatus) getBtbHeadApproval()
+        if (state.btbApprovalData.length === 0 && !state.fetchStatus) getBtbHeadApproval()
         
-    },[user, state.btbApprovalData, state.fetchStatus, state.btbRequestorData, isLoading])
+    },[getBtbHeadApproval, state.btbApprovalData, state.fetchStatus])
     
 
     return (
         <LayoutList title="List of BTB Approval" 
                     refresh={true} 
                     onRefresh={getBtbHeadApproval} 
-                    goBackPage={props.pathReferer !== '' ? props.pathReferer !== '/eca/approval/btb' && props.pathReferer !== '/eca/btb/detail' ? props.pathReferer :'/eca/approval' : '/eca'}>
+                    defaultBackPage='/eca/approval'>
 
             <div className="w-full px-4 mt-20 select-none flex flex-row place-content-center items-center">
                 <p className="w-full font-semibold text-xl">BTB Transactions Need Your Approval</p>

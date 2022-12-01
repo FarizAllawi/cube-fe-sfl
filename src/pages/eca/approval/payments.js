@@ -455,7 +455,7 @@ export default function Payment(props) {
     return (
         <LayoutList title="List of Payment" 
                     refresh={true}
-                    goBackPage={props.pathReferer !== '' ? props.pathReferer !== '/eca/approval/payments' && (props.pathReferer !== '/eca/claims/detail' || props.pathReferer !== '/eca/btb/detail' ) ? props.pathReferer :'/eca/approval' : '/eca'}>>
+                    defaultBackPage='/eca/approval'>
             <div className="w-full px-4 mt-20 select-none flex flex-row place-content-center items-center">
                 <p className="w-full font-semibold text-lg">Payment Transactions Need Your Approval</p>
                 {/* <p className="w-1/2 font-semibold text-lg">List Payments Need Your Approval</p>

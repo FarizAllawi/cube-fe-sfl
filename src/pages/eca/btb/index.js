@@ -177,14 +177,12 @@ export default function BTB(props) {
         if (!fetchStatus) fetchData()
     },[fetchData, fetchStatus])
 
-    console.log(props.pathReferer)
     return (
         <LayoutList title="List of BTB" 
                     refresh={true} 
                     onRefresh={getBTB} 
-                    goBackPage={props.pathReferer !== '' ? props.pathReferer !== '/eca/btb' ? props.pathReferer :'/eca' : '/eca'}
-                    
-                    >
+                    defaultBackPage='/eca'>
+                        
             <div className="w-full px-4 mt-20 select-none flex flex-row place-content-center items-center">
                 <p className="w-1/2 font-semibold text-xl">Your BTB</p>
                 <div className="w-1/2 h-auto flex place-content-end items-center">

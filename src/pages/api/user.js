@@ -56,6 +56,7 @@ export default function useUser() {
         setIsLoading(true)
         setErrors([])
 
+        let isDefaultPassword = props.password === 'sayangsaka' ? true : false
         let key = CryptoJS.enc.Utf8.parse(process.env.NEXT_PUBLIC_AES_HASH_KEY)
         let iv = CryptoJS.enc.Utf8.parse(process.env.NEXT_PUBLIC_AES_IV_KEY)
 
@@ -73,6 +74,7 @@ export default function useUser() {
                                             photo_profile: res.data.user.photo_profile,
                                             token: res.data.token,
                                             uid_user: res.data.user.uid_user,
+                                            defaultPassword: isDefaultPassword
                                         }
                                         setIsLoading(false)
                                         return {
@@ -95,54 +97,9 @@ export default function useUser() {
                 method: 'POST'
             })
 
-            router.push('/');
+            if (isDefaultPassword) router.push('/change-password')
+            else router.push('/');
         }
-    }
-
-    const loginTesting = async ({setErrors, ...props}) => {
-        let user = {}
-        setIsLoading(true)
-        setErrors([])
-
-		// Request login and get user credential
-		const response = await axios.get(`api/User/get/byEmail?getEmail=${props.email}`)
-                                    .then(res => {
-                                        user = {
-                                            id: res.data[0].id,
-                                            nik: res.data[0].nik,
-                                            name: res.data[0].name,
-                                            email: props.email,
-                                            password: props.password,
-                                        }
-                                        setIsLoading(false)
-                                        return {
-                                            status: res.status,
-                                            data: {
-                                                nama_rekening: res.data[0].nama_rekening,
-                                                no_rekening: res.data[0].no_rekening
-                                            }
-                                        }
-                                    })
-                                    .catch(err => {
-                                        setIsLoading(false)
-                                    })
-                                    
-        if (response?.status === 200) {
-            await fetch('/api/auth/login', {
-                body: JSON.stringify(user),
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                method: 'POST'
-            })
-
-            if ((response.data.nama_rekening === null || response.data.nama_rekening === undefined) &&
-                (response.data.no_rekening === null || response.data.no_rekening === undefined)) {
-                    router.push('/profile')
-            }
-            else router.push('/')
-        }
-        else errorHandler('Wrong email or password')
     }
 
     const logout = async () => {
@@ -179,6 +136,6 @@ export default function useUser() {
     }, [router, user, setUser])
 
     return {
-        isLoading, user, setUser, loginTesting, getUser,  getDetailUser, logout, login, updateUser
+        isLoading, user, setUser, getUser,  getDetailUser, logout, login, updateUser
     }
 }

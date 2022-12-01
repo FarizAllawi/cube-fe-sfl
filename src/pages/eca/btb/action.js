@@ -171,13 +171,11 @@ export default function ActionBTB(props) {
         if (!fetchStatus) fetchData()
     }, [fetchData, fetchStatus])
 
-    console.log(state)
-
     return (
         <LayoutDetail title="Action BTB" 
                       detailFeature='btb'
                     //   detailFeatureFormButton={state.activities.split('-')[1]} 
-                      goBackPage='/eca/btb'
+                      defaultBackPage='/eca/btb'
                       status={btbStatus}
                       isSubmitLoading={state.submitStatus}
                       onSubmitClick={() => {

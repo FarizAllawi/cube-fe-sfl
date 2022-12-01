@@ -123,7 +123,7 @@ export default function Notification(props) {
     },[notifications])
 
     return (
-        <Layout title="Notification" refresh={true} >
+        <Layout title="Notification" refresh={true} defaultBackPage="/eca">
             <div className="w-full flex flex-row px-4 mt-20 select-none">
                 <p className="w-1/2 font-semibold text-base md:text-lg">Your Notification</p>
                 {/* <div className="w-1/2 text-right font-medium text-sm md:text-base text-blue-400 cursor-pointer" onClick={() => markAllAsRead()}>Mark All as Read</div> */}
