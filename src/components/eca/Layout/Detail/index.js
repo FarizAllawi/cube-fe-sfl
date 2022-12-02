@@ -20,7 +20,7 @@ import SignOutLight from '/public/images/svg/eca/icon-signout-light.svg'
 
 export default function Layout(props) {
 
-    const { defaultBackPage } = props
+    const { defaultBackPage, isBackPageMainFlow } = props
 
     const router = useRouter()
     const [mounted, setMounted] = useState(false)
@@ -60,29 +60,35 @@ export default function Layout(props) {
         }
 
         if (action === 'back') {
-            if (page.length === 0) {
+            if (isBackPageMainFlow === true && isBackPageMainFlow !== undefined) {
                 router.push(defaultBackPage)
+                localStorage.setItem('navigation-page', JSON.stringify([]))
             }
             else {
-                let backStatus = false
-                let length = page.length-1;
-                for (let i=length; i > 0; i--) {
-                    backStatus = true;
-                    if (page[i] === router.asPath) {
-                        page.splice(i, 1)
-                        backStatus = false
-                    }
+                if (page.length === 0) {
+                    router.push(defaultBackPage)
                 }
+                else {
+                    let backStatus = false
+                    let length = page.length-1;
+                    for (let i=length; i >= 0; i--) {
+                        if (page[i] === router.asPath) {
+                            page.splice(i, 1)
+                            backStatus = false
+                        }
+                        else backStatus = true;
+                    }
 
-                if (backStatus) router.push(page[page.length - 1])
-                else router.push(defaultBackPage)
-                localStorage.setItem('navigation-page', JSON.stringify(page))
+                    if (backStatus) router.push(page[page.length-1])
+                    else router.push(defaultBackPage)
+                    localStorage.setItem('navigation-page', JSON.stringify(page))
+                }
             }
         }
 
         
 
-    }, [defaultBackPage, router])
+    }, [defaultBackPage, isBackPageMainFlow, router])
 
     useEffect(() => {
         setMounted(true)
@@ -166,20 +172,6 @@ export default function Layout(props) {
     )
 }
 
-Layout.getInitialProps = async (context) => {
-    // const {users} = store.getState()
-
-    const { referer } = context.req.headers 
-
-    let pathReferer = ''
-    if (referer !== undefined) {
-        let url = new URL(referer)
-        pathReferer = url.pathname
-    }
-
-    console.log(pathReferer)
-}
-
 Layout.propTypes = {
     title: propTypes.string,
     detailId: propTypes.string,
@@ -187,6 +179,7 @@ Layout.propTypes = {
     detailFeatureFormButton: propTypes.string,
     detailFeature: propTypes.string,
     isSubmitLoading: propTypes.bool,
-    defaultBackPage: propTypes.string,
+    isBackPageMainFlow: propTypes.bool,
+    defaultBackPage: propTypes.string.isRequired,
 }
 

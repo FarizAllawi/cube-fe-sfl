@@ -23,6 +23,7 @@ import FaqDark from '/public/images/svg/eca/faq-dark.svg'
 import FaqLight from '/public/images/svg/eca/faq-light.svg'
 import ContactDark from '/public/images/svg/eca/contact-dark.svg'
 import ContactLight from '/public/images/svg/eca/contact-light.svg'
+import errorHandler from 'configs/errorHandler'
 
 
 function CardApplication(props) {
@@ -90,21 +91,32 @@ export default function Home(props) {
 	const { getHomeNotification } = useNotification() 
 
 	const fetchData = useCallback( async () => {
-		let userData = await getDetailUser()
-		let syncUser = await login({ email: userData.email, password: userData.password})
-		let homeNotif = await getHomeNotification(userData.nik)
 
-		let temp = {}
-		homeNotif.map(item => {
-			temp[`${item.status_approval}`] = item	
-		})
 
-		setHomeNotificationTemp(temp)
-		setFetchStatus(true)
-	}, [getDetailUser, getHomeNotification, login])
+		let userData = user.id === undefined ? await getDetailUser() : user
+		
+		if (userData.id !== undefined) {
+			setUser(userData)
+			
+			let syncUser = await login({ email: userData.email, password: userData.password})
+			let homeNotif = await getHomeNotification(userData.nik)
+	
+			let temp = {}
+			homeNotif.map(item => {
+				temp[`${item.status_approval}`] = item	
+			})
+
+			setHomeNotificationTemp(temp)
+		}
+		// else errorHandler("There is an error when retrieving user data")
+
+	}, [getDetailUser, getHomeNotification, login, user])
 
     useEffect(() => {
-		if (homeNotification.length == 0 && !fetchStatus) fetchData()
+		if (!fetchStatus) { 
+			fetchData()
+			setFetchStatus(true)
+		}
 
         // Handler to call on window resize
 		const handleResize = () => {

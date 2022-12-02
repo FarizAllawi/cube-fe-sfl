@@ -160,14 +160,6 @@ function CardClaims(props) {
 
 export async function getServerSideProps(context) {
 
-    const { referer } = context.req.headers 
-
-    let pathReferer = ''
-    if (referer !== undefined) {
-        let url = new URL(referer)
-        pathReferer = url.pathname
-    }
-
     const {chid} =  queryString.parseUrl(context.resolvedUrl).query
     const response = await axios.get(`/api/ClaimHead/getCHBundle?getChid=${chid}`)
                           .then(res => {
@@ -178,7 +170,7 @@ export async function getServerSideProps(context) {
                           })
 
     // Pass data to the page via props
-    if (response?.status >= 400 || response?.status === undefined) return { props: { data: [], pathReferer: pathReferer } }
+    if (response?.status >= 400 || response?.status === undefined) return { props: { data: [] } }
     return {
          props: { 
             data: response.data,
@@ -343,12 +335,14 @@ export default function Claims(props) {
 
         } else router.push('/404')
 
-        setFetchStatus(true)
     }, [getCHBundle, getDetailUser, router])
 
 
     useEffect(() => {
-        if (!fetchStatus) getDataClaim()
+        if (!fetchStatus) {
+            getDataClaim()
+            setFetchStatus(true)
+        }
     }, [fetchStatus, getDataClaim])
 
     return (

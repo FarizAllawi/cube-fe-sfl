@@ -230,20 +230,27 @@ export default function BTB(props) {
         const getDataBTB = async () => {
             let { bhid } = router.query
             let btbHeader = await getBTBHeadDetail(bhid) 
-            let btbChild = await getBTBChildByHeader(bhid)
-            let userData = await getDetailUser()
-
-            if (userData.id !== undefined) {
-                setUser(userData)
-            }
-            else errorHandler("There is an error when retrieving user data")
-            setBTBHead(btbHeader)
-            setDataBTB(btbChild)
-            setIsFetch(true)
+            
+            if (btbHeader.length !== 0) {
+                let btbChild = await getBTBChildByHeader(bhid)
+                let userData = await getDetailUser()
+    
+                if (userData.id !== undefined) {
+                    setUser(userData)
+                }
+                else errorHandler("There is an error when retrieving user data")
+                setBTBHead(btbHeader)
+                setDataBTB(btbChild)
+            } 
+            else router.push('404')
+            
         }
 
 
-        if (btbHead.length === 0 && !isFetch) getDataBTB()
+        if (btbHead.length === 0 && !isFetch) {
+            getDataBTB()
+            setIsFetch(true)
+        }
     }, [btbHead, dataBTB, getBTBChildByHeader, getBTBHeadDetail, getDetailUser, isFetch, router.query])
 
     return (

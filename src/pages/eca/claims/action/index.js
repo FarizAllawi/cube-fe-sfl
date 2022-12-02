@@ -13,7 +13,7 @@ export default function Action(props) {
     useEffect(() => {}, [])
 
     return (
-        <LayoutList title="Add Claims" goBackPage='/claims'>
+        <LayoutList title="Add Claims" isBackPageMainFlow={true} defaultBackPage='/eca/claims'>
             <div className="mt-20 select-none w-full h-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 auto-rows-max px-4 gap-2 pb-4 overflow-y-scroll scroll-display-none">
                 <Link href="/eca/claims/action/mileage" className="w-full p-4 flex flex-row gap-3 items-start bg-white dark:bg-gray-700 drop-shadow-md hover:drop-shadow-sm rounded-3xl cursor-pointer">
                         <div className="w-auto flex place-content-center items-center p-2 bg-blue-400 rounded-full">

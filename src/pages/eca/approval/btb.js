@@ -361,9 +361,14 @@ export default function BTB(props) {
     }
 
     useEffect(() => {
-        if (state.btbApprovalData.length === 0 && !state.fetchStatus) getBtbHeadApproval()
+        if (state.btbApprovalData.length === 0 && !state.fetchStatus) {
+            getBtbHeadApproval()
+            newState({
+                fetchStatus: true
+            })
+        }
         
-    },[getBtbHeadApproval, state.btbApprovalData, state.fetchStatus])
+    },[getBtbHeadApproval, newState, state.btbApprovalData, state.fetchStatus])
     
 
     return (

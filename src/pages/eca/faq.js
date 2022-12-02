@@ -36,6 +36,8 @@ export default function Faq(props) {
         keyClicked: ''
     })
 
+    const [fetchStatus, setFetchStatus] = useState(false)
+
     // Backup fetch if serverside not working
     const getFaq = useCallback( async() => {
         let response = await axios.get(`api/Faq/getAll`)
@@ -58,9 +60,12 @@ export default function Faq(props) {
     }
 
     useEffect(() => {
-        if (state.faq.length === 0) getFaq()
+        if (state.faq.length === 0 && !fetchStatus){
+            getFaq()
+            setFetchStatus(true)
+        } 
 
-    }, [getFaq, state.faq])
+    }, [fetchStatus, getFaq, state.faq])
 
     return (
         <Layout title="FAQ's" defaultBackPage="/eca">

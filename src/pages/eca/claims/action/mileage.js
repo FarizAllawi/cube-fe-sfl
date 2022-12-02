@@ -249,7 +249,7 @@ export default function Mileage(props) {
     // if (!state.mounted) return null
     
     return (
-        <LayoutDetail title="Action Claim Mileage" status={''} defaultBackPage='/eca/claims'>
+        <LayoutDetail title="Action Claim Mileage" status={''} isBackPageMainFlow={otherStatus === 'create' ?  true : false} defaultBackPage='/eca/claims/action'>
             <div className="z-20 w-full px-4 pt-20 pb-4 fixed select-none bg-neutral-50 dark:bg-gray-900 drop-shadow-md">
                 <p className="font-bold text-base md:text-lg text-center">{
                         otherStatus === 'create' ?  'Add New' : otherStatus === 'view' ? 'View' : 'Update'

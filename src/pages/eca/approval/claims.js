@@ -398,9 +398,14 @@ export default function Claims(props) {
     }
 
     useEffect(() => {
-        if (state.claimsApprovalData.length === 0 && !state.fetchStatus) fetchData()
+        if (state.claimsApprovalData.length === 0 && !state.fetchStatus) {
+            fetchData()
+            newState({
+                fetchStatus: true
+            })
+        }
 
-    },[fetchData, state.claimsApprovalData.length, state.fetchStatus])
+    },[fetchData, newState, state.claimsApprovalData.length, state.fetchStatus])
     
     // console.log(state.claimRequestorData)
 

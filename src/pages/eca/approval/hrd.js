@@ -191,6 +191,7 @@ export default function Hrd(props) {
         if (userData.id !== undefined) {
             setUser(userData)
             newState({ 
+                reason: '',
                 rejectMileage: '',
                 rejectAllMileage: '',
                 approveMileage: '',
@@ -202,6 +203,7 @@ export default function Hrd(props) {
             setTimeout(async () => {
                 const data = await getHRDApproval(userData.nik)
                 newState({ 
+                    reason: '',
                     rejectMileage: '',
                     rejectAllMileage: '',
                     approveMileage: '',
@@ -212,7 +214,22 @@ export default function Hrd(props) {
                 setIsLoading(false)
             }, 1000);
         }
-        else errorHandler("There is an error when retrieving user data")
+        else {
+            setTimeout(async () => {
+                newState({ 
+                    reason: '',
+                    rejectMileage: '',
+                    rejectAllMileage: '',
+                    approveMileage: '',
+                    claimsApprovalData: [],
+                    claimRequestorData: {},
+                    fetchStatus: true
+                })
+                setIsLoading(false)
+            }, 1000);
+            errorHandler("There is an error when retrieving user data")
+        } 
+
     }, [getDetailUser, getHRDApproval, newState])
 
     const getClaimRequestorData = async (chid) => {
@@ -420,7 +437,7 @@ export default function Hrd(props) {
 
                 await insertNotification({
                     nik: requestor.nik,
-                    header: `claims-Claim Rejected-${item.claimHead}`,
+                    header: `claims-Claim Rejected-${claimHead}`,
                     description: `Claims ${claimHead} rejected by HRD ${capitalizeEachWord(user.name)}`
                 })
 
@@ -453,9 +470,14 @@ export default function Hrd(props) {
 
 
     useEffect(() => {
-        if (state.claimsApprovalData.length === 0 && !state.fetchStatu) fetchData()
+        if (state.claimsApprovalData.length === 0 && !state.fetchStatus) {
+            fetchData()
+            newState({
+                fetchStatus: true
+            })
+        }
 
-    },[fetchData, state.claimsApprovalData, state.fetchStatu])
+    },[fetchData, newState, state.claimsApprovalData, state.fetchStatus])
 
     return (
         <LayoutList title="List of HRD Approval" 

@@ -168,13 +168,13 @@ export default function BTB(props) {
             }, 1000);
         }
         else errorHandler("There is an error when retrieving user data")
-
-        setFetchStatus(true)
-
     }, [getBTBHeader, getDetailUser, newState])
 
     useEffect(() => {
-        if (!fetchStatus) fetchData()
+        if (!fetchStatus) {
+            fetchData()
+            setFetchStatus(true)
+        }
     },[fetchData, fetchStatus])
 
     return (

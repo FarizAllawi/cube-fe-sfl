@@ -7,6 +7,7 @@ export default function useUser() {
     const router = useRouter()
     const [isLoading, setIsLoading] = useState(false)
     const [user, setUser] = useState({})
+    const [isFetch, setIsFetch] = useState(false)
 
     const getUser = async () => {
         let user = await fetch('/api/auth/user').then(res => {return res.json()})
@@ -55,10 +56,12 @@ export default function useUser() {
 		// Request login and get user credential
 		const response = await axios.post(`api/User/login`, props)
         .then(res => {
-            console.log(res)
+            return true
+            setIsLoading(false)
         })
         .catch(err => {
             setIsLoading(false)
+            return false
         })
 
         return response
@@ -132,9 +135,14 @@ export default function useUser() {
 
     useEffect(() => {
 
-        if (user?.isLogin === undefined) getUser()
+        if (user?.isLogin === undefined && !isFetch) {
+            getUser()
+            setIsFetch(true)
+        } 
+        else setIsFetch(false)
 
-    }, [router, user?.isLogin])
+
+    }, [isFetch, router, user?.isLogin])
 
     return {
         isLoading, user, loginTesting,getUserByNik, getDetailUser, logout, login, updateUser

@@ -175,6 +175,7 @@ export default function ActionBTB(props) {
         <LayoutDetail title="Action BTB" 
                       detailFeature='btb'
                     //   detailFeatureFormButton={state.activities.split('-')[1]} 
+                      isBackPageMainFlow={btbStatus === 'create' ?  true : false}
                       defaultBackPage='/eca/btb'
                       status={btbStatus}
                       isSubmitLoading={state.submitStatus}

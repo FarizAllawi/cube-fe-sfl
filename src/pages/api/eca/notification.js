@@ -28,7 +28,7 @@ export default function useNotification() {
             })
             // return response
         },
-        {revalidateOnFocus: true, refreshWhenHidden: false, refreshWhenOffline: false, refreshInterval: 10000 }
+        {revalidateOnFocus: true, revalidateIfStale: false, refreshWhenHidden: false, refreshWhenOffline: false, refreshInterval: 15000}
     )
 
 

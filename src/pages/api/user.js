@@ -9,6 +9,7 @@ export default function useUser() {
     const router = useRouter()
     const [isLoading, setIsLoading] = useState(false)
     const [user, setUser] = useState({})
+    const [isFetch, setIsFetch] = useState(false)
 
     const { updateUserSession } = useSWR( 
         user?.isLogin !== undefined ? 
@@ -34,9 +35,9 @@ export default function useUser() {
 
         setIsLoading(true)
         // await axios.post(`api/User/login?getEmail=${userSession.email}&getPassword=${userSession.password}`)
-        const response = await axios.get(`api/user?email=${userSession.email}`, {
+        const response = await axios.get(`api/user?email=${userSession?.email}`, {
             headers: {
-                'Authorization': `Bearer ${userSession.token}`
+                'Authorization': `Bearer ${userSession?.token}`
             }
         })
         .then(res => {
@@ -131,9 +132,13 @@ export default function useUser() {
 
     useEffect(() => {
 
-        if (user?.isLogin === undefined) getUser()
+        if (user?.isLogin === undefined && !isFetch) {
+            getUser()
+            setIsFetch(true)
+        } 
+        // else setIsFetch(false)
 
-    }, [router, user, setUser])
+    }, [router, user, setUser, isFetch])
 
     return {
         isLoading, user, setUser, getUser,  getDetailUser, logout, login, updateUser

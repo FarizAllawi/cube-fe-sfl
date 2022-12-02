@@ -18,7 +18,7 @@ import SignOutDark from '/public/images/svg/eca/icon-signout-dark.svg'
 import SignOutLight from '/public/images/svg/eca/icon-signout-light.svg'
 
 export default function Layout(props) {
-    const { defaultBackPage } = props
+    const { defaultBackPage, isBackPageMainFlow } = props
 
     const router = useRouter()
     const [mounted, setMounted] = useState(false)
@@ -55,29 +55,33 @@ export default function Layout(props) {
         }
 
         if (action === 'back') {
-            if (page.length === 0) {
+            if (isBackPageMainFlow === true && isBackPageMainFlow !== undefined) {
                 router.push(defaultBackPage)
+                localStorage.setItem('navigation-page', JSON.stringify([]))
             }
             else {
-                let backStatus = false;
-                let length = page.length-1;
-                for (let i=length; i > 0; i--) {
-                    backStatus = true;
-                    if (page[i] === router.asPath) {
-                        page.splice(i, 1)
-                        backStatus = false
-                    }
+                if (page.length === 0) {
+                    router.push(defaultBackPage)
                 }
-
-                if (backStatus) router.push(page[page.length - 1])
-                else router.push(defaultBackPage)
-                localStorage.setItem('navigation-page', JSON.stringify(page))
+                else {
+                    let backStatus = false
+                    let length = page.length-1;
+                    for (let i=length; i >= 0; i--) {
+                        if (page[i] === router.asPath) {
+                            page.splice(i, 1)
+                            backStatus = false
+                        }
+                        else backStatus = true
+                    }
+    
+                    if (backStatus) router.push(page[page.length-1])
+                    else router.push(defaultBackPage)
+                    localStorage.setItem('navigation-page', JSON.stringify(page))
+                }
             }
         }
 
-        
-
-    }, [defaultBackPage, router])
+    }, [defaultBackPage, isBackPageMainFlow, router])
 
     useEffect(() => {
         setMounted(true)
@@ -153,6 +157,7 @@ Layout.propTypes = {
     title: propTypes.string,
     refresh: propTypes.bool,
     onRefresh: propTypes.func,
-    defaultBackPage: propTypes.string
+    defaultBackPage: propTypes.string.isRequired,
+    isBackPageMainFlow: propTypes.bool
 }
 

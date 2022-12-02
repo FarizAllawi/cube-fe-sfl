@@ -61,7 +61,10 @@ export default function Approve(props) {
 	}, [getApprovalNotification, getDetailUser])
 
     useEffect(() => {
-        if (!fetchNotification) getNotification()
+        if (!fetchNotification) {
+            getNotification()
+            setFetchNotification(true)
+        }
 
         const getRole = async () => {
             axios.get(`api/RolePayment/getAll`)
@@ -75,7 +78,10 @@ export default function Approve(props) {
             setFetchRole(true)
         }
 
-        if (!fetchRole && user.id !== undefined && role.length === 0) getRole()
+        if (!fetchRole && user.id !== undefined && role.length === 0) {
+            getRole()
+            setFetchRole(true)
+        }
 
     }, [role, user, fetchRole, fetchNotification, approveNotification, approveNotificationTemp, getNotification])
 

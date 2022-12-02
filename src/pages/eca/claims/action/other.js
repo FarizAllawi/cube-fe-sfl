@@ -324,7 +324,8 @@ export default function Other(props) {
                       detailFeatureFormButton={''} 
                       status={otherStatus}
                       isSubmitLoading={isSubmitForm}
-                      defaultBackPage='/eca/claims'
+                      isBackPageMainFlow={otherStatus === 'create' ?  true : false}
+                      defaultBackPage='/eca/claims/action'
                       onSubmitClick={() => {
                         console.log(state)
 

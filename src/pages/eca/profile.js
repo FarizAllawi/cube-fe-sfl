@@ -1,12 +1,15 @@
+import { useEffect, useState, useCallback } from 'react'
 import { withSessionSsr } from "../../lib/withSession"
 import CryptoJS from "crypto-js"
-import { useEffect, useState } from 'react'
 import { useTheme } from 'next-themes'
 import {toast} from 'react-toastify'
 import Image from 'next/image'
 
 import capitalizeEachWord from "helpers/capitalizeEachWord"
 import useForm from "helpers/useForm"
+import useUserCube from "pages/api/user"
+import useUserEca from "pages/api/eca/user"
+
 
 import Button from 'components/eca/Button'
 import LayoutDetail from "components/eca/Layout/Detail"
@@ -17,21 +20,12 @@ import SignOutDark from '/public/images/svg/eca/icon-signout-dark.svg'
 import SignOutLight from '/public/images/svg/eca/icon-signout-light.svg'
 import errorHandler from 'configs/errorHandler'
 
-export const getServerSideProps = withSessionSsr(
-    async function getServerSideProps({ req }) {
-        return {
-            props: {
-                user: req.session.user,
-            },
-        };
-    }
-);
-
 export default function Profile(props) {
     const { theme } = useTheme()
 
-    const { getDetailUser, logout, updateUser , isLoading } = useUser()
-    const [sessionUser, setSessionUser] = useState(props.user)
+    const { updateUser, getDetailUser} = useUserCube()
+    const { login, isLoading } = useUserEca()
+
     const [fetchStatus, setFetchStatus] = useState(false)
     const [user, setUser] = useState({})
 
@@ -40,60 +34,68 @@ export default function Profile(props) {
         mounted: false,
         bank: "",
         accountNumber: '',
-        updatePassword: '',
     })
 
     const saveUpdate = async () => {
-        let data = {
-            id: user.id,
-            nama_rekening: state.bank,
-            no_rekening: state.accountNumber
+        let data = user
+        
+        if (state.bank !== '' && state.accountNumber !== '') {
+            data['nama_rekening'] = state.bank
+            data['no_rekening'] = state.accountNumber
+
+            let account = await updateUser(data)
+            // Sync User
+            
+
+
+            if (account) {
+                let syncUser = await login({ email: userData.email, password: userData.password})
+                if (syncUser) toast.success("Update Profile successfully")
+                else errorHandler("Something went wrong when update your profile")
+            }
+            else errorHandler("Something went wrong when update your profile")
+            
         }
+        else toast.info('Please fill the form bellow')
 
-        if (state.updatePassword !== '') data['password'] = CryptoJS.AES.encrypt(state.updatePassword, process.env.NEXT_PUBLIC_HASH_KEY).toString()
-
-        let account = await updateUser(data)
-
-
-        if (state.updatePassword !== '') {
-            toast.success("Update Profile successfully, Please login again")
-            await logout()
-        }
-        else {
-            if (!account) errorHandler("Something went wrong when update your profile")
-            else toast.success("Update Profile successfully")
-        }
     }
 
-    useEffect(() => {
-        const getUserData = async () => {
-            let dataUser = await getDetailUser(sessionUser.id)
-    
-            if ((dataUser.nama_rekening === '' || dataUser.nama_rekening === null) && 
-                (dataUser.no_rekening === '' || dataUser.no_rekening === null)) {
-                toast.info("Please Insert your bank account into the form below")
-            }
-            
+    const fetchData = useCallback( async () => {
+        let response = await getDetailUser().then( data => {
+            let dataUser = data
+
             setUser(dataUser)
-            newState({
-                bank: dataUser.nama_rekening,
-                accountNumber: dataUser.no_rekening
-            })
-        }
 
-        if (user?.id === undefined && !fetchStatus){
+            if (user.id === undefined) {
+                if ((dataUser.nama_rekening === '' || dataUser.nama_rekening === null) && 
+                    (dataUser.no_rekening === '' || dataUser.no_rekening === null)) {
+                    toast.info("Please Insert your bank account into the form below")
+                } 
+                else {
+                    newState({
+                        bank: dataUser.nama_rekening,
+                        accountNumber: dataUser.no_rekening
+                    })
+                }
+            }
+        })
+        .catch( err => {
+            errorHandler("There is an error when retrieving user data")
+        })
+
+    }, [getDetailUser, newState, user.id])
+
+    useEffect(() => {
+        if (!fetchStatus) {
+            fetchData()
             setFetchStatus(true)
-            getUserData()
         }
-
-        
-    }, [user, fetchStatus, newState, getDetailUser, sessionUser.id])
+    }, [fetchData, fetchStatus])
     
     return (
         <LayoutDetail title="Profile" 
                       status={''}
-                    //   status={claimHead[0].status}
-                      goBackPage='/eca'>
+                      defaultBackPage='/eca'>
             
             <div className="relative w-full mt-24 ">
                 <div className="mx-6 lg:mx-10 bg-blue-300 h-32 rounded-3xl"></div>
@@ -166,16 +168,6 @@ export default function Profile(props) {
                                onChange={setState} 
                                isRequired/>
                     </div>
-
-                    <div className="w-full">
-                        <Input type='password'
-                               name="updatePassword"
-                               labelName="Update Password"  
-                               value={state.updatePassword} 
-                               placeholder="Update your password heree" 
-                               onChange={setState} 
-                               isRequired/>
-                    </div>
                     
                     <div className="w-full flex place-content-end mt-2">
                         <Button size="small" 
@@ -184,21 +176,6 @@ export default function Profile(props) {
                                 onClick={ () => saveUpdate()}>
                             Update
                         </Button>
-                    </div>
-
-                    <div className="cursor-pointer w-1/2 p-2.5 
-                                    flex  place-content-center mt-8 
-                                    rounded-2xl text-sm font-semibold 
-                                    bg-gray-300 dark:bg-gray-700 hover:bg-opacity-80"
-                         onClick={() => logout()}>
-                        {
-                            theme === 'dark' || (theme === 'system' && systemTheme === 'dark') ? (
-                                <SignOutDark className="p-0.5" />
-                            ) : (
-                                <SignOutLight className="p-0.5" />
-                            )
-                        }
-                            Sign Out
                     </div>
                 </div>
 
