@@ -210,7 +210,7 @@ export default function Mileage(props) {
         if (cmid === undefined && chid === undefined) setOtherStatus('create')
         else if (cmid !== undefined && status === 'view') setOtherStatus('view') 
 
-    }, [chid, cmid, fetchStatus, status, state, currentStep, getDataClaim])
+    }, [chid, cmid, fetchStatus, getDataClaim, status])
     // if (!state.mounted) return null
     
     return (
