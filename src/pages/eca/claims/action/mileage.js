@@ -16,49 +16,12 @@ import EndingKM from 'components/eca/Mileage/EndingKM'
 import errorHandler from 'configs/errorHandler'
 
 export async function getServerSideProps(context) {
-
-    const { referer } = context.req.headers 
-
-    let pathReferer = ''
-    if (referer !== undefined) {
-        let url = new URL(referer)
-        pathReferer = url.pathname
-    }
-
-    const {cmid} = queryString.parseUrl(context.resolvedUrl).query
-    const claimMileage = await axios.get(`api/ClaimMil/getByCMID?getCMID=${cmid}`)
-    .then(res => {
-        return res
-    }).catch(err => {
-        console.log(err)
-    })
-
-    const claimMileageUploaded = await axios.get(`api/COMedia/getByCoid?getCoid=${claimMileage?.data[0]?.cmid}`).then(res => {
-                                                return res.data
-                                            }).catch(err => {
-                                                console.log(err)
-                                            })
-       
-
     // Pass data to the page via props
     if (claimMileage?.status >= 400 || claimMileage?.status === undefined) return { props: { data: {} } }
     return { 
         props: { 
-            data: {
-                claimHeadId: claimMileage.data[0].chid,
-                claimMileageId: claimMileage.data[0].cmid,
-                claimMileageStatusApproval: claimMileage.data[0].status_approval !== undefined ? claimMileage.data[0].status_approval : 4,
-                claimMileageSuperiorApproval: claimMileage.data[0].superior_approval !== undefined ? claimMileage.data[0].superior_approval : 3,
-                claimMileageHRDApproval: claimMileage.data[0].hrd_approval !== undefined ? claimMileage.data[0].hrd_approval : 3,
-                startingKM: claimMileage.data[0].start_km,
-                startingKMDocumentsProve: claimMileage.data[0].upload_start,
-                endingKM: claimMileage.data[0].end_km,
-                endingKMDocumentsProve: claimMileage.data[0].upload_end,
-                metadata: claimMileage.data[0].metadata,
-                claimMileageUploaded: claimMileageUploaded,
-                pathReferer: pathReferer
-            }
-         }
+            data: {}
+        }
     }
 }
 
