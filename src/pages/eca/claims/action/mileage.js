@@ -203,7 +203,10 @@ export default function Mileage(props) {
 
     useEffect(() => {
         if (!fetchStatus && cmid !=
-             undefined && chid !== undefined && (status === 'update' || status === 'view')) getDataClaim()
+             undefined && chid !== undefined && (status === 'update' || status === 'view')){
+                getDataClaim() 
+                setFetchStatus(true)
+        }
         if (cmid === undefined && chid === undefined) setOtherStatus('create')
         else if (cmid !== undefined && status === 'view') setOtherStatus('view') 
 

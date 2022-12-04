@@ -38,7 +38,7 @@ function CardClaims(props) {
     const imageLoader = ({src}) => {
         return src
     }
-
+    
     const getClaimMedia = useCallback(async (id) => {
         let claimOTherMedia = await getClaimOtherMedia(id)
         setClaimMedia(claimOTherMedia)
