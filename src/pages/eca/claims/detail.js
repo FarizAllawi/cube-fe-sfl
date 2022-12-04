@@ -32,6 +32,7 @@ function CardClaims(props) {
     const [deleteClicked, setDeleteClicked] = useState('')
     const [claimMedia, setClaimMedia] = useState([])
 
+    const [fetchStatus, setFetchStatus] = useState(false)
     const { getClaimOtherMedia } = useClaim()
 
     const imageLoader = ({src}) => {
@@ -43,8 +44,11 @@ function CardClaims(props) {
     },[getClaimOtherMedia])
 
     useEffect(() => {
-        if (claimMedia?.length === 0) getClaimMedia(data.hasOwnProperty('coid') ? data?.coid : data?.cmid)
-    },[claimMedia, data, getClaimMedia])
+        if (!fetchStatus) {
+            getClaimMedia(data.hasOwnProperty('coid') ? data?.coid : data?.cmid)
+            setFetchStatus(true)
+        }
+    },[claimMedia, data, fetchStatus, getClaimMedia])
 
     return (
         <div className="w-full py-4 px-3 flex flex-col gap-2 items-start bg-white dark:bg-gray-700 drop-shadow-md hover:drop-shadow-sm rounded-3xl cursor-pointer">
