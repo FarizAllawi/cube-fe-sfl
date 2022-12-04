@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import React, { useEffect } from 'react'
-import styles from '/styles/components/Cube.module.css'
+import styles from '/styles/components/Cube.Module.css'
 import CubeLogo from '/public/images/pictures/cube-logo.png'
 
 export default function Cube() {
