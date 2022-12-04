@@ -43,7 +43,7 @@ function CardClaims(props) {
     },[getClaimOtherMedia])
 
     useEffect(() => {
-        if (claimMedia?.length === 0) getClaimMedia(data.hasOwnProperty('coid') ? data.coid : data.cmid)
+        if (claimMedia?.length === 0) getClaimMedia(data.hasOwnProperty('coid') ? data?.coid : data?.cmid)
     },[claimMedia, data, getClaimMedia])
 
     return (
