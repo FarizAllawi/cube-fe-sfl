@@ -10,7 +10,7 @@ export default function useUser() {
     const [isFetch, setIsFetch] = useState(false)
 
     const getUser = async () => {
-        let user = await fetch('/api/auth/user').then(res => {return res.json()})
+        let user = await fetch('/api/auth/user').then(res => {return res.json()}).catch(err => {})
         setUser(user.data)
         return user.data
     }
