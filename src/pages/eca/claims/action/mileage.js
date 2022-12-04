@@ -17,7 +17,6 @@ import errorHandler from 'configs/errorHandler'
 
 export async function getServerSideProps(context) {
     // Pass data to the page via props
-    if (claimMileage?.status >= 400 || claimMileage?.status === undefined) return { props: { data: {} } }
     return { 
         props: { 
             data: {}

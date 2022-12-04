@@ -40,7 +40,8 @@ function CardClaims(props) {
     }
 
     const getClaimMedia = useCallback(async (id) => {
-        setClaimMedia(await getClaimOtherMedia(id))
+        let claimOTherMedia = await getClaimOtherMedia(id)
+        setClaimMedia(claimOTherMedia)
     },[getClaimOtherMedia])
 
     useEffect(() => {

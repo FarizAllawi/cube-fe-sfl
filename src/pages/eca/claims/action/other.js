@@ -27,17 +27,8 @@ import PDFIcon from '/public/images/svg/eca/pdf-red.svg'
 
 export const getServerSideProps = async (context) => {
 
-    const { referer } = context.req.headers 
-
-    let pathReferer = ''
-    if (referer !== undefined) {
-        let url = new URL(referer)
-        pathReferer = url.pathname
-    }
-
     return { 
         props: { 
-            pathReferer: pathReferer
         } 
     }
 }
