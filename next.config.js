@@ -21,7 +21,7 @@ const nextConfig = {
       },
       {
         // matching all API routes
-        source: `${NEXT_PUBLIC_ECA_SERVICE}/api/:path*`,
+        source: `${process.env.NEXT_PUBLIC_ECA_SERVICE}/api/:path*`,
         headers: [
           { key: "Access-Control-Allow-Credentials", value: "true" },
           { key: "Access-Control-Allow-Origin", value: "*" },
