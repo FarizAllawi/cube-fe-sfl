@@ -57,7 +57,7 @@ export default function useUser() {
         setIsLoading(true)
         setErrors([])
 
-        let isDefaultPassword = props.password === 'sayangsaka' ? true : false
+        let isDefaultPassword = props.password === '20221205' ? true : false
         let key = CryptoJS.enc.Utf8.parse(process.env.NEXT_PUBLIC_AES_HASH_KEY)
         let iv = CryptoJS.enc.Utf8.parse(process.env.NEXT_PUBLIC_AES_IV_KEY)
 
