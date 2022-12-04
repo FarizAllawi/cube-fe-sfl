@@ -39,17 +39,17 @@ function CardClaims(props) {
         return src
     }
 
-    const getClaimMedia = useCallback(async (id) => {
-        let claimOTherMedia = await getClaimOtherMedia(id)
+    const getClaimMedia = useCallback(async () => {
+        let claimOTherMedia = await getClaimOtherMedia(data.hasOwnProperty('coid') ? data?.coid : data?.cmid)
         setClaimMedia(claimOTherMedia)
-    },[getClaimOtherMedia])
+    },[data, getClaimOtherMedia])
 
     useEffect(() => {
         if (!fetchStatus) {
-            getClaimMedia(data.hasOwnProperty('coid') ? data?.coid : data?.cmid)
+            getClaimMedia()
             setFetchStatus(true)
         }
-    },[data, fetchStatus, getClaimMedia])
+    },[fetchStatus, getClaimMedia])
 
     return (
         <div className="w-full py-4 px-3 flex flex-col gap-2 items-start bg-white dark:bg-gray-700 drop-shadow-md hover:drop-shadow-sm rounded-3xl cursor-pointer">
@@ -318,7 +318,7 @@ export default function Claims(props) {
         let { chid } = router.query
         let claim = await getCHBundle(chid)
         let userData = await getDetailUser()
-        
+
         if (userData.id !== undefined) setUser(userData)
         else errorHandler("There is an error when retrieving user data")
         
