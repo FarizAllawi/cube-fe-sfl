@@ -94,8 +94,6 @@ export default function Other(props) {
         if (activityData.length !== 0) newState({ activitiesData: activityData })
         else errorHandler("An Error when trying to get Activities List")
 
-        setFetchStatus(true)
-
     }, [getClaimMaster, getDetailUser, newState])
 
     const getClaimData = useCallback( async (coid) => {
@@ -284,7 +282,10 @@ export default function Other(props) {
 
     useEffect(() => {
 
-        if (!fetchStatus) fetchData()
+        if (!fetchStatus) {
+            fetchData()
+            setFetchStatus(true)
+        }
 
         if (coid !== undefined && chid !== undefined && status === 'update' && state.activities === '') {
             setOtherStatus('update')
