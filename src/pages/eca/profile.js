@@ -45,6 +45,7 @@ export default function Profile(props) {
 
             let account = await updateUser(data).then( async (res) => {
                 let syncUser = await login({ email: account.email, password: account.password})
+                toast.success("Update profile successfully")
             })
             .catch(err => {})
             
