@@ -25,9 +25,11 @@ export default function useUser() {
     )
 
     const getUser = async () => {
-        let user = await fetch('/api/auth/user').then(res => {return res.json()}).catch(err => {})
-        setUser(user.data)
-        return user.data
+        let user = await fetch('/api/auth/user').then(res => {
+            return setUser(res.json().data)
+        }).catch(err => {
+            
+        })
     }
     
     const getDetailUser = async (email) => {email
