@@ -26,10 +26,10 @@ export default function useUser() {
 
     const getUser = async () => {
         let user = await fetch('/api/auth/user').then(res => {
-            return setUser(res.json().data)
-        }).catch(err => {
-            
-        })
+            return res.json()
+        }).catch(err => {})
+        setUser(user.data)
+        return user.data
     }
     
     const getDetailUser = async (email) => {email
