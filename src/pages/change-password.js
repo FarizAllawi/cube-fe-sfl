@@ -41,7 +41,7 @@ export default function ChangePassword(props) {
         if (dataUser.uid_user !== undefined) {
 
             if (state.password !== state.confirmPassword) toast.info("Password and Confirm Password not match")
-            else if (state.password === 'sayangsaka') toast.info("Please update your password")
+            else if (state.password === '20221205') toast.info("Please update your password")
             else {
 
                 if (state.password.length < 8) toast.info('Minimum password is 8 character')
