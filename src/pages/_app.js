@@ -6,8 +6,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import '../../tailwindcss/style.css'
 import NProgress from 'nprogress'
 
-import Logo from '../../public/images/pictures/kch-office/logo-kalbe.png'
-import CubeLogo from '../../public/images/svg/cube-logo-horizontal.svg'
+import CubeLogoFull from '../../public/cube-logo-full.png'
 // import "nprogress/nprogress.css"
 
 function Loading(props) {
@@ -157,9 +156,9 @@ function MyApp({ Component, ...props }) {
 			loading && (
 				<div style={{"zIndex" : 1020}} className="fade-in fixed z-50 ease-linear transition-all delay-500 bg-gradient-shine w-screen h-screen overflow-hidden">
 					<div className="relative w-full h-full flex flex-col place-content-center items-center">
-						<CubeLogo className='p-8 w-full sm:p-0 sm:w-1/3 mb-4' />
+						<Image src={CubeLogoFull} width={350} height={350} alt="cube-log" />
 
-						<div className="w-full h-auto flip-to-square">
+						<div className="mt-12 w-full h-auto flip-to-square">
 							<div></div>
 							<div></div>
 							<div></div>
