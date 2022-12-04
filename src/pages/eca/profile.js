@@ -43,19 +43,17 @@ export default function Profile(props) {
             data['nama_rekening'] = state.bank
             data['no_rekening'] = state.accountNumber
 
-            let account = await updateUser(data)
-            // Sync User
-
-            if (account) {
+            let account = await updateUser(data).then( async (res) => {
                 let syncUser = await login({ email: account.email, password: account.password})
                 if (syncUser) toast.success("Update Profile successfully")
                 else errorHandler("Something went wrong when update your profile")
-            }
-            else errorHandler("Something went wrong when update your profile")
+            })
+            .catch(err => {
+                errorHandler("Something went wrong when update your profile")
+            })
             
         }
         else toast.info('Please fill the form bellow')
-
     }
 
     const fetchData = useCallback( async () => {
