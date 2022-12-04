@@ -98,47 +98,10 @@ function CardClaims(props) {
     )
 }
 
-export const getServerSideProps = async (context) => {
-    // const {users} = store.getState()
+export async function getServerSideProps(context) {
 
-    const { referer } = context.req.headers 
-
-    let pathReferer = ''
-    if (referer !== undefined) {
-        let url = new URL(referer)
-        pathReferer = url.pathname
-    }
-
-    const {bhid} = queryString.parseUrl(context.resolvedUrl).query
-    const btbHead = await axios.get(`/api/BTBHead/getByBhid?getBhid=${bhid}`)
-                          .then(res => {
-                             return res
-                          })
-                          .catch(err => {
-                            //  console.log(err)
-                          })
-
-    const childData = await axios.get(`api/BTBChild/getByBh?getBhid=${bhid}`)
-                               .then(res => {
-                                    return res
-                               })
-                               .catch(err => {
-                                    // console.log(err)
-                               })            
-
-    // Pass data to the page via props
-    if (btbHead?.status >= 400 || 
-        btbHead?.status === undefined || 
-        childData?.status >= 400 || 
-        childData?.status === undefined) {
-            return { props: { btbHead: [], childData: [], pathReferer: pathReferer} }
-    }
-
-    return { 
-        props: { 
-            btbHead: btbHead.data[0],
-            childData: childData.data,
-            pathReferer: pathReferer
+    return {
+         props: { 
         } 
     }
 }
@@ -251,7 +214,7 @@ export default function BTB(props) {
             getDataBTB()
             setIsFetch(true)
         }
-    }, [btbHead, dataBTB, getBTBChildByHeader, getBTBHeadDetail, getDetailUser, isFetch, router.query])
+    }, [btbHead, dataBTB, getBTBChildByHeader, getBTBHeadDetail, getDetailUser, isFetch, router, router.query])
 
     return (
         <LayoutDetail title="Detail of BTB" 

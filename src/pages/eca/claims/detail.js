@@ -160,21 +160,8 @@ function CardClaims(props) {
 
 export async function getServerSideProps(context) {
 
-    const {chid} =  queryString.parseUrl(context.resolvedUrl).query
-    const response = await axios.get(`/api/ClaimHead/getCHBundle?getChid=${chid}`)
-                          .then(res => {
-                             return res
-                          })
-                          .catch(err => {
-                            //  console.log(err)
-                          })
-
-    // Pass data to the page via props
-    if (response?.status >= 400 || response?.status === undefined) return { props: { data: [] } }
     return {
          props: { 
-            data: response.data,
-            pathReferer: pathReferer
         } 
     }
 }
@@ -202,8 +189,8 @@ export default function Claims(props) {
     const [fetchStatus, setFetchStatus] = useState(false)
     const [user, setUser] = useState({})
     
-    const [dataClaim, setDataClaim] = useState(props.data)
-    const [claimHead, setClaimHead] = useState(props.data.item1 !== undefined ? props.data.item1 : [])
+    const [dataClaim, setDataClaim] = useState([])
+    const [claimHead, setClaimHead] = useState([])
     const [deleteClicked, setDeleteClicked] = useState('')
     const [documentClicked, setDocumentClicked] = useState([])
 
