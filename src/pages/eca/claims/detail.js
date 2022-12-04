@@ -38,7 +38,7 @@ function CardClaims(props) {
     const imageLoader = ({src}) => {
         return src
     }
-    
+
     const getClaimMedia = useCallback(async (id) => {
         let claimOTherMedia = await getClaimOtherMedia(id)
         setClaimMedia(claimOTherMedia)
@@ -319,11 +319,12 @@ export default function Claims(props) {
         let claim = await getCHBundle(chid)
         let userData = await getDetailUser()
         
+        if (userData.id !== undefined) setUser(userData)
+        else errorHandler("There is an error when retrieving user data")
+        
         if (claim?.item2?.length > 0 || claim?.item3?.length > 0) {
             setDataClaim(claim)
             setClaimHead(claim.item1)
-            if (userData.id !== undefined) setUser(userData)
-            else errorHandler("There is an error when retrieving user data")
 
         } else router.push('/404')
 
