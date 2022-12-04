@@ -165,7 +165,7 @@ export default function Claims(props) {
             })
         }
 
-    },[user, isLoading, state.claimsDataTemp, state.claimHeaderData, getClaim, state.fetchStatus])
+    },[user, isLoading, state.claimsDataTemp, state.claimHeaderData, getClaim, state.fetchStatus, newState])
 
 
     return (
