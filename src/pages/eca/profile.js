@@ -45,12 +45,8 @@ export default function Profile(props) {
 
             let account = await updateUser(data).then( async (res) => {
                 let syncUser = await login({ email: account.email, password: account.password})
-                if (syncUser) toast.success("Update Profile successfully")
-                else errorHandler("Something went wrong when update your profile")
             })
-            .catch(err => {
-                errorHandler("Something went wrong when update your profile")
-            })
+            .catch(err => {})
             
         }
         else toast.info('Please fill the form bellow')
