@@ -30,6 +30,8 @@ export default function Claims(props) {
     const { getClaimHeader, getCHBundle } = useClaim()
     const { getDetailUser } = useUser()
 
+
+    const [fetStatus , setFetchStatus] = useState(false)
     const [state, setState, newState] = useForm({
         buttonFilter: [
             {name: 'All', color: 'lime'},
@@ -158,14 +160,12 @@ export default function Claims(props) {
     }
 
     useEffect(() => {
-        if (state.claimsDataTemp.length === 0 && !state.fetchStatus) {
+        if (!fetStatus) {
             getClaim()
-            newState({ 
-                fetchStatus: true
-            })
+            setFetchStatus(true)
         }
 
-    },[user, isLoading, state.claimsDataTemp, state.claimHeaderData, getClaim, state.fetchStatus, newState])
+    },[user, isLoading, state.claimsDataTemp, state.claimHeaderData, getClaim, state.fetchStatus, newState, fetStatus])
 
 
     return (
