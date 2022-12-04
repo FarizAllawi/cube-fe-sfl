@@ -45,11 +45,9 @@ export default function Profile(props) {
 
             let account = await updateUser(data)
             // Sync User
-            
-
 
             if (account) {
-                let syncUser = await login({ email: userData.email, password: userData.password})
+                let syncUser = await login({ email: account.email, password: account.password})
                 if (syncUser) toast.success("Update Profile successfully")
                 else errorHandler("Something went wrong when update your profile")
             }
