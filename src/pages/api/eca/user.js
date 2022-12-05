@@ -1,6 +1,6 @@
 import axios from 'configs/eca/axios'
 import { useRouter } from 'next/router'
-import { useState , useEffect} from 'react'
+import { useState , useEffect, useCallback} from 'react'
 import errorHandler from 'configs/errorHandler'
 
 export default function useUser() {
@@ -137,14 +137,12 @@ export default function useUser() {
 
     useEffect(() => {
 
-        if (user?.isLogin === undefined && !isFetch) {
+        if (!isFetch) {
             getUser()
             setIsFetch(true)
         } 
-        else setIsFetch(false)
 
-
-    }, [isFetch, router, user?.isLogin])
+    }, [])
 
     return {
         isLoading, user, loginTesting,getUserByNik, getDetailUser, logout, login, updateUser

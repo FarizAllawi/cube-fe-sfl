@@ -163,13 +163,13 @@ function CardClaims(props) {
     )
 }
 
-export async function getServerSideProps(context) {
+// export async function getServerSideProps(context) {
 
-    return {
-         props: { 
-        } 
-    }
-}
+//     return {
+//          props: { 
+//         } 
+//     }
+// }
 
 export default function Claims(props) {
 
@@ -319,8 +319,7 @@ export default function Claims(props) {
         let claim = await getCHBundle(chid)
         let userData = await getDetailUser()
 
-        if (userData.id !== undefined) setUser(userData)
-        else errorHandler("There is an error when retrieving user data")
+        setUser(userData)
         
         if (claim?.item2?.length > 0 || claim?.item3?.length > 0) {
             setDataClaim(claim)
