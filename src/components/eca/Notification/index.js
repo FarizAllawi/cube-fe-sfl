@@ -17,7 +17,7 @@ export default function Notification(props) {
 
     useEffect(() => {
         
-        if (notifications.length === 0 && fetchStatus === false) {
+        if (notifications?.length === 0 && fetchStatus === false) {
             setUserNotificaton(notifications)
             setFetchStatus(true)
         }

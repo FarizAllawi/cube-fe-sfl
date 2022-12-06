@@ -94,21 +94,17 @@ export default function Home(props) {
 
 
 		let userData = user.id === undefined ? await getDetailUser() : user
+		setUser(userData)
 		
-		if (userData.id !== undefined) {
-			setUser(userData)
-			
-			let syncUser = await login({ email: userData.email, password: userData.password})
-			let homeNotif = await getHomeNotification(userData.nik)
-	
-			let temp = {}
-			homeNotif.map(item => {
-				temp[`${item.status_approval}`] = item	
-			})
+		let syncUser = await login({ email: userData.email, password: userData.password})
+		let homeNotif = await getHomeNotification(userData.nik)
 
-			setHomeNotificationTemp(temp)
-		}
-		// else errorHandler("There is an error when retrieving user data")
+		let temp = {}
+		homeNotif.map(item => {
+			temp[`${item.status_approval}`] = item	
+		})
+
+		setHomeNotificationTemp(temp)
 
 	}, [getDetailUser, getHomeNotification, login, user])
 

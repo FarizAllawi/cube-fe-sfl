@@ -111,7 +111,7 @@ export default function useNotification() {
     useEffect(() => {
         if(user?.nik !== undefined && notifications?.length === 0 && !fetchStatus) getNotification()
     
-    }, [fetchStatus, getNotification, notification, notifications, router, user])
+    }, [fetchStatus, getNotification, notifications, user?.nik])
 
     return {
         notifications,
