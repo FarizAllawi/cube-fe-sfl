@@ -21,6 +21,7 @@ export default withIronSessionApiRoute(
       password: req.body.password,
       token: req.body.token,
       uid_user: req.body.uid_user,
+      golongan: req.body.golongan,
       photo_profile: req.body.photo_profile,
       defaultPassword: req.body.defaultPassword,
       isLogin: true,

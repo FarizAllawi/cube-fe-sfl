@@ -75,6 +75,7 @@ export default function useUser() {
                                             email: res.data.user.email,
                                             password: props.password,
                                             photo_profile: res.data.user.photo_profile,
+                                            golongan: res.data.user.golongan,
                                             token: res.data.token,
                                             uid_user: res.data.user.uid_user,
                                             defaultPassword: isDefaultPassword

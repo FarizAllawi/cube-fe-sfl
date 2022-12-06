@@ -63,6 +63,7 @@ export default function ChangePassword(props) {
                                 email: dataUser.email,
                                 password: dataUser.password,
                                 photo_profile: dataUser.photo_profile,
+                                golongan: dataUser.golongan,
                                 token: user.token,
                                 uid_user: dataUser.uid_user,
                                 defaultPassword: false
