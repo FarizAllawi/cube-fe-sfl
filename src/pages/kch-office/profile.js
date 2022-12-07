@@ -178,6 +178,10 @@ export default function Profile(props) {
                                     <div className="w-2/5 sm:w-1/3 text-white text-sm  font-medium">Level</div>
                                     <div className="w-3/5 sm:w-2/3 text-white text-xs sm:text-sm font-medium">: {user?.jobLvlName}</div>
                                 </div>
+                                <div className="w-full flex flex-row">
+                                    <div className="w-2/5 sm:w-1/3 text-white text-sm  font-medium">Golongan</div>
+                                    <div className="w-3/5 sm:w-2/3 text-white text-xs sm:text-sm font-medium">: {user?.golongan}</div>
+                                </div>
                                 <div className="w-full flex flex-row mt-6">
                                     <div className="w-2/5 sm:w-1/3 text-white text-sm font-medium">Superior NIK</div>
                                     <div className="w-3/5 sm:w-2/3 text-white text-xs sm:text-sm font-medium">: {user?.superiorNIK}</div>
