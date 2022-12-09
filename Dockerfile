@@ -3,19 +3,13 @@ FROM node:16.17.0
 # RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
-# Dockerfile
-
-# create & set working directory
-RUN mkdir -p /app
-WORKDIR /app
-
 # copy source files
-COPY . /app
+COPY package*.json ./
 
 # install dependencies
 RUN npm install
+COPY . .
 
 # start app
-RUN npm run build
-EXPOSE 3000
-CMD npm run start
+EXPOSE 3001
+CMD [ "node", "server.js" ]
