@@ -626,25 +626,25 @@ export default function DeskSection(props) {
 
                         <div className="w-full h-8 mt-4 flex flex-row place-content-center items-center gap-1 sm:gap-2">
                             <div className="w-auto flex flex-row gap-1 sm:gap-2 mx-2 xl:mx-4">
-                                <div className="w-3 h-3 sm:w-4 sm:h-4 xl:w-6 xl:h-6 border-1 sm:border-2 border-green-900 bg-green-900 rounded-full"></div>
-                                <div className="absolute w-3 h-3 sm:w-4 sm:h-4 xl:w-6 xl:h-6 border-1 sm:border-2 border-green-500 bg-white bg-opacity-60 rounded-full"></div>
-                                <div className="text-xs sm:text-sm xl:text-base text-black font-medium">Available</div>
+                                <div className="w-3 h-3 sm:w-4 sm:h-4 2xl:w-6 2xl:h-6 border-1 sm:border-2 border-green-900 bg-green-900 rounded-full"></div>
+                                <div className="absolute w-3 h-3 sm:w-4 sm:h-4 2xl:w-6 2xl:h-6 border-1 sm:border-2 border-green-500 bg-white bg-opacity-60 rounded-full"></div>
+                                <div className="text-xs sm:text-sm 2xl:text-base text-black font-medium">Available</div>
                             </div>
                             <div className="w-auto flex flex-row gap-1 sm:gap-2 mx-2 xl:mx-4">
-                                <div className="w-3 h-3 sm:w-4 sm:h-4 xl:w-6 xl:h-6 border-1 sm:border-2 border-green-900 bg-green-900 rounded-full"></div>
-                                <div className="absolute w-3 h-3 sm:w-4 sm:h-4 xl:w-6 xl:h-6 border-1 sm:border-2 border-white border-opacity-5 bg-white bg-opacity-30 rounded-full"></div>
-                                <div className="text-xs sm:text-sm xl:text-base text-black font-medium">Unavailable</div>
+                                <div className="w-3 h-3 sm:w-4 sm:h-4 2xl:w-6 2xl:h-6 border-1 sm:border-2 border-green-900 bg-green-900 rounded-full"></div>
+                                <div className="absolute w-3 h-3 sm:w-4 sm:h-4 2xl:w-6 2xl:h-6 border-1 sm:border-2 border-white border-opacity-5 bg-white bg-opacity-30 rounded-full"></div>
+                                <div className="text-xs sm:text-sm 2xl:text-base text-black font-medium">Unavailable</div>
                             </div>
                             <div className="w-auto flex flex-row items-center  gap-1 sm:gap-2 mx-2 xl:mx-4">
-                                <div className="w-3 h-3 sm:w-4 sm:h-4 xl:w-6 xl:h-6 border-1 sm:border-2 border-green-900 bg-green-900 rounded-full"></div>
-                                <div className="absolute w-3 h-3 sm:w-4 sm:h-4 xl:w-6 xl:h-6 border-1 sm:border-2 border-red-900 border-opacity-10 bg-red-900 rounded-full"></div>
-                                <div className="text-center text-xs sm:text-sm xl:text-base text-black font-medium">Authorized Desk</div>
+                                <div className="w-3 h-3 sm:w-4 sm:h-4 2xl:w-6 2xl:h-6 border-1 sm:border-2 border-green-900 bg-green-900 rounded-full"></div>
+                                <div className="absolute w-3 h-3 sm:w-4 sm:h-4 2xl:w-6 2xl:h-6 border-1 sm:border-2 border-red-900 border-opacity-10 bg-red-900 rounded-full"></div>
+                                <div className="text-center text-xs sm:text-sm 2xl:text-base text-black font-medium">Authorized Desk</div>
                             </div>
                             <div className="w-auto flex flex-row gap-1 sm:gap-2 mx-2 xl:mx-4">
-                                <div className="w-3 h-3 sm:w-4 sm:h-4 xl:w-6 xl:h-6 border-1 sm:border-2 p-0.5 border-green-500 rounded-full flex place-content-center items-center">
-                                    <div className="w-2 h-2 xl:w-4 xl:h-4 bg-green-500 rounded-full"></div>
+                                <div className="w-3 h-3 sm:w-4 sm:h-4 2xl:w-6 2xl:h-6 border-1 sm:border-2 p-0.5 border-green-500 rounded-full flex place-content-center items-center">
+                                    <div className="w-2 h-2 2xl:w-4 2xl:h-4 bg-green-500 rounded-full"></div>
                                 </div>
-                                <div className="text-xs sm:text-sm xl:text-base text-black font-medium">Booked</div>
+                                <div className="text-xs sm:text-sm 2xl:text-base text-black font-medium">Booked</div>
                             </div>
                         </div>
                     </div>
