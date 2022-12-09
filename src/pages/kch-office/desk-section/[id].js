@@ -521,7 +521,7 @@ export default function DeskSection(props) {
                                     return (
                                         <div key={index} className="w-full h-full flex place-content-center items-center">
                                             <div className={`
-                                                    relative w-12 h-12 sm:w-14 sm:h-14  xl:w-24 xl:h-24 flex place-content-center items-center 
+                                                    relative ${size.width < 390 ? 'w-10 h-10' : 'w-12 h-12'} sm:w-14 sm:h-14  xl:w-24 xl:h-24 flex place-content-center items-center 
                                                     text-xl xl:text-4xl font-semibold text-green-900 cursor-pointer
                                                     ${
                                                         item.desk_status !== 2 ? (
@@ -580,7 +580,7 @@ export default function DeskSection(props) {
                                     return (
                                         <div key={index} className="w-full h-full flex place-content-center items-center">
                                             <div className={`
-                                                    relative w-12 h-12 sm:w-14 sm:h-14  xl:w-24 xl:h-24 flex place-content-center items-center 
+                                                    relative ${size.width < 390 ? 'w-10 h-10' : 'w-12 h-12'}  sm:w-14 sm:h-14  xl:w-24 xl:h-24 flex place-content-center items-center 
                                                     text-xl xl:text-4xl font-semibold text-green-900 cursor-pointer
                                                     ${
                                                         item.desk_status !== 2 ? (
