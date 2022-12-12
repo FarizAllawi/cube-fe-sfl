@@ -1,6 +1,7 @@
 export default async function sendEmail (req, res) {
     let nodemailer = require('nodemailer')
     const transporter = nodemailer.createTransport({
+      service: 'gmail',
       host: `${process.env.NEXT_PUBLIC_SMTP_URL}`,
       // secure: false,
       port: `${process.env.NEXT_PUBLIC_SMTP_PORT}`,
