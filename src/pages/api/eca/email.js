@@ -5,8 +5,8 @@ export default async function sendEmail (req, res) {
       // secure: false,
       port: `${process.env.NEXT_PUBLIC_SMTP_PORT}`,
       auth: {
-        user: "05fbd14ef12faf",
-        pass: "be0720307fe900"
+        user: "no.reply@kalbeconsumerhealth.com",
+        pass: "@Sakafarma22"
       }
     
     })
@@ -14,11 +14,11 @@ export default async function sendEmail (req, res) {
     // console.log(req.body)
     // console.log("CHeck Body")
     const mailData = await {
-      from: 'finance@sakafarma.com (no reply)',
+      from: 'employee.claim@kalbeconsumerhealth.com (no reply)',
       to: req.body.email,
       subject: `${req.body.header}`,
-      text: `${req.body.description}` +" | Automatic Sent from: finance@sakafarma.com",
-      html: `<div>${req.body.description}</div><p>Automatic Sent from: finance@sakafarma.com</p>`
+      text: `${req.body.description}` +" | Automatic Sent from: employee.claim@kalbeconsumerhealth",
+      html: `<div>${req.body.description}</div><p>employee.claim@kalbeconsumerhealth</p>`
     }
     await transporter.sendMail(mailData, function (err, info) {
       if(err){
