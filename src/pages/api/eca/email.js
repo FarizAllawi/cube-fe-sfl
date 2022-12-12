@@ -16,7 +16,7 @@ export default async function sendEmail (req, res) {
     // console.log("CHeck Body")
     const mailData = await {
       from: 'employee.claim@kalbeconsumerhealth.com (no reply)',
-      to: req.body.email,
+      to: `${req.body.email}`,
       subject: `${req.body.header}`,
       text: `${req.body.description}` +" | Automatic Sent from: employee.claim@kalbeconsumerhealth",
       html: `<div>${req.body.description}</div><p>employee.claim@kalbeconsumerhealth</p>`
