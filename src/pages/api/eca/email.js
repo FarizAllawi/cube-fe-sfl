@@ -6,13 +6,13 @@ export default async function sendEmail (req, res) {
       // secure: false,
       port: `${process.env.NEXT_PUBLIC_SMTP_PORT}`,
       auth: {
-        user: "no.reply@kalbeconsumerhealth.com",
-        pass: "@Sakafarma22"
+        user: `${process.env.NEXT_PUBLIC_USER_ID}`,
+        pass: `${process.env.NEXT_PUBLIC_USER_PW}`,
       }
     
     })
-    // console.log("CHeck Body")
-    // console.log(req.body)
+    console.log("CHeck Body")
+    console.log(req.body)
     // console.log("CHeck Body")
     const mailData = await {
       from: 'employee.claim@kalbeconsumerhealth.com (no reply)',
