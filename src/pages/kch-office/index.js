@@ -295,7 +295,7 @@ export default function HomePage(props) {
                                         ) : (
                                             <div className="w-full flex flex-col place-content-center items-center xl:items-start gap-2">
                                                 <NotFoundData className='w-96 h-72 mx-20 mt-6' />
-                                                <div className="mx-40 w-56 text-center text-green-900 font-medium">oops, looks like we cant find what you want</div>
+                                                <div className="mx-40 w-56 text-center text-green-900 font-medium">oops, looks like we cant show you the desk section</div>
                                             </div>
                                         )
                                     }  

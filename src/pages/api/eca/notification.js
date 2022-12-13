@@ -73,7 +73,7 @@ export default function useNotification() {
             body: JSON.stringify({ 
                 email: props.email,
                 header: props.header,
-                body: props.body
+                description: props.description
              })
         });
     }

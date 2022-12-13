@@ -199,7 +199,7 @@ export default function BTB(props) {
             if (detailUser.email !== undefined) {
                 sendEmail({
                     email: detailUser.email,
-                    heaer: 'BTB Approved',
+                    header: 'BTB Approved',
                     description: `BTB ${requestor.chid} approved by your superior ${capitalizeEachWord(user.name)}`
                 })
             }
@@ -264,7 +264,7 @@ export default function BTB(props) {
                         if (detailUser.email !== undefined) {
                             await sendEmail({
                                 email: detailUser.email,
-                                heaer: 'BTB Rejected',
+                                header: 'BTB Rejected',
                                 description: `BTB ${item.bcid} rejected by your superior ${capitalizeEachWord(user.name)}`
                             })
                         }
@@ -335,7 +335,7 @@ export default function BTB(props) {
                         if (detailUser.email !== undefined) {
                             await sendEmail({
                                 email: detailUser.email,
-                                heaer: 'BTB Rejected',
+                                header: 'BTB Rejected',
                                 description: `BTB Headear ${btbHead} rejected by your superior ${capitalizeEachWord(user.name)}`
                             })
                         }

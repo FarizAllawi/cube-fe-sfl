@@ -267,7 +267,7 @@ export default function Claims(props) {
 
             sendEmail({
                 email: detailSuperior.email,
-                heaer: 'Claim Need Approval',
+                header: 'Claim Need Approval',
                 description: `Claim ${chid} from ${capitalizeEachWord(detailUser.name)} needs your approval`
             })
 

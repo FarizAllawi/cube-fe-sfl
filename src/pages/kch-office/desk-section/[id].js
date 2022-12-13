@@ -521,8 +521,8 @@ export default function DeskSection(props) {
                                     return (
                                         <div key={index} className="w-full h-full flex place-content-center items-center">
                                             <div className={`
-                                                    relative ${size.width < 390 ? 'w-10 h-10' : 'w-12 h-12'} sm:w-14 sm:h-14  xl:w-24 xl:h-24 flex place-content-center items-center 
-                                                    text-xl xl:text-4xl font-semibold text-green-900 cursor-pointer
+                                                    relative ${size.width < 390 ? 'w-10 h-10 text-base' : 'w-12 h-12 text-xl xl:text-4xl '}  sm:w-14 sm:h-14  xl:w-24 xl:h-24 flex place-content-center items-center 
+                                                    font-semibold text-green-900 cursor-pointer
                                                     ${
                                                         item.desk_status !== 2 ? (
                                                             (item.desk_employee_class === null || parseInt(user.golongan) >= item.desk_employee_class) ? (
@@ -580,8 +580,8 @@ export default function DeskSection(props) {
                                     return (
                                         <div key={index} className="w-full h-full flex place-content-center items-center">
                                             <div className={`
-                                                    relative ${size.width < 390 ? 'w-10 h-10' : 'w-12 h-12'}  sm:w-14 sm:h-14  xl:w-24 xl:h-24 flex place-content-center items-center 
-                                                    text-xl xl:text-4xl font-semibold text-green-900 cursor-pointer
+                                                    relative ${size.width < 390 ? 'w-10 h-10 text-base' : 'w-12 h-12 text-xl xl:text-4xl '}  sm:w-14 sm:h-14  xl:w-24 xl:h-24 flex place-content-center items-center 
+                                                    font-semibold text-green-900 cursor-pointer
                                                     ${
                                                         item.desk_status !== 2 ? (
                                                             (item.desk_employee_class === null || parseInt(user.golongan) >= item.desk_employee_class) ? (
