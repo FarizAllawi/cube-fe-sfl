@@ -58,6 +58,14 @@ export default function useUser() {
 		// Request login and get user credential
 		const response = await axios.post(`api/User/login`, props)
         .then(res => {
+            let data = res.data[0]
+
+            if ((data.no_rekening === null || data.no_rekening === undefined || data.no_rekening === "") &&
+                (data.nama_rekening === null && data.nama_rekening === undefined || data.nama_rekening === "")) {
+
+                router.push('/eca/profile')
+            }
+            
             return true
             setIsLoading(false)
         })

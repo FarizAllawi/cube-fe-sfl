@@ -200,7 +200,7 @@ function MyApp({ Component, ...props }) {
 		<div className={`${!loading ? 'fade-in' : 'hidden'}`}>
 			<Component {...props.pageProps} />
 		</div>
-		<ToastContainer position='top-right'  hideProgressBar closeOnClick/>
+		<ToastContainer position='top-center'  hideProgressBar closeOnClick/>
     </>
 	)
 }
