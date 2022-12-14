@@ -43,11 +43,15 @@ export default function Profile(props) {
             data['nama_rekening'] = state.bank
             data['no_rekening'] = state.accountNumber
 
-            let account = await updateUser(data).then( async (res) => {
-                let syncUser = await login({ email: account.email, password: account.password})
-                toast.success("Update profile successfully")
-            })
-            .catch(err => {})
+            let account = await updateUser(data)
+            let syncUser = await login({ email: data.email, password: data.password})
+
+            if (account) {
+                if (syncUser) {
+                    toast.success("Update profile successfully")
+                }
+            }
+            
             
         }
         else toast.info('Please fill the form bellow')
@@ -103,7 +107,7 @@ export default function Profile(props) {
             <div className="w-full flex place-content-center mt-12 lg:mt-16 font-semibold text-black dark:text-white">{capitalizeEachWord(user?.name)}</div>
             
             <div className="z-10 mt-8 w-full h-full flex flex-col lg:flex-row place-content-center
-                            gap-4 px-2 pb-16 
+                            gap-4 px-4 pb-16 
                             overflow-y-scroll scroll-display-none">
 
                 <div className="w-full md:w-2/4 lg:w-1/3  flex flex-col gap-2">
@@ -111,12 +115,12 @@ export default function Profile(props) {
                         <div className="flex flex-col gap-3">
                             <div className="text-xs md:text-sm font-medium">NIK</div>
                             <div className="text-xs md:text-sm font-medium">email</div>
+                            <div className="font-light md:pt-0.5" style={{ fontSize: "12px" }}>: {user?.nik}</div>
                             <div className="text-xs md:text-sm font-medium">Department</div>
                             <div className="text-xs md:text-sm font-medium">Division</div>
                             <div className="text-xs md:text-sm font-medium">Level</div>
                         </div>
                         <div className="flex flex-col gap-2.5 md:gap-3">
-                            <div className="font-light md:pt-0.5" style={{ fontSize: "12px" }}>: {user?.nik}</div>
                             <div className="font-light md:pt-0.5" style={{ fontSize: "12px" }}>: {user?.email}</div>
                             <div className="font-light md:pt-0.5" style={{ fontSize: "12px" }}>: {user?.deptName}</div>
                             <div className="font-light md:pt-0.5" style={{ fontSize: "12px" }}>: {user?.divName}</div>
