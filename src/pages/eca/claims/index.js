@@ -146,16 +146,23 @@ export default function Claims(props) {
 
     const getAmount = (mileage, others, type) => {
         let total = 0
-        mileage?.map((item) => {
-            if (type === 'amount') total += item.amount
-            if (item.status_approval === 0 && type === 'paid') total += item.amount
-            if (item.status_approval === 4 && type === 'rejected') total += item.amount
-        })
-        others?.map((item) => {
-            if (type === 'amount') total += item.amount
-            if (item.status_approval === 0 && type === 'paid') total += item.amount
-            if (item.status_approval === 4 && type === 'rejected') total += item.amount
-        })
+
+        if (mileage.length > 0) {
+            mileage?.map((item) => {
+                if (type === 'amount') total += item.amount
+                if (item.status_approval === 0 && type === 'paid') total += item.amount
+                if (item.status_approval === 4 && type === 'rejected') total += item.amount
+            })
+        }
+
+        if (others.length > 0) {
+            others?.map((item) => {
+                if (type === 'amount') total += item.amount
+                if (item.status_approval === 0 && type === 'paid') total += item.amount
+                if (item.status_approval === 4 && type === 'rejected') total += item.amount
+            })
+        }
+        
         return total
     }
 

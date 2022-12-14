@@ -56,12 +56,14 @@ export default function BTB(props) {
 
     const getAmount = (data, type) => {
         let total = 0
-        data?.map((item) => {
-            if (type === 'amount') total += item.amount
-            if (item.status_approval === 0 && type === 'paid') total += item.amoun
-            if (item.status_approval === 1 && type === 'approved') total += item.amount
-            if (item.status_approval === 4 && type === 'rejected') total += item.amount
-        })
+        if (data.length > 0) {
+            data?.map((item) => {
+                if (type === 'amount') total += item.amount
+                if (item.status_approval === 0 && type === 'paid') total += item.amoun
+                if (item.status_approval === 1 && type === 'approved') total += item.amount
+                if (item.status_approval === 4 && type === 'rejected') total += item.amount
+            })
+        }
         return total
     }
 
@@ -127,13 +129,11 @@ export default function BTB(props) {
         
     }
 
-    const getBTBHeaderData = (bhId) => {
-        setTimeout(async () => {
-            const btbChildData = await getBTBChildByHeader(bhId)
-            let btbHeaderData = state.btbHeaderData
-            btbHeaderData[bhId] = btbChildData
-            newState({ btbHeaderData: btbHeaderData })
-        }, 500) 
+    const getBTBHeaderData = async (bhId) => {
+        const btbChildData = await getBTBChildByHeader(bhId)
+        let btbHeaderData = state.btbHeaderData
+        btbHeaderData[bhId] = btbChildData
+        newState({ btbHeaderData: btbHeaderData })
     }
 
     const fetchData = useCallback( async () => {

@@ -97,6 +97,8 @@ export default function Home(props) {
 		setUser(userData)
 		
 		let syncUser = await login({ email: userData.email, password: userData.password})
+
+		console.log(syncUser)
 		let homeNotif = await getHomeNotification(userData.nik)
 
 		let temp = {}

@@ -142,7 +142,7 @@ export default function useUser() {
             setIsFetch(true)
         } 
 
-    }, [])
+    }, [isFetch])
 
     return {
         isLoading, user, loginTesting,getUserByNik, getDetailUser, logout, login, updateUser
