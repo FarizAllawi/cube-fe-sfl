@@ -15,11 +15,11 @@ export default async function sendEmail (req, res) {
     console.log(req.body)
     // console.log("CHeck Body")
     const mailData = await {
-      from: 'employee.claim@kalbeconsumerhealth.com (no reply)',
+      from: 'cube@kalbeconsumerhealth.com (no reply)',
       to: `${req.body.email}`,
       subject: `${req.body.header}`,
-      text: `${req.body.description}` +" | Automatic Sent from: employee.claim@kalbeconsumerhealth",
-      html: `<div>${req.body.description}</div><p>employee.claim@kalbeconsumerhealth</p>`
+      text: `${req.body.description}` +" | Automatic Sent from: cube@kalbeconsumerhealth.com",
+      html: `<div>${req.body.description}</div><p>cube@kalbeconsumerhealth.com</p>`
     }
     await transporter.sendMail(mailData, function (err, info) {
       if(err){
