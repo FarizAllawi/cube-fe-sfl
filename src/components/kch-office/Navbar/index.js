@@ -32,14 +32,11 @@ export default function Navbar(props) {
 
     return ( 
         <>
-            <div className="fixed top-0 w-screen h-auto flex flex-col gap-3" style={{ 'zIndex' : '1000' }}>
+            <div className="select-none fixed top-0 w-screen h-auto flex flex-col gap-3" style={{ 'zIndex' : '1000' }}>
                 <div className="w-full flex flex-row px-6 lg:px-12 pt-4 pb-2 xl:pt-1 fixed top-0 z-10 bg-white">
                 {
                     size.width <= 1024 ? <NavbarMobile /> : <NavbarDesktop />
                 }
-                </div>
-                <div className="w-full mt-20 xl:mt-16 pt-1 xl:pt-3 px-6 lg:px-12 fixed top-0 z-10 bg-white ">
-                    <div className="w-full bg-green-900 border border-white h-0.5"></div>
                 </div>
             </div>
             

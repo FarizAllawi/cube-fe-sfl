@@ -171,7 +171,7 @@ export default function BTB(props) {
                 }),
                 sendEmail({
                     email: detailSuperior.email,
-                    heaer: 'BTB Need Approval',
+                    header: 'BTB Need Approval',
                     description: `BTB ${bhid} from ${capitalizeEachWord(detailUser.name)} needs your approval`
                 })
 
