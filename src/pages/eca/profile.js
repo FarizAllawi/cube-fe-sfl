@@ -115,12 +115,12 @@ export default function Profile(props) {
                         <div className="flex flex-col gap-3">
                             <div className="text-xs md:text-sm font-medium">NIK</div>
                             <div className="text-xs md:text-sm font-medium">email</div>
-                            <div className="font-light md:pt-0.5" style={{ fontSize: "12px" }}>: {user?.nik}</div>
                             <div className="text-xs md:text-sm font-medium">Department</div>
                             <div className="text-xs md:text-sm font-medium">Division</div>
                             <div className="text-xs md:text-sm font-medium">Level</div>
                         </div>
                         <div className="flex flex-col gap-2.5 md:gap-3">
+                            <div className="font-light md:pt-0.5" style={{ fontSize: "12px" }}>: {user?.nik}</div>
                             <div className="font-light md:pt-0.5" style={{ fontSize: "12px" }}>: {user?.email}</div>
                             <div className="font-light md:pt-0.5" style={{ fontSize: "12px" }}>: {user?.deptName}</div>
                             <div className="font-light md:pt-0.5" style={{ fontSize: "12px" }}>: {user?.divName}</div>
@@ -175,8 +175,6 @@ export default function Profile(props) {
                         </Button>
                     </div>
                 </div>
-
-
             </div>
 
         </LayoutDetail>
