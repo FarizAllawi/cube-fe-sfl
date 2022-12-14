@@ -117,7 +117,7 @@ export default function Profile(props) {
         <>
             <Layout>
                 <div className="w-full flex place-content-center">
-                    <div className="mt-10 sm:mt-20 w-full sm:mx-10 rounded-3xl  xl:w-1/3 h-auto bg-green-500 bg-opacity-40">
+                    <div className="mt-10 sm:mt-20 w-full sm:mx-10 xl:mb-24 2xl:mb-0 rounded-3xl  xl:w-1/3 h-auto bg-green-500 bg-opacity-40">
                         <div className="w-full pt-3 pb-1 text-center text-base sm:text-2xl text-green-900 font-semibold">PROFILE</div>
                         <div className="w-full h-full px-8 sm:px-10 flex flex-col bg-green-900 rounded-3xl">
                             <div className="w-full h-48 sm:h-52 flex flex-col gap-4 place-content-center items-center">
@@ -177,6 +177,10 @@ export default function Profile(props) {
                                 <div className="w-full flex flex-row">
                                     <div className="w-2/5 sm:w-1/3 text-white text-sm  font-medium">Level</div>
                                     <div className="w-3/5 sm:w-2/3 text-white text-xs sm:text-sm font-medium">: {user?.jobLvlName}</div>
+                                </div>
+                                <div className="w-full flex flex-row">
+                                    <div className="w-2/5 sm:w-1/3 text-white text-sm  font-medium">Golongan</div>
+                                    <div className="w-3/5 sm:w-2/3 text-white text-xs sm:text-sm font-medium">: {user?.golongan}</div>
                                 </div>
                                 <div className="w-full flex flex-row mt-6">
                                     <div className="w-2/5 sm:w-1/3 text-white text-sm font-medium">Superior NIK</div>
