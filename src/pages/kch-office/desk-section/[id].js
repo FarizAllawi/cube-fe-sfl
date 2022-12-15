@@ -525,18 +525,18 @@ export default function DeskSection(props) {
                                                     font-semibold text-green-900 cursor-pointer
                                                     ${
                                                         item.desk_status !== 2 ? (
-                                                            (item.desk_employee_class === null || parseInt(user.golongan) >= item.desk_employee_class) ? (
+                                                            (item.desk_employee_class === null || parseInt(user.golongan) >= parseInt(item.desk_employee_class)) ? (
                                                                 (item.uid_user === null || item.uid_user === '') ? ( 
                                                                     'border-4 border-green-500 border-opacity-40 bg-white bg-opacity-60 hover:bg-green-500'
                                                                 ) :  (
                                                                     'border-4 border-green-500 bg-green-500'
                                                                 )
-                                                            ) : 'border-4 border-red-900 bg-red-900'
+                                                            ) : 'border-4 border-green-500 border-opacity-40 bg-white bg-opacity-60 hover:bg-green-500'
                                                         ) : 'border-4 border-white border-opacity-5 bg-white bg-opacity-20'   
                                                     }
                                                     rounded-full`
                                                 }
-                                                onClick={() => item.desk_status !== 2 && user.golongan >= item.desk_employee_class ? selectDesk(item) : ''}>
+                                                onClick={() => item.desk_status !== 2 ? selectDesk(item) : ''}>
                                                     {
                                                         item.desk_status !== 0 && item.uid_user !== null && item.uid_user !== '' ? (
                                                             <>
@@ -576,6 +576,8 @@ export default function DeskSection(props) {
                             <div className="w-full h-28 pt-2 xl:pt-4 grid grid-flow-col gap-4">
                             {
                                 desk?.dataRow2?.slice(0)?.reverse()?.map((item , index) => {
+                                    console.log(user)
+                                    console.log(item)
                                     // if (item.uid_user !== undefined && item.uid_user !== null) setAlreadyBooked(true)
                                     return (
                                         <div key={index} className="w-full h-full flex place-content-center items-center">
@@ -584,13 +586,13 @@ export default function DeskSection(props) {
                                                     font-semibold text-green-900 cursor-pointer
                                                     ${
                                                         item.desk_status !== 2 ? (
-                                                            (item.desk_employee_class === null || parseInt(user.golongan) >= item.desk_employee_class) ? (
+                                                            (item.desk_employee_class === null || parseInt(user.golongan) >= parseInt(item.desk_employee_class)) ? (
                                                                 (item.uid_user === null || item.uid_user === '') ? ( 
                                                                     'border-4 border-green-500 border-opacity-40 bg-white bg-opacity-60 hover:bg-green-500'
                                                                 ) :  (
                                                                     'border-4 border-green-500 bg-green-500'
                                                                 )
-                                                            ) : 'border-4 border-red-900 bg-red-900'
+                                                            ) : 'border-4 border-green-500 border-opacity-40 bg-white bg-opacity-60 hover:bg-green-500'
                                                         ) : 'border-4 border-white border-opacity-5 bg-white bg-opacity-20'   
                                                     }
                                                     rounded-full`

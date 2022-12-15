@@ -71,6 +71,13 @@ export default function useNotification() {
         console.log("Email");
         await fetch('/api/eca/email', {
             method: "POST",
+            headers: {
+                'Access-Control-Allow-Origin' : `${process.env.NEXT_PUBLIC_ECA_SERVICE}`,
+                'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
+                'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token',
+                'Accept': 'application/json, text/plain, /',
+                'Content-Type': 'application/json'
+            },
             body: JSON.stringify({ 
                 email: props.email,
                 header: props.header,
