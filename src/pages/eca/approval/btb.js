@@ -538,7 +538,15 @@ export default function BTB(props) {
                                     <Button size="flex" className="select-none bg-red-400 hover:bg-red-500 py-3 text-xs xl:text-sm text-white" onClick={() => newState({approveAll: '', reason: ''})}>NO, CANCEL</Button>
                                 </div>
                                 <div className="w-1/2">
-                                    <Button size="flex" className="select-none bg-green-400 hover:bg-green-500 py-3 text-xs xl:text-sm text-white" isLoading={isLoading} onClick={() => approveAll()}>YES, PROCEED!</Button>
+                                    <Button size="flex" 
+                                            className="select-none bg-green-400 hover:bg-green-500 py-3 text-xs xl:text-sm text-white" 
+                                            isLoading={isLoading} 
+                                            onClick={() => {
+                                                approveAll()
+                                                newState({approveAll: '', reason: ''})
+                                            }}>
+                                        YES, PROCEED!
+                                    </Button>
                                 </div>
                             </div>
                     </Modals>
