@@ -6,6 +6,7 @@ const instance = axios.create({
     headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
         'X-Requested-With' : 'XMLHttpRequest',
         'ApiKey' : `${process.env.NEXT_PUBLIC_ECA_SERVICE_API_KEY}`,
     },
