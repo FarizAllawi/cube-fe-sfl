@@ -119,9 +119,11 @@ export default function HomePage(props) {
         const fetchData = async () => {
             let bookingList = await getBookedList()
             let officeData = await getAllOffice()
-            let uid = officeData[0]?.uid_office
             
+            console.log(officeData)
+
             if (officeData.length > 0) {
+                let uid = officeData[0]?.uid_office
                 let office = {}
     
                 officeData.map((item, index) => {
