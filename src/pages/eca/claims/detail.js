@@ -308,7 +308,7 @@ export default function Claims(props) {
 
         if (dataClaim.item2.length <= 1 && dataClaim.item3.length <= 1) {
             await deleteClaimHeader(claimHead[0].chid)
-            setTimeout(() => router.push('/eca/claims'), 500)
+            router.push('/eca/claims')
         }
         else setTimeout(() => router.reload(), 500)
     }

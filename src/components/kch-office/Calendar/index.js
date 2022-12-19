@@ -98,13 +98,13 @@ export default function Calendar(props) {
 
     const CalendarHeader = () => {
         return (
-            <div className="w-full h-20 p-4 flex flex-row place-content-center items-center bg-green-900 rounded-t-3xl">
+            <div className="w-full h-16 p-4 flex flex-row place-content-center items-center bg-green-900 rounded-t-3xl">
                 <div className="w-1/3">
-                    <div className="cursor-pointer w-8 h-8 xl:w-12 xl:h-12 flex place-content-center items-center rounded-full bg-green-500 bg-opacity-80 hover:bg-opacity-60" onClick={() => prevMonth()}>
+                    <div className="cursor-pointer w-8 h-8 xl:w-10 xl:h-10 flex place-content-center items-center rounded-full bg-green-500 bg-opacity-80 hover:bg-opacity-60" onClick={() => prevMonth()}>
                         <ChevronLeft className="p-1" />
                     </div>
                 </div>
-                <div className="w-2/3 h-12 p-2 bg-green-500 bg-opacity-80 rounded-xl flex flex-row place-content-center items-center gap-2 divide-x-2">
+                <div className="w-2/3 h-10 p-2 bg-green-500 bg-opacity-80 rounded-xl flex flex-row place-content-center items-center gap-2 divide-x-2">
                     <div className="w-1/2 p-2 flex place-content-center items-center text-sm xl:text-base font-medium text-white">
                         {format(currentMonth, "MMMM")}
                     </div>
@@ -113,7 +113,7 @@ export default function Calendar(props) {
                     </div>
                 </div>
                 <div className="w-1/3 flex place-content-end">
-                    <div className="cursor-pointer w-8 h-8 xl:w-12 xl:h-12 flex place-content-center items-center rounded-full bg-green-500 bg-opacity-80 hover:bg-opacity-60" onClick={() => nextMonth()}>
+                    <div className="cursor-pointer w-8 h-8 xl:w-10 xl:h-10 flex place-content-center items-center rounded-full bg-green-500 bg-opacity-80 hover:bg-opacity-60" onClick={() => nextMonth()}>
                         <ChevronRight className="p-1" />
                     </div>
                 </div>
@@ -126,7 +126,7 @@ export default function Calendar(props) {
         const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
     
         return (
-            <div className="w-full h-12 grid grid-cols-7 ">
+            <div className="w-full h-10 grid grid-cols-7 ">
                 {
                     weekDays.map((day, index) => {
                         return (
@@ -289,7 +289,7 @@ export default function Calendar(props) {
                 day = addDays(day, 1);
             }
             rows.push(
-                <div key={day} className="w-full h-16 xl:h-20 grid grid-cols-7 divide-x-2 divide-green-900 divide-opacity-20 ">
+                <div key={day} className="w-full h-16 2xl:h-20 grid grid-cols-7 divide-x-2 divide-green-900 divide-opacity-20 ">
                     {days}
                 </div>
             )
