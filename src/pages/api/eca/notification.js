@@ -68,12 +68,20 @@ export default function useNotification() {
     }
 
     const sendEmail = async ({setErrors, ...props}) => {
+        console.log("Email");
         await fetch('/api/eca/email', {
             method: "POST",
+            headers: {
+                'Access-Control-Allow-Origin' : '*',
+                'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
+                'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token',
+                'Accept': 'application/json, text/plain, /',
+                'Content-Type': 'application/json'
+            },
             body: JSON.stringify({ 
                 email: props.email,
                 header: props.header,
-                body: props.body
+                description: props.description
              })
         });
     }

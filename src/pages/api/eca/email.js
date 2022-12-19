@@ -1,24 +1,25 @@
 export default async function sendEmail (req, res) {
     let nodemailer = require('nodemailer')
     const transporter = nodemailer.createTransport({
+      service: 'gmail',
       host: `${process.env.NEXT_PUBLIC_SMTP_URL}`,
       // secure: false,
       port: `${process.env.NEXT_PUBLIC_SMTP_PORT}`,
       auth: {
-        user: "05fbd14ef12faf",
-        pass: "be0720307fe900"
+        user: `${process.env.NEXT_PUBLIC_USER_ID}`,
+        pass: `${process.env.NEXT_PUBLIC_USER_PW}`,
       }
     
     })
-    // console.log("CHeck Body")
-    // console.log(req.body)
+    console.log("CHeck Body")
+    console.log(req.body)
     // console.log("CHeck Body")
     const mailData = await {
-      from: 'finance@sakafarma.com (no reply)',
-      to: req.body.email,
+      from: 'cube@kalbeconsumerhealth.com (CUBE NOTIFICATION)',
+      to: `${req.body.email}; andrian.santo@kalbeconsumerhealth.com`,
       subject: `${req.body.header}`,
-      text: `${req.body.description}` +" | Automatic Sent from: finance@sakafarma.com",
-      html: `<div>${req.body.description}</div><p>Automatic Sent from: finance@sakafarma.com</p>`
+      text: `${req.body.description}` +" | Automatic Sent from: cube@kalbeconsumerhealth.com",
+      html: `<div>${req.body.description}</div><p>cube@kalbeconsumerhealth.com</p>`
     }
     await transporter.sendMail(mailData, function (err, info) {
       if(err){

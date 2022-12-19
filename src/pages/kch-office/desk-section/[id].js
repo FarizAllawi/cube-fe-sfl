@@ -24,6 +24,7 @@ import ChevronLeft from '../../../../public/images/svg/kch-office/chevron-left.s
 import ChevronRight from '../../../../public/images/svg/kch-office/chevron-right.svg'
 import DeskIcon from '../../../../public/images/svg/kch-office/desk-icon.svg'
 import TrashIcon from '../../../../public/images/svg/kch-office/trash-icon.svg'
+import NotFoundData from '../../../../public/images/svg/kch-office/not-found-data.svg'
 
 function getDataRow(row, data) {
     const column = Math.ceil(data.length / row)
@@ -520,20 +521,28 @@ export default function DeskSection(props) {
                                     return (
                                         <div key={index} className="w-full h-full flex place-content-center items-center">
                                             <div className={`
-                                                    relative w-14 h-14  xl:w-24 xl:h-24 flex place-content-center items-center 
-                                                    text-xl xl:text-4xl font-semibold text-green-900 cursor-pointer
-                                                    ${item.desk_status !== 2 && (item.uid_user === null || item.uid_user === '') && 'border-4 border-green-500 border-opacity-40 bg-white bg-opacity-60 hover:bg-green-500'} 
-                                                    ${item.desk_status !== 2 && selectedDesk.uid_dk !== undefined && selectedDesk.uid_dk === item.uid_dk && 'border-4 border-green-500 bg-green-500 bg-opacity-100'} 
-                                                    ${item.desk_status === 2 && 'border-4 border-white border-opacity-5 bg-white bg-opacity-20'}
+                                                    relative ${size.width < 390 ? 'w-10 h-10 text-base' : 'w-12 h-12 text-xl xl:text-4xl '}  sm:w-14 sm:h-14  xl:w-24 xl:h-24 flex place-content-center items-center 
+                                                    font-semibold text-green-900 cursor-pointer
+                                                    ${
+                                                        item.desk_status !== 2 ? (
+                                                            (item.desk_employee_class === null || parseInt(user.golongan) >= parseInt(item.desk_employee_class)) ? (
+                                                                (item.uid_user === null || item.uid_user === '') ? ( 
+                                                                    'border-4 border-green-500 border-opacity-40 bg-white bg-opacity-60 hover:bg-green-500'
+                                                                ) :  (
+                                                                    'border-4 border-green-500 bg-green-500'
+                                                                )
+                                                            ) : 'border-4 border-green-500 border-opacity-40 bg-white bg-opacity-60 hover:bg-green-500'
+                                                        ) : 'border-4 border-white border-opacity-5 bg-white bg-opacity-20'   
+                                                    }
                                                     rounded-full`
                                                 }
-                                                onClick={() => item.desk_status !== 2 ?selectDesk(item) : ''}>
+                                                onClick={() => item.desk_status !== 2 ? selectDesk(item) : ''}>
                                                     {
                                                         item.desk_status !== 0 && item.uid_user !== null && item.uid_user !== '' ? (
                                                             <>
                                                                 {
                                                                     item.user.photo_profile === null || item.user.photo_profile === undefined ? (
-                                                                        <ProfileInitial name={item.user.name} width="full" height="full" className='text-xl xl:text-3xl'/>
+                                                                        <ProfileInitial name={item.user.name} width="full" height="full" className='text-base sm:text-xl xl:text-3xl'/>
                                                                     ) : (
                                                                         <Image  fill
                                                                                 loader={imageLoader}
@@ -567,24 +576,34 @@ export default function DeskSection(props) {
                             <div className="w-full h-28 pt-2 xl:pt-4 grid grid-flow-col gap-4">
                             {
                                 desk?.dataRow2?.slice(0)?.reverse()?.map((item , index) => {
+                                    console.log(user)
+                                    console.log(item)
                                     // if (item.uid_user !== undefined && item.uid_user !== null) setAlreadyBooked(true)
                                     return (
                                         <div key={index} className="w-full h-full flex place-content-center items-center">
                                             <div className={`
-                                                    relative w-14 h-14  xl:w-24 xl:h-24 flex place-content-center items-center 
-                                                    text-xl xl:text-4xl font-semibold text-green-900 cursor-pointer
-                                                    ${item.desk_status !== 2 && (item.uid_user === null || item.uid_user === '') && 'border-4 border-green-500 border-opacity-40 bg-white bg-opacity-60 hover:bg-green-500'} 
-                                                    ${item.desk_status !== 2 && selectedDesk.uid_dk !== undefined && selectedDesk.uid_dk === item.uid_dk && 'border-4 border-green-500 bg-green-500 bg-opacity-100'} 
-                                                    ${item.desk_status === 2 && 'border-4 border-white border-opacity-5 bg-white bg-opacity-20'}
+                                                    relative ${size.width < 390 ? 'w-10 h-10 text-base' : 'w-12 h-12 text-xl xl:text-4xl '}  sm:w-14 sm:h-14  xl:w-24 xl:h-24 flex place-content-center items-center 
+                                                    font-semibold text-green-900 cursor-pointer
+                                                    ${
+                                                        item.desk_status !== 2 ? (
+                                                            (item.desk_employee_class === null || parseInt(user.golongan) >= parseInt(item.desk_employee_class)) ? (
+                                                                (item.uid_user === null || item.uid_user === '') ? ( 
+                                                                    'border-4 border-green-500 border-opacity-40 bg-white bg-opacity-60 hover:bg-green-500'
+                                                                ) :  (
+                                                                    'border-4 border-green-500 bg-green-500'
+                                                                )
+                                                            ) : 'border-4 border-green-500 border-opacity-40 bg-white bg-opacity-60 hover:bg-green-500'
+                                                        ) : 'border-4 border-white border-opacity-5 bg-white bg-opacity-20'   
+                                                    }
                                                     rounded-full`
                                                 }
-                                                onClick={() => item.desk_status !== 2 ? selectDesk(item) : ''}>
+                                                onClick={() => item.desk_status !== 2 && user.golongan >= item.desk_employee_class ? selectDesk(item) : ''}>
                                                     {
                                                         item.desk_status !== 0 && item.uid_user !== null && item.uid_user !== '' ? (
                                                             <>
                                                                 {
                                                                     item.user.photo_profile === null || item.user.photo_profile === undefined ? (
-                                                                        <ProfileInitial name={item.user.name} width="full" height="full" className='text-xl xl:text-3xl'/>
+                                                                        <ProfileInitial name={item.user.name} width="full" height="full" className='text-base sm:text-xl  xl:text-3xl'/>
                                                                     ) : (
                                                                         <Image  fill
                                                                                 loader={imageLoader}
@@ -607,21 +626,27 @@ export default function DeskSection(props) {
                             </div>
                         </div>
 
-                        <div className="w-full h-8 mt-4 flex flex-row place-content-center items-center gap-2">
-                            <div className="w-auto flex flex-row gap-2 mx-2 xl:mx-4">
-                                <div className="w-4 h-4 xl:w-6 xl:h-6 border-2 border-green-500 bg-green-900 bg-opacity-30 rounded-full"></div>
-                                <div className="text-sm xl:text-base text-black font-medium">Available</div>
+                        <div className="w-full h-8 mt-4 flex flex-row place-content-center items-center gap-1 sm:gap-2">
+                            <div className="w-auto flex flex-row gap-1 sm:gap-2 mx-2 xl:mx-4">
+                                <div className="w-3 h-3 sm:w-4 sm:h-4 2xl:w-6 2xl:h-6 border-1 sm:border-2 border-green-900 bg-green-900 rounded-full"></div>
+                                <div className="absolute w-3 h-3 sm:w-4 sm:h-4 2xl:w-6 2xl:h-6 border-1 sm:border-2 border-green-500 bg-white bg-opacity-60 rounded-full"></div>
+                                <div className="text-xs sm:text-sm 2xl:text-base text-black font-medium">Available</div>
                             </div>
-                            <div className="w-auto flex flex-row gap-2 mx-2 xl:mx-4">
-                                <div className="w-4 h-4 xl:w-6 xl:h-6 border-2 border-green-900 bg-green-900 rounded-full"></div>
-                                <div className="absolute w-4 h-4 xl:w-6 xl:h-6 border-2 border-white border-opacity-10 bg-white bg-opacity-30 rounded-full"></div>
-                                <div className="text-sm xl:text-base text-black font-medium">Unavailable</div>
+                            <div className="w-auto flex flex-row gap-1 sm:gap-2 mx-2 xl:mx-4">
+                                <div className="w-3 h-3 sm:w-4 sm:h-4 2xl:w-6 2xl:h-6 border-1 sm:border-2 border-green-900 bg-green-900 rounded-full"></div>
+                                <div className="absolute w-3 h-3 sm:w-4 sm:h-4 2xl:w-6 2xl:h-6 border-1 sm:border-2 border-white border-opacity-5 bg-white bg-opacity-30 rounded-full"></div>
+                                <div className="text-xs sm:text-sm 2xl:text-base text-black font-medium">Unavailable</div>
                             </div>
-                            <div className="w-auto flex flex-row gap-2 mx-2 xl:mx-4">
-                                <div className="w-4 h-4 xl:w-6 xl:h-6 border-2 p-0.5 border-green-500 rounded-full flex place-content-center items-center">
-                                    <div className="w-2 h-2 xl:w-4 xl:h-4 bg-green-500 rounded-full"></div>
+                            <div className="w-auto flex flex-row items-center  gap-1 sm:gap-2 mx-2 xl:mx-4">
+                                <div className="w-3 h-3 sm:w-4 sm:h-4 2xl:w-6 2xl:h-6 border-1 sm:border-2 border-green-900 bg-green-900 rounded-full"></div>
+                                <div className="absolute w-3 h-3 sm:w-4 sm:h-4 2xl:w-6 2xl:h-6 border-1 sm:border-2 border-red-900 border-opacity-10 bg-red-900 rounded-full"></div>
+                                <div className="text-center text-xs sm:text-sm 2xl:text-base text-black font-medium">Authorized Desk</div>
+                            </div>
+                            <div className="w-auto flex flex-row gap-1 sm:gap-2 mx-2 xl:mx-4">
+                                <div className="w-3 h-3 sm:w-4 sm:h-4 2xl:w-6 2xl:h-6 border-1 sm:border-2 p-0.5 border-green-500 rounded-full flex place-content-center items-center">
+                                    <div className="w-2 h-2 2xl:w-4 2xl:h-4 bg-green-500 rounded-full"></div>
                                 </div>
-                                <div className="text-sm xl:text-base text-black font-medium">Booked</div>
+                                <div className="text-xs sm:text-sm 2xl:text-base text-black font-medium">Booked</div>
                             </div>
                         </div>
                     </div>
@@ -678,7 +703,10 @@ export default function DeskSection(props) {
                                     </div>
                                 </div>
                             ) : (
-                                <></>
+                                <div className="relative w-full pb-16 flex flex-col place-content-center items-center">
+                                    <NotFoundData className='w-80 h-80 sm:w-96 sm:h-96'/>
+                                    <p className='text-center text-base font-medium text-green-900'>Looks like you not booking any desk in this desk section</p>
+                                </div>
                             )
                         }
                     </div>

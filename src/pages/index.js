@@ -27,18 +27,20 @@ export default function Home(props) {
                                 <div className="mb-4 text-xs tracking-normal text-blue-300 font-light">EMPLOYEE CLAIM APP</div>
                             </div>
                         </Link>
-                        {/* <Link href="/kch-office" className='cursor-pointer w-1/2 flex place-content-center items-center h-48 sm:h-56 p-4 bg-white bg-opacity-40 backdrop-blur-md border-2 border-gray-200 rounded-xl'> */}
+                        {/* <Link href="/kch-office" className='cursor-pointer w-1/2 flex place-content-center items-center h-48 sm:h-56 p-4 bg-white bg-opacity-40 backdrop-blur-md border-2 border-gray-200 rounded-xl'>
+                            <div className="w-40 text-center">
+                                <div className="mt-4 text-3xl xl:text-4xl text-green-900 text-logo-stroke-mobile xl:text-logo-stroke-desktop font-extrabold ">CHStar</div>
+                                <div className="mb-4 text-base xl:text-xl tracking-wider text-green-500 text-logo-stroke-mobile font-extrabold">KCH OFFICE</div>
+                            </div>
+                        </Link> */}
+
                         <div href="#" className='select-none w-1/2 flex place-content-center items-center h-48 sm:h-56 p-4 bg-black bg-opacity-20 backdrop-blur-md border-2 border-gray-200 rounded-xl'>
                             <div className="w-40 text-center">
-                                {/* <div className="mt-4 text-3xl xl:text-4xl text-green-900 text-logo-stroke-mobile xl:text-logo-stroke-desktop font-extrabold ">CHStar</div> */}
-                                {/* <div className="mb-4 text-base xl:text-xl tracking-wider text-green-900 text-logo-stroke-mobile font-extrabold">KCH OFFICE</div> */}
                                 <div className="mt-4 text-3xl xl:text-2xl text-gray-100 text-logo-stroke-mobile xl:text-logo-stroke-desktop font-extrabold ">CHStar</div>
                                 <div className="mb-4 text-base xl:text-l tracking-wider text-gray-100 text-logo-stroke-mobile font-extrabold">KCH OFFICE</div>
                                 <div className="mb-4 text-base xl:text-4xl tracking-wider text-green-500 text-logo-stroke-mobile font-extrabold">Coming Soon!</div>
                             </div>
                         </div>
-                        {/* </Link> */}
-
                     </div>
                 </div>
 
@@ -46,7 +48,7 @@ export default function Home(props) {
                     <Image src={CubeLogoFont} width={150} height={150} alt="cube-logo-font"/>
                 </div>
                 <div className="relative w-full h-full overflow-hidden z-10">
-                    <svg className="absolute bottom-0 left-0"
+                    <svg className="absolute w-full -bottom-10 left-0"
                             xmlns="http://www.w3.org/2000/svg"
                             xmlnsXlink="http://www.w3.org/1999/xlink"
                             viewBox="0 24 150 28"
