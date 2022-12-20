@@ -432,7 +432,7 @@ export default function DeskSection(props) {
                                     endDate: new Date()
                                 })
                             }}
-                            size="large">
+                            size="medium">
                             <div className="w-full flex flex-col gap-4 px-5 xl:px-10">
                                 <Calendar   type='dateRange' 
                                             name="selectedDate" 
@@ -531,12 +531,12 @@ export default function DeskSection(props) {
                                                                 ) :  (
                                                                     'border-4 border-green-500 bg-green-500'
                                                                 )
-                                                            ) : 'border-4 border-green-500 border-opacity-40 bg-white bg-opacity-60 hover:bg-green-500'
+                                                            ) : 'border-4 border-white border-opacity-5 bg-red-900 bg-opacity-90'
                                                         ) : 'border-4 border-white border-opacity-5 bg-white bg-opacity-20'   
                                                     }
                                                     rounded-full`
                                                 }
-                                                onClick={() => item.desk_status !== 2 ? selectDesk(item) : ''}>
+                                                onClick={() => item.desk_status !== 2 && user.golongan >= item.desk_employee_class ? selectDesk(item) : ''}>
                                                     {
                                                         item.desk_status !== 0 && item.uid_user !== null && item.uid_user !== '' ? (
                                                             <>
@@ -576,8 +576,6 @@ export default function DeskSection(props) {
                             <div className="w-full h-28 pt-2 xl:pt-4 grid grid-flow-col gap-4">
                             {
                                 desk?.dataRow2?.slice(0)?.reverse()?.map((item , index) => {
-                                    console.log(user)
-                                    console.log(item)
                                     // if (item.uid_user !== undefined && item.uid_user !== null) setAlreadyBooked(true)
                                     return (
                                         <div key={index} className="w-full h-full flex place-content-center items-center">
@@ -592,7 +590,7 @@ export default function DeskSection(props) {
                                                                 ) :  (
                                                                     'border-4 border-green-500 bg-green-500'
                                                                 )
-                                                            ) : 'border-4 border-green-500 border-opacity-40 bg-white bg-opacity-60 hover:bg-green-500'
+                                                            ) : 'border-4 border-white border-opacity-5 bg-red-900 bg-opacity-90'
                                                         ) : 'border-4 border-white border-opacity-5 bg-white bg-opacity-20'   
                                                     }
                                                     rounded-full`

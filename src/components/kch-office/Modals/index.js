@@ -12,7 +12,7 @@ export default function Modals(props) {
     
     let width = ''
     if (props.size === 'small') width = 'w-11/12 sm:w-1/3 2xl:w-1/4'
-    if (props.size === 'medium') width = 'w-11/12 sm:w-10/12 xl:w-1/2 2xl:w-1/3'
+    if (props.size === 'medium') width = 'w-11/12 sm:w-10/12 xl:w-5/12 2xl:w-1/3'
     if (props.size === 'large') width = 'w-11/12 sm:w-10/12 xl:w-1/2'
 
     let color = ''
@@ -34,7 +34,7 @@ export default function Modals(props) {
                         </div>
                         
                         <div className="w-full h-full bg-white border-2 border-green-900 rounded-b-3xl">
-                            <div className="w-full flex px-4 text-center place-content-center mt-5 mb-5 text-base text-green-900 tracking-wide font-medium">
+                            <div className="w-full flex px-4 text-center place-content-center mt-3 mb-3 2xl:mt-5 2xl:mb-5 text-base text-green-900 tracking-wide font-medium">
                                 {props.caption}
                             </div>
                             <div className='w-full flex flex-col mb-4'>

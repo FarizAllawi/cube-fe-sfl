@@ -119,10 +119,12 @@ export default function HomePage(props) {
         const fetchData = async () => {
             let bookingList = await getBookedList()
             let officeData = await getAllOffice()
-            let uid = officeData[0]?.uid_office
-            
+
             if (officeData.length > 0) {
+                let uid = officeData[0]?.uid_office
+                let deskSectionData = await bookingFetcher( `/api/booking/office/${uid}`)
                 let office = {}
+
     
                 officeData.map((item, index) => {
                     if (item.uid_office === uid) {
@@ -130,7 +132,8 @@ export default function HomePage(props) {
                         newState({ office: `${item.uid_office}=${item.office_name}`})
                     }
                 })
-    
+
+                setDeskSection(deskSectionData)
                 setBookedList(bookingList)
                 setSelectedOffice(office)
                 setOfficeData(officeData) 
@@ -192,9 +195,9 @@ export default function HomePage(props) {
                                 </div>
                             </div>
                             <div className="w-1/3 sm:w-1/2 text-right">
-                                <Link href="/kch-office/history">
+                                {/* <Link href="/kch-office/history">
                                     <div className="cursor-pointer text-xs sm:text-sm underline underline-offset-2 text-white font-medium">Booking history</div>
-                                </Link>
+                                </Link> */}
                             </div>
                         </div>
 
