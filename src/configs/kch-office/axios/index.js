@@ -6,7 +6,7 @@ const instance = axios.create({
     headers: {
         'Access-Control-Allow-Origin' : '*',
         'Access-Control-Allow-Methods': 'GET, HEAD, POST, PATCH, PUT, DELETE, OPTIONS',
-        'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token',
+        'Access-Control-Allow-Headers': 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version',
         'Accept': 'application/json, text/plain, /',
         'Content-Type': 'application/json',
         'X-Requested-With' : 'XMLHttpRequest',
