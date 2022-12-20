@@ -23,7 +23,7 @@ export default function useOffice() {
             }
         })
         .then(res => {
-            office = res.data
+            office = res?.data
             setIsLoading(false)
         })
         .catch(err => {
@@ -44,7 +44,7 @@ export default function useOffice() {
         })
         .then(res => {
             setIsLoading(false)
-            return res.data
+            return res?.data
         })
         .catch(err => {
             setIsLoading(false)

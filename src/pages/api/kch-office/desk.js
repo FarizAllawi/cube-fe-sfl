@@ -47,7 +47,7 @@ export default function useBooking() {
         })
         .then(res => {
             setIsLoading(false)
-            return res.data
+            return res?.data
         })
         .catch(err => {
             setIsLoading(false)

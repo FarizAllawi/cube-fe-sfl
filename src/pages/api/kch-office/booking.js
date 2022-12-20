@@ -21,7 +21,7 @@ export default function useBooking() {
                 'Authorization': `Bearer ${userSession?.token}`
             }
         }).then(res => {
-            return res.data
+            return res?.data
         })
 
         return response
@@ -38,7 +38,7 @@ export default function useBooking() {
         })
         .then(res => {
             setIsLoading(false)
-            return res.data
+            return res?.data
         })
         .catch(err => {
             setIsLoading(false)
@@ -58,7 +58,7 @@ export default function useBooking() {
         })
         .then(res => {
             setIsLoading(false)
-            return res.data
+            return res?.data
         })
         .catch(err => {
             setIsLoading(false)
@@ -79,7 +79,7 @@ export default function useBooking() {
         })
         .then(res => {
             setIsLoading(false)
-            return res.data
+            return res?.data
         })
         .catch(err => {
             setIsLoading(false)
@@ -101,17 +101,17 @@ export default function useBooking() {
         .then(res => {
             setIsLoading(false)
             return {
-                status: res.status,
-                message: res.message,
-                data: res.data
+                status: res?.status,
+                message: res?.message,
+                data: res?.data
             }
             // return Promise.resolve(res.data)
         })
         .catch(err => {
             setIsLoading(false)
             return {
-                status: err.response.status,
-                message: err.response.data.message
+                status: err.response?.status,
+                message: err.response?.data.message
             }
             // return Promise.reject(err.response.message)
         })
@@ -130,11 +130,11 @@ export default function useBooking() {
         })
         .then(res => {
             setIsLoading(false)
-            return res.data
+            return res?.data
         })
         .catch(err => {
             setIsLoading(false)
-            return err.response.status
+            return err.response?.status
         })
 
         return response
