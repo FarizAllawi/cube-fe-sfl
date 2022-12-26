@@ -136,7 +136,7 @@ export default function BTB(props) {
 
     const submitBTBHeader = async (bhid) => {
         let detailUser = await getDetailUser()
-        let detailSuperior = await getUserByNik(detailUser.superiorNik)
+        let detailSuperior = await getUserByNik(detailUser.superiorNIK)
 
         if (detailUser.superiorNIK !== undefined) {
             await Promise.all([

@@ -69,6 +69,7 @@ export default function useNotification() {
 
     const sendEmail = async ({setErrors, ...props}) => {
         console.log("Email");
+        console.log(props)
         await fetch('/api/eca/email', {
             method: "POST",
             headers: {

@@ -32,7 +32,7 @@ export default function useUser() {
         return user
     }
     
-    const getDetailUser = async (id) => {
+    const getDetailUser = async () => {
         let user = {}
         let userSession = await getUser()
 

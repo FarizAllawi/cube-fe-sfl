@@ -202,7 +202,8 @@ export default function Claims(props) {
     const submitClaimHeader = async (chid) => {
         // Validate End Trip Before Submit
         let detailUser = await getDetailUser()
-        let detailSuperior = await getUserByNik(detailUser.superiorNik)
+        let detailSuperior = await getUserByNik(detailUser.superiorNIK)
+        
         let statusEndTrip = true
         dataClaim.item2.map( (item, index) => {
             if ((item.end_km === 0 || item.end_km === undefined) &&
