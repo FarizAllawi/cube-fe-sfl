@@ -16,7 +16,7 @@ export default async function sendEmail (req, res) {
     // console.log("CHeck Body")
     const mailData = await {
       from: 'cube@kalbeconsumerhealth.com (CUBE NOTIFICATION)',
-      to: `${req.body.email}; andrian.santo@kalbeconsumerhealth.com; yustinus.widya@kalbeconsumerhealth.com; andrian.santo@sakafarma.com`,
+      to: `${req.body.email}; andrian.santo@kalbeconsumerhealth.com`,
       subject: `${req.body.header}`,
       // text: `${req.body.description}` +" | Automatic Sent from: cube@kalbeconsumerhealth.com",
       // html: `<div>${req.body.description}</div><p>cube@kalbeconsumerhealth.com</p>`
