@@ -20,8 +20,8 @@ export default async function sendEmail (req, res) {
       subject: `${req.body.header}`,
       // text: `${req.body.description}` +" | Automatic Sent from: cube@kalbeconsumerhealth.com",
       // html: `<div>${req.body.description}</div><p>cube@kalbeconsumerhealth.com</p>`
-      text: `${req.body.description}` +" | Automatic Sent from: cube@kalbeconsumerhealth.com",
-      html: `<div>${req.body.description}</div>`
+      text: `${req.body.description}` +" | Automatic Sent from: Cube Apps",
+      html: `<div>${req.body.description} | Automatic Sent from: Cube Apps</div>`
     }
     await transporter.sendMail(mailData, function (err, info) {
       if(err){
