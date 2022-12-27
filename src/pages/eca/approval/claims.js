@@ -9,7 +9,8 @@ import useForm from 'helpers/useForm'
 import slugify from 'helpers/slugify'
 
 import useApproval from 'pages/api/eca/approval'
-import useUser from 'pages/api/eca/user'    
+import useUserECA from 'pages/api/eca/user'
+import useUserFWA from 'pages/api/user'
 import useClaim from 'pages/api/eca/claim'
 import useNotification from 'pages/api/eca/notification'
 
@@ -30,7 +31,9 @@ export default function Claims(props) {
     const [filter, setFilter] = useState(false)
     const [user, setUser] = useState({})
 
-    const { getDetailUser, getUserByNik } = useUser()
+    const { getDetailUser } = useUserECA()
+    const { getUserByNik } = useUserFWA()
+
 
     const {updateClaimMileage, updateClaimOther} = useClaim()
     const {

@@ -9,7 +9,8 @@ import Button from "components/eca/Button"
 import LayoutDetail from "components/eca/Layout/Detail"
 import Modals from "components/eca/Modals"
 
-import useUser from 'pages/api/eca/user'
+import useUserECA from 'pages/api/eca/user'
+import useUserFWA from 'pages/api/user'
 import useBTB from 'pages/api/eca/btb'
 import useNotification from 'pages/api/eca/notification'
 
@@ -112,7 +113,8 @@ export default function BTB(props) {
 
     const { insertNotification, sendEmail } = useNotification()
     const { getBTBChildByHeader, getBTBHeadDetail, updateBTBHeader, updateBTBChild, deleteBTBChild, deleteBTBHeader,  isLoading } = useBTB()
-    const { getDetailUser, getUserByNik } = useUser()
+    const { getDetailUser } = useUserECA()
+    const { getUserByNik } = useUserFWA()
 
     const [isFetch, setIsFetch] = useState(false)
     const [user, setUser] = useState({})

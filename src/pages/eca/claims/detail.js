@@ -15,7 +15,8 @@ import ShowDocument from "components/eca/Document/Show"
 import Modals from "components/eca/Modals"
 import BadgeStatus from 'components/eca/Badge'
 
-import useUser from 'pages/api/eca/user'
+import useUserECA from 'pages/api/eca/user'
+import useUserFWA from 'pages/api/user'
 import useClaim from 'pages/api/eca/claim'
 import useNotification from 'pages/api/eca/notification'
 
@@ -187,7 +188,8 @@ export default function Claims(props) {
         updateClaimMileage,
         isLoading
     } = useClaim()
-    const { getDetailUser, getUserByNik } = useUser()
+    const { getDetailUser } = useUserECA()
+    const { getUserByNik } = useUserFWA()
 
     // console.log(props.data.item1)
 
