@@ -7,7 +7,6 @@ import useForm from 'helpers/useForm'
 import slugify from 'helpers/slugify'
 
 import useUserECA from 'pages/api/eca/user'
-import useUserFWA from 'pages/api/user'
 import useApproval from 'pages/api/eca/approval'
 import useBTB from 'pages/api/eca/btb'
 import useNotification from 'pages/api/eca/notification'    
@@ -62,8 +61,7 @@ export default function BTB(props) {
     const [user, setUser] = useState([])
     const {updateBTBChild} = useBTB()
     const {getBtbApproval, approveAllBtbSuperior} = useApproval()
-    const { getDetailUser } = useUserECA()
-    const { getUserByNik } = useUserFWA()
+    const { getDetailUser, getUserByNik } = useUserECA()
 
     const {getBTBChildByHeader} = useBTB()
     const {insertNotification, sendEmail} = useNotification()

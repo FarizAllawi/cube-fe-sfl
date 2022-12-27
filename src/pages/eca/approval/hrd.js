@@ -12,7 +12,6 @@ import slugify from 'helpers/slugify'
 
 import useApproval from 'pages/api/eca/approval'
 import useUserECA from 'pages/api/eca/user'
-import useUserFWA from 'pages/api/user'
 import useClaim from 'pages/api/eca/claim'
 import useNotification from 'pages/api/eca/notification'
 
@@ -114,8 +113,7 @@ export default function Hrd(props) {
     const router = useRouter()
     const [filter, setFilter] = useState(false)
 
-    const { getDetailUser } = useUserECA()
-    const { getUserByNik } = useUserFWA()
+    const { getDetailUser, getUserByNik } = useUserECA()
 
     // const { updateClaimMileage } = useClaim()
     const {getHRDApproval, approveMileageHRD, rejectMileageHRD} = useApproval()
