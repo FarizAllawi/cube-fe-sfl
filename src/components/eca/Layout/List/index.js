@@ -14,8 +14,7 @@ import ArrowLeftDark from '/public/images/svg/eca/arrow-left-dark.svg'
 import ArrowLeftLight from '/public/images/svg/eca/arrow-left-light.svg'
 import RefreshLight from '/public/images/svg/eca/refresh-light.svg'
 import RefreshDark from '/public/images/svg/eca/refresh-dark.svg'
-import SignOutDark from '/public/images/svg/eca/icon-signout-dark.svg'
-import SignOutLight from '/public/images/svg/eca/icon-signout-light.svg'
+import HomeIcon from '/public/images/svg/eca/home-icon.svg'
 
 export default function Layout(props) {
     const { defaultBackPage, isBackPageMainFlow } = props
@@ -134,14 +133,8 @@ export default function Layout(props) {
                                 <Notification />
                             </div>
                         </Link>
-                        <div className="py-3.5 px-3 rounded-full bg-white dark:bg-gray-700 drop-shadow-md hover:drop-shadow-sm  cursor-pointer" onClick={() => logout()}>
-                        {
-                            theme === 'dark' || (theme === 'system' && systemTheme === 'dark') ? (
-                                <SignOutDark className="p-0.5" />
-                            ) : (
-                                <SignOutLight className="p-0.5" />
-                            )
-                        }
+                        <div className="py-3.5 px-3 rounded-full bg-white dark:bg-gray-700 drop-shadow-md hover:drop-shadow-sm  cursor-pointer" onClick={() => router.push('/eca')}>
+                            <HomeIcon />
                         </div>
                     </div>
                 </div>

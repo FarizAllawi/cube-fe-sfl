@@ -5,6 +5,7 @@ import Link from 'next/link'
 // import Theme from 'components/eca/Theme'
 
 import useUser from 'pages/api/user'
+import CubeLogo from '/public/images/svg/cube-logo.svg'
 
 import { useRouter } from 'next/router';
 
@@ -51,14 +52,8 @@ export default function NavbarDesktop(props) {
                     </div>
                 </Link>
 
-                <div className="py-3.5 px-3 rounded-full bg-white dark:bg-gray-700 drop-shadow-md hover:drop-shadow-sm  cursor-pointer" onClick={() => logout()}>
-                {
-                    theme === 'dark' || (theme === 'system' && systemTheme === 'dark') ? (
-                        <SignOutDark className="p-0.5" />
-                    ) : (
-                        <SignOutLight className="p-0.5" />
-                    )
-                }
+                <div className="py-3 px-3 rounded-full bg-white dark:bg-gray-700 drop-shadow-md hover:drop-shadow-sm  cursor-pointer" onClick={() => router.push('/')}>
+                    <CubeLogo />
                 </div>
 
                     <div onClick={()=>{router.push("/eca/profile")}}

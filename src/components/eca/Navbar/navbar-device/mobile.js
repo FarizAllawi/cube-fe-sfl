@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useTheme  } from 'next-themes'
+import { useRouter } from 'next/router'
 import Link from 'next/link'
 
 import useUser from 'pages/api/user'
@@ -8,10 +9,10 @@ import useUser from 'pages/api/user'
 import Notification from 'components/eca/Notification'
 
 import ProfileImage from '/public/images/svg/eca/profile.svg'
-import SignOutDark from '/public/images/svg/eca/icon-signout-dark.svg'
-import SignOutLight from '/public/images/svg/eca/icon-signout-light.svg'
+import CubeLogo from '/public/images/svg/cube-logo.svg'
 
 export default function NavbarMobile(props) {
+    const router = useRouter()
     const { logout } = useUser()
     const {theme, setTheme} = useTheme()
     const [systemTheme, setSystemTheme] = useState('')
@@ -40,14 +41,8 @@ export default function NavbarMobile(props) {
                     </div>
                 </Link>
                 
-                <div className="py-3.5 px-3 rounded-full bg-white dark:bg-gray-700 drop-shadow-md hover:drop-shadow-sm  cursor-pointer" onClick={() => logout()}>
-                {
-                    theme === 'dark' || (theme === 'system' && systemTheme === 'dark') ? (
-                        <SignOutDark className="p-0.5" />
-                    ) : (
-                        <SignOutLight className="p-0.5" />
-                    )
-                }
+                <div className="py-3 px-3 rounded-full bg-white dark:bg-gray-700 drop-shadow-md hover:drop-shadow-sm  cursor-pointer" onClick={() => router.push('/')}>
+                    <CubeLogo />
                 </div>
 
                 <Link href="/eca/profile">

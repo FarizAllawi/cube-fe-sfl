@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
 import Image from 'next/image'
 import { useDropzone } from 'react-dropzone'
 
@@ -8,14 +9,18 @@ import errorHandler from 'configs/errorHandler'
 
 import ProfileInitial from "components/kch-office/ProfileInitial"
 import Layout from "components/kch-office/Layout"
+import Button from 'components/kch-office/Button'
 
 import capitalizeEachWord from 'helpers/capitalizeEachWord'
 
+import ChangePasswordIcon from '/public/images/svg/kch-office/change-password-white.svg'
 import EditIcon from '../../../public/images/svg/kch-office/edit-icon-white.svg'
+
 import { toast } from 'react-toastify'
+import { Router } from 'next/router'
 
 export default function Profile(props) {
-
+    const router = useRouter()
     const { getUser, getDetailUser, updateUser, setUser } = useUser()
 
     const [user, setUserProfile] = useState({})
@@ -192,6 +197,12 @@ export default function Profile(props) {
                                 </div>
                             </div>
                         </div>
+                        <Button size="flex"
+                                className="py-1.5 xl:py-2 text-sm xl:text-base mt-3 bg-green-500"
+                                prependIcon={<ChangePasswordIcon className='p-1' />}
+                                onClick={() => router.push('/change-password')}>
+                            Change Password
+                        </Button>
                     </div>
                 </div>
             </Layout>

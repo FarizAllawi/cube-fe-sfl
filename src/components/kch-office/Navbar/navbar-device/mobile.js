@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
 import Link from 'next/link'
 import Image from 'next/image'
 
@@ -10,9 +11,10 @@ import capitalizeEachWord from 'helpers/capitalizeEachWord'
 
 import NotificationIcon from '../../../../../public/images/svg/kch-office/notification-icon.svg'
 import Logo from '../../../../../public/images/pictures/kch-office/logo-kalbe.png'
+import CubeLogo from '/public/images/svg/cube-logo.svg'
 
 export default function NavbarMobile(props) {
-
+    const router = useRouter()
     const { user, logout } = useUser()
 
     const [toggle, setToggle] = useState(false)
@@ -37,7 +39,9 @@ export default function NavbarMobile(props) {
                 {/* <Link href="/kch-office/notification">
                     <NotificationIcon className='px-0.5' />
                 </Link> */}
-
+                    <div className="relative flex w-12 h-12  xl:w-10 xl:h-10 p-0.5 place-content-center items-center rounded-full bg-white border-2 border-green-900  drop-shadow-md hover:drop-shadow-sm cursor-pointer" onClick={() => router.push('/')}>
+                        <CubeLogo />
+                    </div>
                     <div className="relative flex w-12 h-12  xl:w-10 xl:h-10 p-0.5 place-content-center items-center border-2 border-green-900 rounded-full" onClick={() => setToggle(!toggle)}>
                     {
                         user?.photo_profile === null || user?.photo_profile === undefined ? (
@@ -46,7 +50,7 @@ export default function NavbarMobile(props) {
                             <Image  fill
                                     loader={imageLoader}
                                     src={`${process.env.NEXT_PUBLIC_API_STORAGE}/files/get?filePath=${user.photo_profile}`} 
-                                    className="object-contain rounded-full" 
+                                    className="object-contain object-center rounded-full p-0.5" 
                                     alt="profile-image"/>
                         )
 

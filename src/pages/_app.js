@@ -90,7 +90,7 @@ function MyApp({ Component, ...props }) {
 			#nprogress .bar {
 				background: ${color};
 				position: fixed;
-				z-index: 10000;
+				z-index: 999999;
 				top: 0;
 				left: 0;
 				width: 100%;
@@ -111,7 +111,7 @@ function MyApp({ Component, ...props }) {
 			#nprogress .spinner {
 				display: "block";
 				position: fixed;
-				z-index: 10000;
+				z-index: 999999;
 				top: 15px;
 				right: 15px;
 			}
@@ -200,7 +200,7 @@ function MyApp({ Component, ...props }) {
 		<div className={`${!loading ? 'fade-in' : 'hidden'}`}>
 			<Component {...props.pageProps} />
 		</div>
-		<ToastContainer position='top-center'  hideProgressBar closeOnClick/>
+		<ToastContainer position='top-center' style={{zIndex: "999999"}}  hideProgressBar closeOnClick/>
     </>
 	)
 }

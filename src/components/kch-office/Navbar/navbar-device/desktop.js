@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
 import Link from 'next/link'
 import Image from 'next/image'
 
@@ -10,9 +11,10 @@ import capitalizeEachWord from 'helpers/capitalizeEachWord'
 
 import NotificationIcon from '../../../../../public/images/svg/kch-office/notification-icon.svg'
 import Logo from '../../../../../public/images/pictures/kch-office/logo-kalbe.png'
+import CubeLogo from '/public/images/svg/cube-logo.svg'
 
 export default function NavbarDesktop(props) {
-
+    const router = useRouter()
     const { user, logout } = useUser()
 
     const [toggle, setToggle] = useState(false)
@@ -45,8 +47,9 @@ export default function NavbarDesktop(props) {
                     <NotificationIcon className='px-0.5' />
                 </Link> */}
 
-                {/* <Link href="/kch-office/profile">
-                </Link> */}
+                <div className="py-3 px-3 rounded-full bg-white border-2 border-green-900  drop-shadow-md hover:drop-shadow-sm cursor-pointer" onClick={() => router.push('/')}>
+                    <CubeLogo />
+                </div>
                 <div className="relative flex flex-row gap-1 px-1.5 py-1.5 place-content-end items-center bg-green-900 cursor-pointer  drop-shadow-md hover:drop-shadow-sm rounded-full "
                     onClick={() => setToggle(!toggle)}>
                         <div className="flex p-2">
@@ -60,7 +63,7 @@ export default function NavbarDesktop(props) {
                                 <Image  fill
                                         loader={imageLoader}
                                         src={`${process.env.NEXT_PUBLIC_API_STORAGE}/files/get?filePath=${user.photo_profile}`} 
-                                        className="object-contain rounded-full" 
+                                        className="object-contain object-center rounded-full p-0.5" 
                                         alt="profile-image"/>
                             )
 

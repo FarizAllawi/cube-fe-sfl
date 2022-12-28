@@ -1,4 +1,5 @@
 import { useEffect, useState, useCallback } from 'react'
+import { useRouter } from 'next/router'
 import { withSessionSsr } from "../../lib/withSession"
 import CryptoJS from "crypto-js"
 import { useTheme } from 'next-themes'
@@ -16,14 +17,15 @@ import LayoutDetail from "components/eca/Layout/Detail"
 import Input from "components/eca/Forms/Input"
 
 import ProfileImage from '/public/images/svg/eca/profile.svg'
-import SignOutDark from '/public/images/svg/eca/icon-signout-dark.svg'
 import SignOutLight from '/public/images/svg/eca/icon-signout-light.svg'
+import PasswordIcon from '/public/images/svg/eca/password-icon.svg'
+
 import errorHandler from 'configs/errorHandler'
 
 export default function Profile(props) {
-    const { theme } = useTheme()
+    const router = useRouter()
 
-    const { updateUser, getDetailUser} = useUserCube()
+    const { updateUser, getDetailUser, logout} = useUserCube()
     const { login, isLoading } = useUserEca()
 
     const [fetchStatus, setFetchStatus] = useState(false)
@@ -80,7 +82,7 @@ export default function Profile(props) {
             errorHandler("There is an error when retrieving user data")
         })
 
-    }, [getDetailUser, newState, user.id])
+    }, [getDetailUser, newState, user?.id])
 
     useEffect(() => {
         if (!fetchStatus) {
@@ -172,6 +174,27 @@ export default function Profile(props) {
                                 isLoading={state.isLoading}
                                 onClick={ () => saveUpdate()}>
                             Update
+                        </Button>
+                    </div>
+
+                    <div className="w-full bg-gray-300 border border-gray-300 my-4"></div>
+
+                    <div className="w-full flex place-content-end mt-3">
+                        <Button size="flex" 
+                                className='w-full py-2 text-sm xl:text-base bg-gray-400 hover:bg-gray-500 text-black' 
+                                isLoading={state.isLoading}
+                                onClick={ () => router.push('/change-password')}
+                                prependIcon={<PasswordIcon className="p-0.5"/>}>
+                            Change Password
+                        </Button>
+                    </div>
+                    <div className="w-full flex place-content-end mt-3">
+                        <Button size="flex" 
+                                className='w-full py-2 text-sm xl:text-base bg-gray-400 hover:bg-gray-500 text-black' 
+                                isLoading={state.isLoading}
+                                onClick={ () => logout()}
+                                prependIcon={<SignOutLight className="p-0.5"/>}>
+                            Log Out
                         </Button>
                     </div>
                 </div>

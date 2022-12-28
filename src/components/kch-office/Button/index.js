@@ -34,6 +34,9 @@ export default function Button(props) {
     return (
         <div className={`select-none rounded-full font-semibold cursor-pointer ${ className !== undefined ? className.join(" ") : 'bg-green-900'}`} disabled={isDisabled} onClick={onClick}>
             <div className='flex flex-row place-content-center items-center gap-2 '>
+                { 
+                    prependIcon && (<div>{prependIcon}</div>)
+                }
                 <div>{props.children}</div>
                 { 
                     isLoading ? (

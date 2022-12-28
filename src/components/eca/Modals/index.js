@@ -22,7 +22,7 @@ export default function Modals(props) {
 
     return (
         <>
-            <div className="fixed z-40 w-screen h-screen bg-black bg-opacity-40 backdrop-blur-md">
+            <div className="fixed w-screen h-screen bg-black bg-opacity-40 backdrop-blur-md" style={{ zIndex: "99999"}}>
 
                 <div className="select-none w-screen h-screen flex flex-col place-content-center items-center">
                     <div className={`transition-all duration-300 flex flex-col rounded-3xl bg-gray-500 dark:bg-gray-800 dark:bg-opacity-80 firefox:bg-opacity-100 ${width}`}>
@@ -58,9 +58,9 @@ Modals.defaultProps = {
 }
 
 Modals.propTypes = {
-    type: propTypes.oneOf(['default', 'danger']),
-    size: propTypes.oneOf(['small', 'medium', 'large']),
+    type: propTypes.oneOf(['default', 'danger']).isRequired,
+    size: propTypes.oneOf(['small', 'medium', 'large']).isRequired,
     title: propTypes.string,
     caption: propTypes.string,
-    onClose: propTypes.func,
+    onClose: propTypes.func.isRequired,
 }

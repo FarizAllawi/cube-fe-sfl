@@ -11,6 +11,7 @@ import useUser from 'pages/api/user'
 import useForm from 'helpers/useForm'
 import capitalizeEachWord from 'helpers/capitalizeEachWord'
 
+import Modals from 'components/eca/Modals'
 import Input from 'components/kch-office/Forms/Input'
 import Button from 'components/kch-office/Button'
 import Cube from 'components/Cube'
@@ -18,11 +19,13 @@ import Cube from 'components/Cube'
 import Logo from '../../public/images/pictures/kch-office/logo-kalbe.png'
 import CubeLogo from '../../public/images/svg/cube-logo.svg'
 import errorHandler from 'configs/errorHandler'
+import { data } from 'autoprefixer'
 
 export default function ChangePassword(props) {
 	const router = useRouter()
 
 	const {updateUser, getDetailUser, user, isLoading} = useUser()
+    const [confirmModals, setConfirmModals] = useState(false)
 	const [errors, setErrors] = useState({})
 
 	const [size, setWindowSize] = useState({
@@ -50,32 +53,41 @@ export default function ChangePassword(props) {
 
                     let key = CryptoJS.enc.Utf8.parse(process.env.NEXT_PUBLIC_AES_HASH_KEY)
                     let iv = CryptoJS.enc.Utf8.parse(process.env.NEXT_PUBLIC_AES_IV_KEY)
-                    let encryptedPassword = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(state.password), key, {iv:iv, mode:CryptoJS.mode.CBC, padding: CryptoJS.pad.Pkcs7})
-                    dataUser['password'] = encryptedPassword.ciphertext.toString(CryptoJS.enc.Base64)
 
-                    let update = await updateUser(dataUser)
-                    if (update === 200) {
-                        await fetch('/api/auth/logout')
-                        await fetch('/api/auth/login', {
-                            body: JSON.stringify({
-                                nik: dataUser.nik,
-                                name: dataUser.name,
-                                email: dataUser.email,
-                                password: dataUser.password,
-                                photo_profile: dataUser.photo_profile,
-                                golongan: dataUser.golongan,
-                                token: user.token,
-                                uid_user: dataUser.uid_user,
-                                defaultPassword: false
-                            }),
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            method: 'POST'
-                        })
-                        router.push('/');
+                    let encryptedPassword = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(state.password), key, {iv:iv, mode:CryptoJS.mode.CBC, padding: CryptoJS.pad.Pkcs7})
+                    encryptedPassword = encryptedPassword.ciphertext.toString(CryptoJS.enc.Base64)
+
+                    // Is New Password same with current password
+                    if (dataUser.password !== encryptedPassword) {
+                        dataUser['password'] = encryptedPassword
+
+                        let update = await updateUser(dataUser)
+                        if (update === 200) {
+                            await fetch('/api/auth/logout')
+                            await fetch('/api/auth/login', {
+                                body: JSON.stringify({
+                                    nik: dataUser.nik,
+                                    name: dataUser.name,
+                                    email: dataUser.email,
+                                    password: dataUser.password,
+                                    photo_profile: dataUser.photo_profile,
+                                    golongan: dataUser.golongan,
+                                    token: user.token,
+                                    uid_user: dataUser.uid_user,
+                                    defaultPassword: false
+                                }),
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                method: 'POST'
+                            })
+                            router.push('/');
+                        }
+                        else errorHandler("There is an error when change your password, Please try again")
+                    } else {
+                        toast.info("You using your current password, please change your password to update.")
                     }
-                    else errorHandler("There is an error when change your password, Please try again")
+                
                 }
 
             }
@@ -110,10 +122,39 @@ export default function ChangePassword(props) {
 				<title>CUBE - CHANGE PASSWORD</title>
 			</Head>
 
+            {
+                confirmModals && (
+                    <Modals size='small'
+                            title='Are you sure you want to change password ?'
+                            onClose={ () => { 
+                                newState({
+                                    password: '',
+		                            confirmPassword: '',
+                                })
+                                setConfirmModals(false) 
+                            }}>
+                        <div className="w-full flex flex-row gap-4 place-content-center">
+                            <Button type="primary" 
+                                    className='mt-2 w-1/3 bg-gray-400 border-2 border-gray-400 hover:bg-opacity-80 hover:border-opacity-80' 
+                                    isLoading={isLoading} onClick={() => router.back()}>
+                                    Cancel
+                            </Button>
+
+                            <Button type="primary" 
+                                    className='mt-2 w-1/3 bg-sky-300 border-2 border-sky-300 hover:bg-opacity-80 hover:border-opacity-80 text-white' 
+                                    isLoading={isLoading} onClick={() => submitChangePassword()}>
+                                    Save
+                            </Button>
+
+                        </div>
+                    </Modals>
+                )
+            }
+
+
             <div className="absolute top-10 left-0 w-28 h-12 px-2 py-2 xl:w-36 xl:h-14 flex place-content-center items-center rounded-r-2xl bg-white drop-shadow-md border-1 border-gray-200">
                 <Image src={Logo} fill className=' py-2 px-2 ' quality={100} priority={true} alt="Logo-KCH" />
             </div>
-
             
 
             <div className="relatvie w-screen h-screen max-h-screen overflow-hidden bg-gradient-shine ">
@@ -174,7 +215,7 @@ export default function ChangePassword(props) {
                                 </div>
                                 <div className="w-full flex flex-row place-content-center items-center">
                                     <div className="w-full flex place-content-end">
-                                        <Button type="primary" className='mt-2 w-1/3 bg-sky-300 border-2 border-sky-300 hover:bg-opacity-80 hover:border-opacity-80 text-white' isLoading={isLoading} onClick={() => submitChangePassword()}>Save</Button>
+                                        <Button type="primary" className='mt-2 w-1/3 bg-sky-300 border-2 border-sky-300 hover:bg-opacity-80 hover:border-opacity-80 text-white' isLoading={isLoading} onClick={() => user?.defaultPassword  ? submitChangePassword() : state.password !== "" && state.confirmPassword !== "" ?  setConfirmModals(true) : false}>Save</Button>
                                     </div>
                                 </div>
 
