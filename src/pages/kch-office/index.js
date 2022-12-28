@@ -163,7 +163,7 @@ export default function HomePage(props) {
             window.removeEventListener("resize", handleResize)
         }
 
-    }, [fetchStatus, getBookedList, getAllOffice, newState])
+    }, [bookingFetcher, fetchStatus, getAllOffice, getBookedList, newState])
 
     return (
         <Layout>
