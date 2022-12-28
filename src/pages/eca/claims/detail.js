@@ -142,7 +142,7 @@ function CardClaims(props) {
                             </div>
                             <div className="w-1/2 flex flex-row gap-2">
                                 <div>HRD APPROVAL:</div>
-                                <div>{data.superior_dt !== undefined  && data.superior_dt !== null ? formatDate(new Date(Date.parse(data.superior_dt))) : '-'}</div>
+                                <div>{data.hrd_dt !== undefined  && data.hrd_dt !== null ? formatDate(new Date(Date.parse(data.hrd_dt))) : '-'}</div>
                             </div>
                         </>
                     )
