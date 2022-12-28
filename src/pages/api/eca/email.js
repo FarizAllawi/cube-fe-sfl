@@ -16,10 +16,12 @@ export default async function sendEmail (req, res) {
     // console.log("CHeck Body")
     const mailData = await {
       from: 'cube@kalbeconsumerhealth.com (CUBE NOTIFICATION)',
-      to: `${req.body.email}; andrian.santo@kalbeconsumerhealth.com`,
+      to: `${req.body.email}; andrian.santo@kalbeconsumerhealth.com; andrian.santo@sakafarma.com`,
       subject: `${req.body.header}`,
-      text: `${req.body.description}` +" | Automatic Sent from: cube@kalbeconsumerhealth.com",
-      html: `<div>${req.body.description}</div><p>cube@kalbeconsumerhealth.com</p>`
+      // text: `${req.body.description}` +" | Automatic Sent from: cube@kalbeconsumerhealth.com",
+      // html: `<div>${req.body.description}</div><p>cube@kalbeconsumerhealth.com</p>`
+      text: `${req.body.description}` +" | Automatic Sent from: Cube Apps",
+      html: `<div>${req.body.description} | Automatic Sent from: Cube Apps</div>`
     }
     await transporter.sendMail(mailData, function (err, info) {
       if(err){

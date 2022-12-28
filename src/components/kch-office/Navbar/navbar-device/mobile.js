@@ -45,7 +45,7 @@ export default function NavbarMobile(props) {
                         ) : (
                             <Image  fill
                                     loader={imageLoader}
-                                    src={`${process.env.NEXT_PUBLIC_API_STORAGE}files/get?filePath=${user.photo_profile}`} 
+                                    src={`${process.env.NEXT_PUBLIC_API_STORAGE}/files/get?filePath=${user.photo_profile}`} 
                                     className="object-contain rounded-full" 
                                     alt="profile-image"/>
                         )

@@ -31,6 +31,27 @@ export default function useUser() {
         setUser(user.data)
         return user.data
     }
+
+    const getUserByNik = async (nik) => {
+        let userSession = await getUser()
+
+        setIsLoading(true)
+        // await axios.post(`api/User/login?getEmail=${userSession.email}&getPassword=${userSession.password}`)
+        const response = await axios.get(`api/user/nik/${nik}`, {
+            headers: {
+                'Authorization': `Bearer ${userSession?.token}`
+            }
+        })
+        .then(res => {
+            setIsLoading(false)
+            return res.data
+        })
+        .catch(err => {
+            console.log(err)
+            setIsLoading(false)
+        })
+        return response
+    }
     
     const getDetailUser = async (email) => {email
         let userSession = await getUser()
@@ -132,7 +153,6 @@ export default function useUser() {
         return response
     }
 
-
     useEffect(() => {
 
         if (user?.isLogin === undefined && !isFetch) {
@@ -144,6 +164,6 @@ export default function useUser() {
     }, [router, user, setUser, isFetch])
 
     return {
-        isLoading, user, setUser, getUser,  getDetailUser, logout, login, updateUser
+        isLoading, user, setUser, getUser,  getDetailUser, getUserByNik, logout, login, updateUser
     }
 }

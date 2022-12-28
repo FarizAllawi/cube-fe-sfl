@@ -18,21 +18,21 @@ export default function useUser() {
     }
 
     const getUserByNik = async (nik) => {
-        let user = {}
         setIsLoading(true)
-        await axios.get(`api/User/get/byNik?getNik=${nik}`)
-                    .then(res => {
-                        user = res.data[0]
-                        setIsLoading(false)
-                    })
-                    .catch(err => {
-                        console.log(err)
-                        setIsLoading(false)
-                    })
-        return user
+        // await axios.post(`api/User/login?getEmail=${userSession.email}&getPassword=${userSession.password}`)
+        const response = await axios.get(`api/User/nik/${nik}`)
+        .then(res => {
+            setIsLoading(false)
+            return res.data
+        })
+        .catch(err => {
+            console.log(err)
+            setIsLoading(false)
+        })
+        return response
     }
     
-    const getDetailUser = async (id) => {
+    const getDetailUser = async () => {
         let user = {}
         let userSession = await getUser()
 

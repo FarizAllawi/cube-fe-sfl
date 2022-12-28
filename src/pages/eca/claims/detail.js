@@ -15,7 +15,7 @@ import ShowDocument from "components/eca/Document/Show"
 import Modals from "components/eca/Modals"
 import BadgeStatus from 'components/eca/Badge'
 
-import useUser from 'pages/api/eca/user'
+import useUserECA from 'pages/api/eca/user'
 import useClaim from 'pages/api/eca/claim'
 import useNotification from 'pages/api/eca/notification'
 
@@ -142,7 +142,7 @@ function CardClaims(props) {
                             </div>
                             <div className="w-1/2 flex flex-row gap-2">
                                 <div>HRD APPROVAL:</div>
-                                <div>{data.superior_dt !== undefined  && data.superior_dt !== null ? formatDate(new Date(Date.parse(data.superior_dt))) : '-'}</div>
+                                <div>{data.hrd_dt !== undefined  && data.hrd_dt !== null ? formatDate(new Date(Date.parse(data.hrd_dt))) : '-'}</div>
                             </div>
                         </>
                     )
@@ -187,7 +187,7 @@ export default function Claims(props) {
         updateClaimMileage,
         isLoading
     } = useClaim()
-    const { getDetailUser, getUserByNik } = useUser()
+    const { getDetailUser, getUserByNik } = useUserECA()
 
     // console.log(props.data.item1)
 
@@ -202,7 +202,8 @@ export default function Claims(props) {
     const submitClaimHeader = async (chid) => {
         // Validate End Trip Before Submit
         let detailUser = await getDetailUser()
-        let detailSuperior = await getUserByNik(detailUser.superiorNik)
+        let detailSuperior = await getUserByNik(detailUser.superiorNIK)
+        
         let statusEndTrip = true
         dataClaim.item2.map( (item, index) => {
             if ((item.end_km === 0 || item.end_km === undefined) &&

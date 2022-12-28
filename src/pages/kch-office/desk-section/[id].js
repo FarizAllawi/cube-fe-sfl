@@ -93,7 +93,6 @@ export default function DeskSection(props) {
     const [desk, setDesk] = useState({})
     const [selectedDate, setSelectedDate] = useState(new Date())
 
-
     const [submitBooking, setSubmitBooking] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [selectedDesk, setSelectedDesk] = useState({})
@@ -111,8 +110,8 @@ export default function DeskSection(props) {
 
 
     const { getDesk } = useSWR(  
-        selectedDesk.uid_dk !== undefined ? 
-            `/api/booking/desk/${selectedDesk.uid_dk}`
+        selectedDesk.uid_dk !== undefined && selectedDate !== undefined ? 
+            `/api/booking/desk/${selectedDesk.uid_dk}?date=${format(selectedDate, 'yyyy-MM-dd')}`
         : null,
 
         async (url) => {
@@ -348,7 +347,7 @@ export default function DeskSection(props) {
 
         // Set Disable date
         let disableDateContent = []
-        let fetchBookedDate = await getBookingByDesk(deskItem.uid_dk)
+        let fetchBookedDate = await getBookingByDesk(deskItem.uid_dk, format(new Date(), 'yyyy-MM-dd'))
         
         if (fetchBookedDate) {
             fetchBookedDate.map( (item, index) => {
@@ -546,7 +545,7 @@ export default function DeskSection(props) {
                                                                     ) : (
                                                                         <Image  fill
                                                                                 loader={imageLoader}
-                                                                                src={`${process.env.NEXT_PUBLIC_API_STORAGE}files/get?filePath=${item.user.photo_profile}`} 
+                                                                                src={`${process.env.NEXT_PUBLIC_API_STORAGE}/files/get?filePath=${item.user.photo_profile}`} 
                                                                                 className="object-contain rounded-full" 
                                                                                 alt="profile-image"/>
                                                                     )
@@ -605,7 +604,7 @@ export default function DeskSection(props) {
                                                                     ) : (
                                                                         <Image  fill
                                                                                 loader={imageLoader}
-                                                                                src={`${process.env.NEXT_PUBLIC_API_STORAGE}files/get?filePath=${item.user.photo_profile}`} 
+                                                                                src={`${process.env.NEXT_PUBLIC_API_STORAGE}/files/get?filePath=${item.user.photo_profile}`} 
                                                                                 className="object-contain rounded-full" 
                                                                                 alt="profile-image"/>
                                                                     )

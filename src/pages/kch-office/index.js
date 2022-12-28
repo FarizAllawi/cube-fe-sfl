@@ -51,7 +51,7 @@ export default function HomePage(props) {
     })
     
     const { getDeskSection } = useSWR(
-        selectedOffice?.uid_office !== undefined ? 
+        selectedOffice?.uid_office !== undefined && selectedDate !== undefined ? 
             `/api/booking/office/${selectedOffice?.uid_office}${selectedDate !== null && selectedDate !== '' ? '?date='+selectedDate : ''}`
         : null,
         async (url) => {
@@ -122,7 +122,6 @@ export default function HomePage(props) {
 
             if (officeData.length > 0) {
                 let uid = officeData[0]?.uid_office
-                let deskSectionData = await bookingFetcher( `/api/booking/office/${uid}`)
                 let office = {}
 
     
@@ -133,7 +132,7 @@ export default function HomePage(props) {
                     }
                 })
 
-                setDeskSection(deskSectionData)
+                setSelectedDate(format(new Date(), 'yyyy-MM-dd'))
                 setBookedList(bookingList)
                 setSelectedOffice(office)
                 setOfficeData(officeData) 
@@ -310,7 +309,7 @@ export default function HomePage(props) {
                         (size.width >= 1280 || toggle === 'maps') && selectedOffice.office_sketch !== undefined && (
                             <div className="relative w-full h-80 sm:h-96 xl:h-full xl:w-5/12 xl:mt-4 2xl:mt-2">
                                 <Image  loader={imageLoader} 
-                                        src={`${ process.env.NEXT_PUBLIC_API_STORAGE}files/get?filePath=${selectedOffice.office_sketch}`} 
+                                        src={`${ process.env.NEXT_PUBLIC_API_STORAGE}/files/get?filePath=${selectedOffice.office_sketch}`} 
                                         className="object-fit sm:object-contain xl:object-fill w-full h-full"
                                         priority={true}
                                         quality={100}

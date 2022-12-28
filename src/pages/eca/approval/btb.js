@@ -6,7 +6,7 @@ import {useRouter} from 'next/router'
 import useForm from 'helpers/useForm'
 import slugify from 'helpers/slugify'
 
-import useUser from 'pages/api/eca/user'
+import useUserECA from 'pages/api/eca/user'
 import useApproval from 'pages/api/eca/approval'
 import useBTB from 'pages/api/eca/btb'
 import useNotification from 'pages/api/eca/notification'    
@@ -61,7 +61,8 @@ export default function BTB(props) {
     const [user, setUser] = useState([])
     const {updateBTBChild} = useBTB()
     const {getBtbApproval, approveAllBtbSuperior} = useApproval()
-    const { getDetailUser, getUserByNik } = useUser()
+    const { getDetailUser, getUserByNik } = useUserECA()
+
     const {getBTBChildByHeader} = useBTB()
     const {insertNotification, sendEmail} = useNotification()
     const [isLoading, setIsLoading] = useState(false)

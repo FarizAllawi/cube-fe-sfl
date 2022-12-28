@@ -9,7 +9,7 @@ import Button from "components/eca/Button"
 import LayoutDetail from "components/eca/Layout/Detail"
 import Modals from "components/eca/Modals"
 
-import useUser from 'pages/api/eca/user'
+import useUserECA from 'pages/api/eca/user'
 import useBTB from 'pages/api/eca/btb'
 import useNotification from 'pages/api/eca/notification'
 
@@ -112,8 +112,8 @@ export default function BTB(props) {
 
     const { insertNotification, sendEmail } = useNotification()
     const { getBTBChildByHeader, getBTBHeadDetail, updateBTBHeader, updateBTBChild, deleteBTBChild, deleteBTBHeader,  isLoading } = useBTB()
-    const { getDetailUser, getUserByNik } = useUser()
-
+    const { getDetailUser, getUserByNik} = useUserECA()
+    
     const [isFetch, setIsFetch] = useState(false)
     const [user, setUser] = useState({})
     // const [btbHead, setBTBHead] = useState(props.btbHead)
@@ -136,7 +136,7 @@ export default function BTB(props) {
 
     const submitBTBHeader = async (bhid) => {
         let detailUser = await getDetailUser()
-        let detailSuperior = await getUserByNik(detailUser.superiorNik)
+        let detailSuperior = await getUserByNik(detailUser.superiorNIK)
 
         if (detailUser.superiorNIK !== undefined) {
             await Promise.all([
